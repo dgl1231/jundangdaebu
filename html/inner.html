@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <title>Men's 대출받기</title>
 
     <meta name="author" content="Lee">
     <meta name="viewport"
@@ -18,25 +18,21 @@
     <meta property="og:url" content="https://mens.com">
 
     <!-- https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/Mens.png">
-    <link rel="icon" href="img/Mens.png">
-    <link rel="apple-touch-icon" href="img/Mens.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/Mens.png">
+    <link rel="icon" href="../img/Mens.png">
+    <link rel="apple-touch-icon" href="../img/Mens.png">
 
     
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/header_footer.css">
-    <link rel="stylesheet" href="css/introduce.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/header_footer.css">
 
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8aa0e33ee74ad19f7b924b5e0ec3f870">
-    </script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
-    <title>Men's 회사소개</title>
+    <script defer src="../js/main.js"></script>
 
-    <script defer src="map.js"></script>
 </head>
 
 <body style="overflow:hidden">
+    <!-- body의 일부분인container (BEM 작명 규칙) -->
     <div class="body__container">
 
         <!-- HEADER -->
@@ -45,7 +41,7 @@
 
                 <div class="menu-group float--left">
                     <div class="logo">
-                        <a href="index.html">Men's전당대부</a>
+                        <a href="../index.html">Men's전당대부</a>
                     </div>
                     <div class="logo-text">
                         Men's<br>전당대부
@@ -54,45 +50,18 @@
                         대부업 등록번호 : 0000-0000-0000<br>이자율|월2%,년19.9%이내
                     </div>
                     <ul class="main-menu toggle">
-                        <li><a href="int.html" target='_blank'>회사소개</a></li>
-                        <li><a href="loan.html" target='_blank'>대출하기</a></li>
-                        <li><a href="#">담보인정품목</a></li>
-                        <li><a href="#">담보목록</a></li>
+                        <li><a href="./int.html" target='_blank'>회사소개</a></li>
+                        <li><a href="./loan.html" target='_blank'>대출받기</a></li>
+                        <li><a href="./dambo.html"target='_blank'>담보인정품목</a></li>
+                        <li><a href="./dambolist.html"target='_blank'>담보목록</a></li>
                     </ul>
                 </div>
 
             </div>
         </header>
+        
 
-        <section class="section section--intro">
-            <div class="intro-cont">
-                <div class="introduce">
-                    <div class="intro-name">
-                        Men's<br>전당대부
-                    </div>
-                    <div class="intro-list-block">
-                        <li class="intro-list">문구입력해주세요.<br></li>
-                        <li class="intro-list">문구입력해주세요?<br></li>
-                        <li class="intro-list">문구입력해주세요!<br></li>
-                        <li class="intro-list">문구입력해주세요@<br></li>
-                    </div>
-                </div>
-                <div class="whereis">
-                    <div id="map"></div>
-                    <div class="int-summary">
-                        <h2 class="mens-map">
-                            Men's Location
-                        </h2>
-                        <p class="mens-location">
-                            서울특별시 강남구 논현로 146길 8-9 엔타시아빌딩 4층
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
+        <!-- FOOTER -->
         <footer class="section">
             <div class="inner clearfix">
                 <ul class="site-links float--right">
@@ -109,8 +78,10 @@
             </div>
 
         </footer>
-    </div>
 
+
+    </div>
+    
 </body>
 
 </html>

@@ -1,40 +1,43 @@
 /* WHERE IS */
 .section--intro {
     display:flex;
-    height: 660px;
-    padding-bottom: 80px;
-    padding-top: 50px;
     justify-content: center;
-    background: url("../img/louis-vuitton.jpg");
+    background-image: url("../img/bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100%;
+    width: auto;
+    height: 783px;
+    
 }
 .intro-cont{
-    width:900px;
+    width:1200px;
 }
 
 /* introduce */
 .introduce{
     height: 270px;
-    
+    padding-top: 50px;
     text-shadow: 15px 15px 15px rgba(0, 0, 0, .9),
     15px 15px 15px rgba(0, 0, 0, .9);
 }
 .intro-name{
     color:greenyellow;
-    float:right;
+    float:left;
     width:50%;
     text-align: center;
     padding-top: 20px;
     font-size:110px;
 }
 .intro-list-block{
-    float:left;
+    float:right;
     width:50%;
     margin-top:40px;
 }
 .intro-list{
     color:hotpink;
     list-style-type: none;
-    text-align: center;
+    text-align: left;
     font-size:35px;
     margin-top:15px;
 }
@@ -42,7 +45,7 @@
 
 /* map */
 .whereis{
-    margin-top:50px;
+    margin-top:60px;
 }
 #map {
     border-radius: 15px;
@@ -68,7 +71,7 @@
 }
 .mens-location{
     color:hotpink;
-    padding-top: 20px;
+    padding-top: 40px;
     font-size: 15px;
 }
 
