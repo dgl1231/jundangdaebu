@@ -2,24 +2,41 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/header_footer.css">
-    <link rel="stylesheet" href="css/introduce.css">
 
+    <meta charset="UTF-8">
+
+    <meta name="author" content="Lee">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- http://ogp.me/ -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Men's">
+    <meta property="og:title" content="빠르고 손쉬운 대출">
+    <meta property="og:image" content="img/Mens.png">
+    <meta property="og:url" content="https://mens.com">
+
+    <!-- https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html -->
     <link rel="shortcut icon" type="image/x-icon" href="img/Mens.png">
     <link rel="icon" href="img/Mens.png">
     <link rel="apple-touch-icon" href="img/Mens.png">
-    <script defer src="map.js"></script>
-    <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
 
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/header_footer.css">
+    <link rel="stylesheet" href="css/introduce.css">
 
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8aa0e33ee74ad19f7b924b5e0ec3f870">
+    </script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
     <title>Men's 회사소개</title>
+
+    <script defer src="map.js"></script>
 </head>
 
-<body>
+<body style="overflow:hidden">
     <div class="body__container">
 
         <!-- HEADER -->
@@ -38,7 +55,7 @@
                     </div>
                     <ul class="main-menu toggle">
                         <li><a href="int.html" target='_blank'>회사소개</a></li>
-                        <li><a href="#">대출하기</a></li>
+                        <li><a href="loan.html" target='_blank'>대출하기</a></li>
                         <li><a href="#">담보인정품목</a></li>
                         <li><a href="#">담보목록</a></li>
                     </ul>
@@ -47,9 +64,32 @@
             </div>
         </header>
 
-        <div class="map">
-            <div id="daumRoughmapContainer1629952415522" class="root_daum_roughmap root_daum_roughmap_landing"></div>
-        </div>
+        <section class="section section--intro">
+            <div class="intro-cont">
+                <div class="introduce">
+                    <div class="intro-name">
+                        Men's<br>전당대부
+                    </div>
+                    <div class="intro-list-block">
+                        <li class="intro-list">문구입력해주세요.<br></li>
+                        <li class="intro-list">문구입력해주세요?<br></li>
+                        <li class="intro-list">문구입력해주세요!<br></li>
+                        <li class="intro-list">문구입력해주세요@<br></li>
+                    </div>
+                </div>
+                <div class="whereis">
+                    <div id="map"></div>
+                    <div class="int-summary">
+                        <h2 class="mens-map">
+                            Men's Location
+                        </h2>
+                        <p class="mens-location">
+                            서울특별시 강남구 논현로 146길 8-9 엔타시아빌딩 4층
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
 
 
@@ -69,17 +109,7 @@
             </div>
 
         </footer>
-
-
-        <!-- 3. 실행 스크립트 -->
-        <script charset="UTF-8">
-            new daum.roughmap.Lander({
-                "timestamp" : "1629952415522",
-                "key" : "275cp",
-                "mapWidth" : "640",
-                "mapHeight" : "360"
-            }).render();
-        </script>
+    </div>
 
 </body>
 

@@ -81,6 +81,7 @@ header .main-menu li a:hover {
     color: #c08440
 }
 
+
 /* LOGO */
 header .logo {
     margin: auto;
@@ -111,23 +112,10 @@ header .logo a:hover {
     width: 500px;
     color:#7e7e7e;
 }
-/* MAIN_MENU */
-header .main-menu {
-    display: flex;
-    margin-left: 200px;
-}
 
-header .main-menu li a {
-    display: block;
-    padding: 10px;
-    color: #ffffff;
-}
-
-header .main-menu li a:hover {
-    color: #c08440
-}
 /* FOOTER */
 footer {
+    clear: both;
     background: rgb(30,30,30);
     border-top: 2px solid rgba(31, 24, 23, 0.75);
 }

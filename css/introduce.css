@@ -1,4 +1,74 @@
-.map {
-    width: 500px;
-    height: 500px;
+/* WHERE IS */
+.section--intro {
+    display:flex;
+    height: 660px;
+    padding-bottom: 80px;
+    padding-top: 50px;
+    justify-content: center;
+    background: url("../img/louis-vuitton.jpg");
 }
+.intro-cont{
+    width:900px;
+}
+
+/* introduce */
+.introduce{
+    height: 270px;
+    
+    text-shadow: 15px 15px 15px rgba(0, 0, 0, .9),
+    15px 15px 15px rgba(0, 0, 0, .9);
+}
+.intro-name{
+    color:greenyellow;
+    float:right;
+    width:50%;
+    text-align: center;
+    padding-top: 20px;
+    font-size:110px;
+}
+.intro-list-block{
+    float:left;
+    width:50%;
+    margin-top:40px;
+}
+.intro-list{
+    color:hotpink;
+    list-style-type: none;
+    text-align: center;
+    font-size:35px;
+    margin-top:15px;
+}
+
+
+/* map */
+.whereis{
+    margin-top:50px;
+}
+#map {
+    border-radius: 15px;
+    float: right;
+    width: 50%;
+    height: 300px;
+}
+.int-summary{
+    float: left;
+    width: 50%;
+    text-align: center;
+    padding-top:20px;
+    color: white;
+    text-shadow: 15px 15px 15px rgba(0, 0, 0, .9),
+    15px 15px 15px rgba(0, 0, 0, .9);
+    
+}
+.mens-map{
+    color:greenyellow;
+    padding-top:10px;
+    height: 100%;
+    font-size: 80px;
+}
+.mens-location{
+    color:hotpink;
+    padding-top: 20px;
+    font-size: 15px;
+}
+
