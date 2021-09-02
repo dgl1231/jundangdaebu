@@ -1,9 +1,10 @@
 //app.js
-//package setting
+//package settings
 const express = require('express');
 const path = require('path')
 const PORT = process.env.PORT || 8000
 const app = express();
+
 
 const siteData={
     title : "Men's 전당대부",
@@ -11,8 +12,8 @@ const siteData={
 }
 
 // Specific folder example
-app.use(express.static(path.join(__dirname,'public')))
-app.use('/img', express.static('public'));
+app.use(express.static(path.join(__dirname,'public')));
+app.use('/img', express.static('public/img'));
 
 //app setting
 app.set('views', __dirname + '/views');
