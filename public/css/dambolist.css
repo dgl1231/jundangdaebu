@@ -1,0 +1,35 @@
+.main-container{
+    display: flex;
+    justify-content: center;
+    background-image: url("../img/bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100%;
+    width: auto;
+    height: 783px;
+}
+
+.list-container{
+    width:1250px;
+    align-items: center;
+}
+
+img{
+    width: 200px;
+    height: 200px;
+}
+
+.row{
+    list-style: none;
+}
+
+.cell{
+    margin: 10px;
+    padding: 10px;
+    float: left;
+}
+
+.img-box{
+    width: 200px;
+    height: 200px;
+}

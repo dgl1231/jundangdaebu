@@ -1,0 +1,25 @@
+{
+  "name": "jundangdaebu",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgl1231/jundangdaebu.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dgl1231/jundangdaebu/issues"
+  },
+  "homepage": "https://github.com/dgl1231/jundangdaebu#readme",
+  "description": ""
+}
