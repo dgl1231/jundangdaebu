@@ -96,13 +96,13 @@
 
 /* VISUAL */
 .section--visual {
-    background-image: url("../img/rolex.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100%;
     width: auto;
-    height: 761px;
+    height: 762px;
 }
+
 
 .section--visual::before {
     content: "";

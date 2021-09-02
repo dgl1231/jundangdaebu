@@ -6,8 +6,8 @@
     background-position: center center;
     background-size: 100%;
     width: auto;
-    height: 761px;}
-
+    height: 762px;
+}
 .list-container{
     width:1250px;
     align-items: center;
@@ -23,6 +23,7 @@ img{
 }
 
 .cell{
+    text-align: center;
     margin: 10px;
     padding: 10px;
     float: left;
