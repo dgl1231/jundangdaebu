@@ -21,7 +21,7 @@
 .main-mens{
     padding-top:65px;
     font-size: 140px;
-    font-weight: 400;
+    font-weight: 450;
     color: #e6e6e6;
     line-height: 1.5;
     text-shadow: 15px 15px 15px rgba(0, 0, 0, .75),
@@ -101,7 +101,7 @@
     background-position: center center;
     background-size: 100%;
     width: auto;
-    height: 783px;
+    height: 761px;
 }
 
 .section--visual::before {

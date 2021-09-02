@@ -13,7 +13,6 @@ const siteData={
 
 // Specific folder example
 app.use(express.static(path.join(__dirname,'public')));
-app.use('/img', express.static('public/img'));
 
 //app setting
 app.set('views', __dirname + '/views');
