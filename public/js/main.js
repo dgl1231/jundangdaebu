@@ -1,4 +1,3 @@
-
 (function (window, document) {
     'use strict';
 
@@ -27,7 +26,4 @@
             toggle.classList.remove('on');
         });
     }
-
-    
-
 })(window, document)

@@ -1,46 +1,131 @@
-<script defer src="./js/main.js"></script>
-<script defer src="./js/background.js"></script>
+<script defer src="../js/main.js"></script>
+<script defer src="../js/map.js"></script>
 
 <div class="body__container">
-        <!-- VISUAL -->
-        <section id = "mainbackground" class="section section--visual">
-            <div class="inner">
-                <div class="summary">
-                    
-                    <p class="main-description">
-                        안전하고 신뢰성 있는 대부업체
-                        <br>갚지 않으셔도 괜찮습니다.
-                        <br>급전이 필요할땐?
-                        
-                    </p>
-                    <p class="main-mens">
-                        Men's
-                    </p>
-                    <div class="company-info">
-                        
-                    </div>
-                </div>
-                <div class="main-login">
-                    <div>
-                        <button class="facebooklogo"></button>
-                        <button class="kakaologo"></button>
-                        <button class="instalogo"></button>
-                    </div>
+    <section id="mainbackground" class="section section--visual">
+        <div class="inner">
+            <div class="summary">
 
-                    <form id="sign-form" method="POST" action="">
-                        
-                        <ul>
-                            <!--<li><input type="text" class="input--text" placeholder="ID를 입력하세요"></li>
-                        <li><input type="password" class="input--text" placeholder="비밀번호를 입력하세요"></li>-->
-                            <li>
-                                <button type="submit" class="btn btn--primary">회원 로그인</button>
-                                <button type="submit" class="btn btn--primary">비회원 로그인</button>
-                                <p class="caption">회원이 되고싶으시면 회원 로그인을 클릭하세요.<br>이자율과 대출액 상한에 대한 혜택이 주어집니다.</p>
-                            </li>
-                        </ul>
-                    </form>
-                </div>
+
+                <p class="main-mens">
+                    ♥ 방구석 ♡
+                </p>
             </div>
-        </section>
-    </div>
 
+        </div>
+    </section>
+    <section id="intro" class="section section--visual">
+        <div class="inner">
+
+
+            
+            <div class="body__container">
+                <section class="section section--intro">
+                    <div class="intro-cont">
+                        <div class="introduce">
+                            <div class="intro-name">
+                                Men's<br>전당대부
+                            </div>
+                            <div class="intro-list-block">
+                                <li class="intro-list">문구입력해주세요.<br></li>
+                                <li class="intro-list">문구입력해주세요?<br></li>
+                                <li class="intro-list">문구입력해주세요!<br></li>
+                                <li class="intro-list">문구입력해주세요@<br></li>
+                            </div>
+                        </div>
+                        <div class="whereis">
+                            <script type="text/javascript"
+                                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8aa0e33ee74ad19f7b924b5e0ec3f870"></script>
+                            <div id="map"></div>
+                            <div class="int-summary">
+                                <h2 class="mens-map">
+                                    Location
+                                </h2>
+                                <p class="mens-location">
+                                    서울특별시 강남구 논현로 146길 8-9 엔타시아빌딩 4층
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+
+
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+    <!--
+    <section id="mainbackground" class="section section--visual">
+        <div class="inner">
+            <div class="summary">
+
+                <p class="main-description">
+                    안전하고 신뢰성 있는 대부업체
+                    <br>갚지 않으셔도 괜찮습니다.
+                    <br>급전이 필요할땐?
+                </p>
+                <p class="main-mens">
+                    Men's
+                </p>
+                <div class="company-info"></div>
+            </div>
+            <div class="main-login">
+                <div>
+                    <button class="facebooklogo"></button>
+                    <button class="kakaologo"></button>
+                    <button class="instalogo"></button>
+                </div>
+                <ul>
+                    <li>
+                        <button data-modal-target="#modal" class="btn btn--primary">회원 로그인</button>
+                        <div class="modal" id="modal">
+                            <div class="modal-header">
+                                <div class="title">로그인</div>
+                                <button data-close-button class="close-button">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="sign-form" method="POST" action="">
+                                    <!--<form id="sign-form" method="POST" action="">-->
+    <!--
+                                    <p><input type="text" class="input--text" placeholder="ID를 입력하세요"></p>
+                                    <p><input type="password" class="input--text" placeholder="비밀번호를 입력하세요"></p>
+                                    <button class="login-btn" type="submit">로그인</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="overlay"></div>
+                        <button data-modal-target="#modal" class="btn btn--primary">비회원 로그인</button>
+                        <div class="modal" id="modal">
+                            <div class="modal-header">
+                                <div class="title">비회원 로그인</div>
+                                <button data-close-button class="close-button">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="sign-form" method="POST" action="">
+                                    <!--<form id="sign-form" method="POST" action="">-->
+    <!--
+                                    <p><input type="text" class="input--text" placeholder="ID를 입력하세요"></p>
+                                    <p><input type="password" class="input--text" placeholder="비밀번호를 입력하세요"></p>
+                                    <button class="login-btn" type="submit">로그인</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="overlay"></div>
+                        <p class="caption">회원이 되고싶으시면 회원가입을 진행하세요.<br>이자율과 대출액 상한에 대한 혜택이 주어집니다.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+-->
+</div>

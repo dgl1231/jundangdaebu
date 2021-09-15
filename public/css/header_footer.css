@@ -1,19 +1,8 @@
-/* COMMON */
-.body__container {
-    font-family: 'Roboto', sans-serif;
-    font-size: 15px;
-    font-weight: 300;
-    color: #333;
-    
+body{
+    background-color: rgb(230, 230, 230);
 }
-
-a {
-    text-decoration: none;
-}
-/* SECTION & INNER */
-.section {
-    position: relative;
-
+div{
+    background-color: rgba(0, 0, 0, .1);
 }
 .section .inner {
     max-width: 1300px;
@@ -39,13 +28,16 @@ a {
 
 /* HEADER */
 header {
-    border-bottom: 2px solid rgba(39, 29, 26, 0.75);
-    box-shadow: 0 0 5px rgba(0, 0, 0, .75);
-    background: rgb(30,30,30);
+    position: sticky;
+    top:0;
+    width: 100%;
+    z-index:999;
+    background-color: rgba(156, 156, 156,0.5);
+    
 }
 
 header .inner {
-    height: 100px;
+    height: 80px;
 }
 
 header .menu-group {
@@ -54,34 +46,38 @@ header .menu-group {
     height: 100%;
 }
 
-#toggle-btn {
-    display: none;
-    background: url("../img/toggle-btn.svg");
-    width: 18px;
-    height: 24px;
-    position: absolute;
-    top: 16px;
-    right: 20px;
-    cursor: pointer;
-    text-indent: -9999px;
-}
 /* MAIN_MENU */
 header .main-menu {
     display: flex;
-    margin-left: 200px;
+    margin-left: 100px;
 }
 
-header .main-menu li a {
+.main_btn {
     display: block;
-    padding: 10px;
-    color: #ffffff;
+    padding: 15px;
+    color: black;
+    border-bottom:1px solid gray;
+    border-top:1px solid gray;
 }
 
-header .main-menu li a:hover {
-    color: #c08440
+.main_btn:hover {
+    color: #c08440;
+    border-bottom:1px solid #976c3a;
+    border-top:1px solid #976c3a;
 }
 
 
+.sign_up_btn{
+    margin-left: 50px;
+    display: block;
+    padding: 15px;
+    color: black;
+    border:2px dashed gray;
+}
+.sign_up_btn:hover {
+    color: #c08440;
+    border:2px dashed #976c3a;
+}
 /* LOGO */
 header .logo {
     margin: auto;
@@ -105,7 +101,7 @@ header .logo a:hover {
 .logo-text{
     margin-top:5px;
     width: 100px;
-    color:#ffffff;
+    color:black;
 }
 .info-text{
     margin-top:5px;

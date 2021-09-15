@@ -1,70 +1,17 @@
-/* SUMMARY */
-.company-info{
-    display: block;
-    background: url("../img/회사설명.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: 400px;
-    height: 200px;
-    margin-top:85px;
-    
-}
-
-.main-description {
-    font-size: 40px;
-    font-weight: 500;
-    color: #e6e6e6;
-    line-height: 1.5;
-    text-shadow: 15px 15px 15px rgba(0, 0, 0, .75),
-    15px 15px 15px rgba(0, 0, 0, .75);
-}
-.main-mens{
-    padding-top:65px;
+.main-mens {
+    padding-top: 65px;
     font-size: 140px;
     font-weight: 450;
     color: #e6e6e6;
     line-height: 1.5;
     text-shadow: 15px 15px 15px rgba(0, 0, 0, .75),
-    15px 15px 15px rgba(0, 0, 0, .75);
+        15px 15px 15px rgba(0, 0, 0, .75);
 }
 
-/* BTN */
-.btn {
-    height: 40px;
-    background: #eee linear-gradient(to bottom, #fcfcfc, #eee);
-    border: 1px solid #d5d5d5;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.5;
-    cursor: pointer;
-    box-sizing: border-box;
-    position: relative;
-    color: #333;
-}
-.btn:hover::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.07);
-}
-.btn.btn--primary {
-    border: 1px solid #303030;
-    min-height: 80px;
-    min-width: 250px;
-    margin-top:5px;
-    color: rgb(255, 255, 255);
-    background: rgba(0, 0, 0, 0.70);
-}
 
 /* input */
 .input--text {
+    justify-content: center;
     height: 34px;
     padding: 0 10px;
     border: 1px solid #ddd;
@@ -75,23 +22,6 @@
     font-size: 16px;
 }
 
-.input--text:focus {
-    border-color: #51a7e8;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 1px 2px rgba(81, 167, 232, 0.5);
-}
-
-.input--text::-webkit-input-placeholder {
-    color: #cacaca;
-}
-
-.input--text::-ms-input-placeholder {
-    color: #cacaca;
-}
-
-.input--text::-moz-input-placeholder {
-    color: #cacaca;
-}
-
 
 
 /* VISUAL */
@@ -99,11 +29,10 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100%;
+    padding-top:0;
     width: auto;
-    height: 762px;
+    height: 100%;
 }
-
-
 .section--visual::before {
     content: "";
     position: absolute;
@@ -113,7 +42,6 @@
     right: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3);
 }
 
 .section--visual .inner {
@@ -129,89 +57,17 @@
     color: white;
     font-size: 70px;
     text-shadow: 15px 15px 15px rgba(0, 0, 0, .75),
-    15px 15px 15px rgba(0, 0, 0, .75);
+        15px 15px 15px rgba(0, 0, 0, .75);
 }
 
 .section--visual .summary__description {
     color: white;
-    margin-top:30px;
+    margin-top: 30px;
     text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.25),
-    10px 10px 10px rgba(0, 0, 0, .75);
+        10px 10px 10px rgba(0, 0, 0, .75);
 }
+
 .section--visual .main-login {
-    margin-top:450px;
-    margin-right:50px;
+    margin-top: 450px;
+    margin-right: 50px;
 }
-.facebooklogo{
-    background-image: url("../img/facebook_black.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-color:rgba(0, 0, 0, 0);
-    background-size: 100%;
-    width: 40px;
-    height: 40px;
-    border:none;
-    margin-left:200px;
-    
-}
-.kakaologo{
-    background-image: url("../img/kakao_black.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-color:rgba(0, 0, 0, 0);
-    background-size: 100%;
-    width: 40px;
-    height: 40px;
-    margin-left: 10px;
-    border:none;
-}
-.instalogo{
-    background-image: url("../img/insta_black.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-color:rgba(0, 0, 0, 0);
-    background-size: 100%;
-    width: 40px;
-    height: 40px;
-    margin-left: 10px;
-    border:none;
-}
-
-/* SIGN */
-#sign-form {
-    width: 340px;
-    margin-left:10px;
-    margin-top: 16px;
-}
-
-#sign-form li {
-    margin-bottom: 17px;
-}
-
-#sign-form li:last-child {
-    margin-bottom: 0;
-}
-
-#sign-form .input--text {
-    width: 100%;
-    height: 40px;
-}
-
-#sign-form .caption {
-    font-size: 12px;
-    margin-top: 5px;
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 1.5;
-    text-align: center;
-}
-
-#sign-form [type="submit"] {
-    width: 100%;
-    height: 62px;
-    padding: 0 25px;
-    font-size: 20px;
-    justify-content: center;
-}
-
-
-

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
-    
 
-    
+
+
+
     <title><%=title %></title>
 
     <!-- global style-->
@@ -24,32 +25,44 @@
 
     <!-- ejs css-select -->
     <% if(styleNo == 0) { %>
-        <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/introduce.css">
     <% }else if(styleNo == 1) { %>
-        <link rel="stylesheet" href="css/introduce.css">
+    <link rel="stylesheet" href="css/introduce.css">
     <% }else if(styleNo == 2) { %>
-        <link rel="stylesheet" href="css/dambolist.css">
+    <link rel="stylesheet" href="css/dambolist.css">
     <% }else if(styleNo == 3) { %>
-        <link rel="stylesheet" href="css/dambo.css">
+    <link rel="stylesheet" href="css/dambo.css">
     <% }else if(styleNo == 4) { %>
-        <link rel="stylesheet" href="css/loan.css">
+    <link rel="stylesheet" href="css/loan.css">
+    <% }else if(styleNo == 5) { %>
+    <link rel="stylesheet" href="css/sign_up.css">
     <% }else { %>
     <% } %>
 
 </head>
+<% if(styleNo == 4) { %>
 <body style="overflow:hidden">
+<%}else if(styleNo == 4) {%>
+    <body>
+<%}%>
 
     <header class="section">
         <%- include ('./header') %>
     </header>
- 
-    <section>
-       <%- body %>
-    </section>
+
     
-    <footer  class="section">
+
+    <section>
+        <%- body %>
+    </section>
+
+    <footer class="section">
         <%- include ('./footer') %>
     </footer>
+
     
+
 </body>
+
 </html>
