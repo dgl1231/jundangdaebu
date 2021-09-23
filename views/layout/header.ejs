@@ -3,7 +3,11 @@
 
     <div class="menu-group float--left">
         <div class="logo">
+            <%if(styleNo == 0){%>
+            <a href="#mainbackground">Men's 대부</a>
+            <%}else if(styleNo != 0){%>
             <a href="/">Men's 대부</a>
+            <%}%>
         </div>
         <div class="logo-text">
             방구석<br>대부
@@ -14,7 +18,16 @@
     </div>
     <div class="menu-group float--right">
         <ul class="main-menu toggle">
-            <li><a class="main_btn" href="#intro">회사소개</a></li>
+            <%if(styleNo == 0){%>
+                <li><a class="main_btn" href="#intro">회사소개</a></li>
+                <%}else if(styleNo != 0){%>
+                    <li><a class="main_btn" href="/#intro">회사소개</a></li>
+                <%}%>
+                <%if(styleNo == 1){%>
+                    <li><a class="main_btn" href="#list">취급품목</a></li>
+                    <%}else if(styleNo != 1){%>
+                        <li><a class="main_btn" href="/#list">취급품목</a></li>
+                    <%}%>
             <li><a class="main_btn" href="/loan" >대출</a></li>
             <li><a class="main_btn" href="/dambo">담보인정품목</a></li>
             <li><a class="main_btn" href="/dambolist">담보내역</a></li>

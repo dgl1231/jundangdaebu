@@ -31,47 +31,38 @@ express().use(require('express-ejs-layouts'))
 app.get('/', (req, res) => {
     app.locals.styleNo = 0;
     res.render('index.ejs', {
-        title: "HOME | " + siteData.title
+        title: "HOME | " + siteData.title,
+        address: siteData.address
     })
 });
-//회사소개
-app.get('/int', (req, res) => {
-    app.locals.styleNo = 1;
-    res.render(__dirname + '/views/int.ejs', {
-        title: "회사소개 | " + siteData.title,
-        address: siteData.address
-    });
-})
 
 //담보리스트
 app.get('/dambolist', (req, res) => {
-    app.locals.styleNo = 2;
+    app.locals.styleNo = 1;
     res.render(__dirname + '/views/dambolist.ejs', {
-        title: "담보목록 | " + siteData.title,
-        address: siteData.address
-    })
-})
+        title: "취급품목 | " + siteData.title
+        
+    });
+});
+//대출받기;
+app.get('/loan', (req, res) => {
+    app.locals.styleNo = 2;
+    res.render(__dirname + '/views/loan.ejs', {
+        title: "대출받기 | " + siteData.title
+    });
+});
 //담보인정
 app.get('/dambo', (req, res) => {
-    app.locals.styleNo = 3;
+    app.locals.styleNo = 2;
     res.render(__dirname + '/views/dambo.ejs', {
-        title: "담보인정 | " + siteData.title,
-        address: siteData.address
-    })
-})
-//대출받기
-app.get('/loan', (req, res) => {
-    app.locals.styleNo = 4;
-    res.render(__dirname + '/views/loan.ejs', {
-        title: "대출받기 | " + siteData.title,
-        address: siteData.address
-    })
-})
+        title: "대출이력 | " + siteData.title
+    });
+});
+
 //회원가입
 app.get('/sign_up', (req, res) => {
-    app.locals.styleNo = 5;
+    app.locals.styleNo = 4;
     res.render(__dirname + '/views/signup.ejs', {
-        title: "회원가입 | " + siteData.title,
-        address: siteData.address
-    })
-})
+        title: "회원가입 | " + siteData.title
+    });
+});

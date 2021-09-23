@@ -22,30 +22,25 @@
     <link rel="icon" href="img/favicon.png">
     <link rel="apple-touch-icon" href="img/favicon.png">
 
-
+    <link rel="stylesheet" href="css/layout.css">
     <!-- ejs css-select -->
     <% if(styleNo == 0) { %>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/introduce.css">
+    <link rel="stylesheet" href="css/main_anime.scss">
     <% }else if(styleNo == 1) { %>
-    <link rel="stylesheet" href="css/introduce.css">
+    <link rel="stylesheet" href="css/list.css">
     <% }else if(styleNo == 2) { %>
-    <link rel="stylesheet" href="css/dambolist.css">
-    <% }else if(styleNo == 3) { %>
     <link rel="stylesheet" href="css/dambo.css">
-    <% }else if(styleNo == 4) { %>
+    <% }else if(styleNo == 3) { %>
     <link rel="stylesheet" href="css/loan.css">
-    <% }else if(styleNo == 5) { %>
+    <% }else if(styleNo == 4) { %>
     <link rel="stylesheet" href="css/sign_up.css">
     <% }else { %>
     <% } %>
 
 </head>
-<% if(styleNo == 4) { %>
-<body style="overflow:hidden">
-<%}else if(styleNo == 4) {%>
-    <body>
-<%}%>
+<body>
+
 
     <header class="section">
         <%- include ('./header') %>
@@ -56,6 +51,8 @@
     <section>
         <%- body %>
     </section>
+
+
 
     <footer class="section">
         <%- include ('./footer') %>

@@ -1,12 +1,3 @@
-.main-mens {
-    padding-top: 65px;
-    font-size: 140px;
-    font-weight: 450;
-    color: #e6e6e6;
-    line-height: 1.5;
-    text-shadow: 15px 15px 15px rgba(0, 0, 0, .75),
-        15px 15px 15px rgba(0, 0, 0, .75);
-}
 
 
 /* input */
@@ -26,6 +17,7 @@
 
 /* VISUAL */
 .section--visual {
+    
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100%;
@@ -70,4 +62,114 @@
 .section--visual .main-login {
     margin-top: 450px;
     margin-right: 50px;
+}
+/* ----------------------------------- */
+/* WHERE IS */
+.section--intro {
+    display:flex;
+    justify-content: center;
+    background-image: url("../img/bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100%;
+    width: auto;
+    height: 762px;
+}
+.intro-cont{
+    width:1300px;
+}
+
+/* introduce */
+.introduce{
+    height: 270px;
+    padding-top: 50px;
+    text-shadow: 15px 15px 15px rgba(0, 0, 0, .9),
+    15px 15px 15px rgba(0, 0, 0, .9);
+}
+.intro-name{
+    color:greenyellow;
+    float:left;
+    width:50%;
+    text-align: center;
+    padding-top: 20px;
+    font-size:110px;
+}
+.intro-list-block{
+    float:right;
+    width:50%;
+    margin-top:40px;
+}
+.intro-list{
+    color:hotpink;
+    list-style-type: none;
+    text-align: left;
+    font-size:35px;
+    margin-top:15px;
+}
+
+
+/* map */
+.whereis{
+    margin-top:60px;
+}
+#map {
+    border-radius: 15px;
+    float: right;
+    width: 50%;
+    height: 300px;
+}
+.int-summary{
+    float: left;
+    width: 50%;
+    text-align: center;
+    padding-top:20px;
+    color: white;
+    text-shadow: 15px 15px 15px rgba(0, 0, 0, .9),
+    15px 15px 15px rgba(0, 0, 0, .9);
+    
+}
+.mens-map{
+    color:greenyellow;
+    padding-top:10px;
+    height: 100%;
+    font-size: 80px;
+}
+.mens-location{
+    color:hotpink;
+    padding-top: 40px;
+    font-size: 15px;
+}
+/*-------------------------------------------------------*/
+.list-container{
+    width:1300px;
+}
+/* introduce */
+.list-top{
+    height: 270px;
+    padding-top: 50px;
+    text-shadow: 15px 15px 15px rgba(0, 0, 0, .9),
+    15px 15px 15px rgba(0, 0, 0, .9);
+    background: blue;
+}
+.list-left{
+    color:greenyellow;
+    float:left;
+    width:50%;
+    text-align: center;
+    padding-top: 20px;
+    font-size:110px;
+}
+.list-right{
+    float:right;
+    width:50%;
+    margin-top:40px;
+}
+.list-bottom{
+    background: hotpink;
+    
+    height: 270px;
+    color:greenyellow;
+    text-align: center;
+    padding-top: 20px;
+    font-size:110px;
 }

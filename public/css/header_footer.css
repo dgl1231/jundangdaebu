@@ -49,7 +49,7 @@ header .menu-group {
 /* MAIN_MENU */
 header .main-menu {
     display: flex;
-    margin-left: 100px;
+    margin-left: 30px;
 }
 
 .main_btn {
@@ -68,7 +68,7 @@ header .main-menu {
 
 
 .sign_up_btn{
-    margin-left: 50px;
+    margin-left: 20px;
     display: block;
     padding: 15px;
     color: black;
