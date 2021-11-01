@@ -1,14 +1,15 @@
-body{
-    background-color: rgb(230, 230, 230);
-}
-div{
-    background-color: rgba(0, 0, 0, .1);
-}
 .section .inner {
     max-width: 1300px;
     margin: 0 auto;
     box-sizing: border-box;
     position: relative;
+    font-size: 25px;
+}
+header.section{
+    border-bottom:2px solid rgba(146, 146, 146, 0.664);
+    font-family: 'Cute Font', cursive;
+    font-weight: bolder;
+
 }
 /* FLOAT CLEARFIX */
 .clearfix::after {
@@ -19,6 +20,7 @@ div{
 
 .float--left {
     float: left;
+    width: 300px;
 }
 
 .float--right {
@@ -32,20 +34,21 @@ header {
     top:0;
     width: 100%;
     z-index:999;
-    background-color: rgba(156, 156, 156,0.5);
+    background-color: rgba(255, 255, 255, 0.349);
     
 }
 
 header .inner {
     height: 80px;
+
 }
 
 header .menu-group {
     display: flex;
     align-items: center;
     height: 100%;
+    
 }
-
 /* MAIN_MENU */
 header .main-menu {
     display: flex;
@@ -55,15 +58,13 @@ header .main-menu {
 .main_btn {
     display: block;
     padding: 15px;
-    color: black;
-    border-bottom:1px solid gray;
-    border-top:1px solid gray;
+    margin-top: 10px;
+    color: rgb(44, 44, 44);
+    text-decoration-line:none;
 }
 
 .main_btn:hover {
-    color: #c08440;
-    border-bottom:1px solid #976c3a;
-    border-top:1px solid #976c3a;
+    color: #5cd1ffe3;
 }
 
 
@@ -71,12 +72,13 @@ header .main-menu {
     margin-left: 20px;
     display: block;
     padding: 15px;
+    margin-top: 8px;
     color: black;
     border:2px dashed gray;
+    text-decoration-line:none;
 }
 .sign_up_btn:hover {
-    color: #c08440;
-    border:2px dashed #976c3a;
+    color: #5cd1ffe3;
 }
 /* LOGO */
 header .logo {
@@ -85,18 +87,18 @@ header .logo {
 
 header .logo a {
     display: block;
-    background: url("../img/Mens.png") center center ;
+    background: url("../img/logo.png") center center ;
     background-repeat: no-repeat;
     background-size: 100%;
-    width: 70px;
-    height: 60px;
+    width: 145px;
+    height: 115px;
     margin:1px;
     padding:1px;
     text-indent: -9999px;
 }
 
 header .logo a:hover {
-    background: ulr("../img/Mens.png")
+    background: ulr("../img/logo.png")
 }
 .logo-text{
     margin-top:5px;
@@ -112,15 +114,18 @@ header .logo a:hover {
 /* FOOTER */
 footer {
     clear: both;
-    background: rgb(30,30,30);
-    border-top: 2px solid rgba(31, 24, 23, 0.75);
+    background-color: rgba(255, 255, 255, 0.5);
+    
 }
 
 footer .inner {
     padding: 17px;
+    font-family: 'Jua', sans-serif;
 }
 
-
+footer.section{
+    border-top:2px solid rgba(146, 146, 146, 0.664);
+}
 footer .site-links {
     display: flex;
 }
@@ -132,7 +137,7 @@ footer .site-links.float--right {
 }
 
 footer .site-links li {
-    font-size: 12px;
+    font-size: 15px;
     margin-right: 10px;
     color: #767676;
 }
@@ -147,7 +152,7 @@ footer .site-links li a:hover {
 
 footer .footer-logo {
     display: block;
-    background: url("../img/Mens.png") center center ;
+    background: url("../img/logo.png") center center ;
     background-repeat: no-repeat;
     background-size: 100%;
     position: absolute;
@@ -156,6 +161,6 @@ footer .footer-logo {
     left: 0;
     right: 0;
     margin: auto;
-    width: 30px;
-    height: 30px;
+    width: 100px;
+    height: 100px;
 }

@@ -1,5 +1,3 @@
-
-
 /* input */
 .input--text {
     justify-content: center;
@@ -11,20 +9,20 @@
     outline: none;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
     font-size: 16px;
+
 }
-
-
 
 /* VISUAL */
 .section--visual {
-    
+
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100%;
-    padding-top:0;
+    padding-top: 0;
     width: auto;
     height: 100%;
 }
+
 .section--visual::before {
     content: "";
     position: absolute;
@@ -46,6 +44,7 @@
 }
 
 .section--visual .summary__title {
+
     color: white;
     font-size: 70px;
     text-shadow: 15px 15px 15px rgba(0, 0, 0, .75),
@@ -63,113 +62,194 @@
     margin-top: 450px;
     margin-right: 50px;
 }
+
 /* ----------------------------------- */
-/* WHERE IS */
-.section--intro {
-    display:flex;
-    justify-content: center;
-    background-image: url("../img/bg.jpg");
+.summary_body {
+    padding-top: 50px;
+    background-image: url("../img/bg.PNG");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100%;
     width: auto;
-    height: 762px;
+    height: 805px;
+    font-family: 'Jua', sans-serif;
 }
-.intro-cont{
-    width:1300px;
+
+.summary_text1 {
+    color: rgb(51, 51, 51);
+    padding-top: 150px;
+    text-align: center;
+    font-size: 80px;
+    text-shadow: 15px 15px 15px rgba(0, 0, 0, 0.1),
+        15px 15px 15px rgba(0, 0, 0, 0.1);
+}
+
+.summary_text2 {
+    color: rgb(51, 51, 51);
+    padding-top: 40px;
+    text-align: center;
+    font-size: 80px;
+    text-shadow: 15px 15px 15px rgba(0, 0, 0, 0.1),
+        15px 15px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* WHERE IS */
+.section--intro {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: auto;
+    height: 920px;
+    background-color: rgb(248, 248, 248);
+    font-family: 'Jua', sans-serif;
+}
+
+.intro-cont {
+    width: 1300px;
 }
 
 /* introduce */
-.introduce{
+.introduce {
     height: 270px;
-    padding-top: 50px;
-    text-shadow: 15px 15px 15px rgba(0, 0, 0, .9),
-    15px 15px 15px rgba(0, 0, 0, .9);
+    padding-top: 150px;
+
 }
-.intro-name{
-    color:greenyellow;
-    float:left;
-    width:50%;
+
+.intro-name {
+    color: #5cb6ff;
+    float: left;
+    width: 40%;
     text-align: center;
     padding-top: 20px;
-    font-size:110px;
+    font-size: 130px;
 }
-.intro-list-block{
-    float:right;
-    width:50%;
-    margin-top:40px;
+
+.intro-list-block {
+    float: right;
+    width: 60%;
+    margin-top: 30px;
 }
-.intro-list{
-    color:hotpink;
+
+.intro-list {
+    color: rgb(63, 63, 63);
     list-style-type: none;
     text-align: left;
-    font-size:35px;
-    margin-top:15px;
+    font-size: 23px;
+    margin-top: 30px;
+    font-weight: 700;
 }
 
 
 /* map */
-.whereis{
-    margin-top:60px;
+.whereis {
+    margin-top: 60px;
 }
+
 #map {
     border-radius: 15px;
     float: right;
-    width: 50%;
+    width: 60%;
     height: 300px;
 }
-.int-summary{
+
+.int-summary {
     float: left;
-    width: 50%;
+    width: 40%;
     text-align: center;
-    padding-top:20px;
-    color: white;
-    text-shadow: 15px 15px 15px rgba(0, 0, 0, .9),
-    15px 15px 15px rgba(0, 0, 0, .9);
-    
+    padding-top: 20px;
+    text-shadow: 15px 15px 15px rgba(0, 0, 0, .1),
+        15px 15px 15px rgba(0, 0, 0, .1);
+
 }
-.mens-map{
-    color:greenyellow;
-    padding-top:10px;
+
+.mens-map {
+    color: rgb(48, 48, 48);
+    padding-top: 10px;
     height: 100%;
-    font-size: 80px;
+    font-size: 100px;
 }
-.mens-location{
-    color:hotpink;
+
+.mens-location {
+    color: rgb(63, 63, 63);
     padding-top: 40px;
-    font-size: 15px;
+    font-size: 30px;
 }
+
 /*-------------------------------------------------------*/
-.list-container{
-    width:1300px;
+.section--list {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    height: 950px;
+    background-color: rgb(248, 248, 248);
+    font-family: 'Jua', sans-serif;
+
 }
+
+.list-container {
+    padding-top: 170px;
+    width: 1300px;
+}
+
 /* introduce */
-.list-top{
-    height: 270px;
-    padding-top: 50px;
-    text-shadow: 15px 15px 15px rgba(0, 0, 0, .9),
-    15px 15px 15px rgba(0, 0, 0, .9);
-    background: blue;
-}
-.list-left{
-    color:greenyellow;
-    float:left;
-    width:50%;
-    text-align: center;
+.list-top {
+    height: 100px;
     padding-top: 20px;
-    font-size:110px;
-}
-.list-right{
-    float:right;
-    width:50%;
-    margin-top:40px;
-}
-.list-bottom{
-    background: hotpink;
-    
-    height: 270px;
-    color:greenyellow;
+    text-shadow: 15px 15px 15px rgba(0, 0, 0, .1),
+        15px 15px 15px rgba(0, 0, 0, .1);
     text-align: center;
-    padding-top: 20px;
-    font-size:110px;
+    font-size: 70px;
+}
+
+.list-bottom {
+    display: flex;
+    height: 500px;
+    padding-top: 100px;
+}
+
+img {
+    display: block;
+    margin: 0px auto;
+}
+
+.list-b-l {
+    width: 433px;
+    margin: 0 auto;
+
+}
+
+.list-b-l-t {
+    height: 250px;
+    margin: 0 auto;
+
+}
+
+.list-b-l-b {
+    height: 250px;
+    margin: 0 auto;
+
+}
+
+.list-b-m {
+    width: 433px;
+    margin: 0 auto;
+    padding-top: 135px;
+}
+
+.list-b-r {
+    width: 433px;
+    margin: 0 auto;
+
+}
+
+.list-b-r-t {
+    height: 250px;
+    margin: 0 auto;
+
+}
+
+.list-b-r-b {
+    height: 250px;
+    margin: 0 auto;
+
 }

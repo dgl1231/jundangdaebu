@@ -36,33 +36,48 @@ app.get('/', (req, res) => {
     })
 });
 
-//담보리스트
-app.get('/dambolist', (req, res) => {
-    app.locals.styleNo = 1;
-    res.render(__dirname + '/views/dambolist.ejs', {
-        title: "취급품목 | " + siteData.title
-        
-    });
-});
 //대출받기;
 app.get('/loan', (req, res) => {
-    app.locals.styleNo = 2;
+    app.locals.styleNo = 1;
     res.render(__dirname + '/views/loan.ejs', {
         title: "대출받기 | " + siteData.title
     });
 });
-//담보인정
-app.get('/dambo', (req, res) => {
+//택배
+app.get('/post', (req, res) => {
     app.locals.styleNo = 2;
-    res.render(__dirname + '/views/dambo.ejs', {
-        title: "대출이력 | " + siteData.title
+    res.render(__dirname + '/views/post.ejs', {
+        title: "배송안내 | " + siteData.title
+        
     });
 });
-
+//한도문의
+app.get('/dambo', (req, res) => {
+    app.locals.styleNo = 3;
+    res.render(__dirname + '/views/dambo.ejs', {
+        title: "한도문의 | " + siteData.title
+    });
+});
+//대출이력
+app.get('/dambolist', (req, res) => {
+    app.locals.styleNo = 4;
+    res.render(__dirname + '/views/dambolist.ejs', {
+        title: "대출이력 | " + siteData.title
+        
+    });
+});
+//마이페이지
+app.get('/mypage', (req, res) => {
+    app.locals.styleNo = 5;
+    res.render(__dirname + '/views/mypage.ejs', {
+        title: "마이페이지 | " + siteData.title
+        
+    });
+});
 //회원가입
 app.get('/sign_up', (req, res) => {
-    app.locals.styleNo = 4;
+    app.locals.styleNo = 6;
     res.render(__dirname + '/views/signup.ejs', {
-        title: "회원가입 | " + siteData.title
+        title: "로그인 | " + siteData.title
     });
 });
