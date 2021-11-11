@@ -6,23 +6,6 @@ const path = require('path')
 const PORT = process.env.PORT || 8000
 const app = express();
 
-var mysql_dbc = require('../db/db_con')();
-var connection = mysql_dbc.init();
-mysql_dbc.test_open(connection);
-
-
-2
-3
-4
-5
-6
-router.get('/mysql/test', function (req, res) {
-  var stmt = 'select *from ....';
-  connection.query(stmt, function (err, result) {
-    .....
-  })
-});
-
 
 const siteData = {
     title: "방구석 전당♡",
