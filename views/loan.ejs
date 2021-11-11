@@ -64,12 +64,19 @@
                         <tr>
                             <td><a class="guide-btn" href="">대출한도 안내</a></th>
                             <td><a class="guide-btn" href="">서류 첨부시 유의사항</a></th>
-                            <td></th>
-                            <td></th>
+                            <td>
+                                </th>
+                            <td>
+                                </th>
                         </tr>
                     </tbody>
                 </table>
-                <div class="start"><a href="">
+                <div class="start">
+                    <%if(login == 0){%>
+                    <a href="/sign_up">
+                    <%}else if(login != 0){%>
+                    <a href="/goloan">
+                    <%}%>
                         <img class="startbutton" src="../img/loan/deba.png" alt=""></a>
                 </div>
             </div>
