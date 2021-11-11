@@ -1,3 +1,4 @@
+<script defer src="../js/login.js"></script>
 <div class="body__container">
 
     <div class="main-container">
@@ -14,12 +15,12 @@
         <div class="main ">안녕하세요! <br> 방구석 전당대부 <br> 입니다 </div>
         <!-- content-->
         <div id="content">
-            <form id="" name="" method="post" action="" class="form_login">
+            <form id="" name="" method="post" action="login_check" class="form_login">
                     <!-- NAME -->
                     <div>
                         <h3 class="join_title"><label for="name">이 름</label></h3>
                         <span class="box int_name">
-                            <input type="text" id="name" class="int" maxlength="20" placeholder="이름 입력">
+                            <input type="text" name="id" id="id" class="int" maxlength="20" placeholder="이름 입력">
                         </span>
                         <span class="error_next_box"></span>
                     </div>
@@ -27,22 +28,31 @@
                     <div>
                         <h3 class="join_title"><label for="phoneNo">휴 대 전 화</label></h3>
                         <span class="box int_mobile">
-                            <input type="tel" id="mobile" class="int" maxlength="16" placeholder="전화번호 입력">
+                            <input type="tel" name="pn" id="pn" class="int" maxlength="16" placeholder="전화번호 입력">
                         </span>
                         <span class="error_next_box"></span>
+                    </div>
+                    <div class="btn_area">
+                        <button type="button" id="btnJoin">
+                            <span>인증번호 받기</span>
+                        </button>
                     </div>
                     <div>
                         <h3 class="join_title"><label for="verNo">인 증 번 호</label></h3>
                         <span class="box int_mobile">
-                            <input type="tel" id="mobile" class="int" maxlength="16" placeholder="인증번호 입력">
+                            <input type="password"name="lang" id="lang" class="int" maxlength="16" placeholder="인증번호 입력">
                         </span>
                         <span class="error_next_box"></span>
                     </div>
-
                     <!-- JOIN BTN-->
                     <div class="btn_area">
                         <button type="button" id="btnJoin">
-                            <span>가입하기</span>
+                            <span>인증번호 확인</span>
+                        </button>
+                    </div>
+                    <div class="btn_area">
+                        <button type="" id="btnJoin">
+                            <span>로그인</span>
                         </button>
                     </div>
             </form>

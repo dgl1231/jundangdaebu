@@ -1,9 +1,27 @@
 //app.js
 //package settings
+const { Router } = require('express');
 const express = require('express');
 const path = require('path')
 const PORT = process.env.PORT || 8000
 const app = express();
+
+var mysql_dbc = require('../db/db_con')();
+var connection = mysql_dbc.init();
+mysql_dbc.test_open(connection);
+
+
+2
+3
+4
+5
+6
+router.get('/mysql/test', function (req, res) {
+  var stmt = 'select *from ....';
+  connection.query(stmt, function (err, result) {
+    .....
+  })
+});
 
 
 const siteData = {
@@ -87,4 +105,10 @@ app.get('/sign_up', (req, res) => {
     res.render(__dirname + '/views/signup.ejs', {
         title: "로그인 | " + siteData.title
     });
+});
+
+app.get('/login_check', (req, res) => {
+    var id = req.query.id;
+    var pn = req.query.pn;
+    res.send(`id : ${id}, pw : ${pw}`);
 });

@@ -184,7 +184,7 @@ select {
 /* 버튼 */
 
 .btn_area {
-    margin: 30px 0 91px;
+    margin: 30px 0 30px;
 }
 
 #btnJoin {
@@ -193,7 +193,7 @@ select {
     border: 0;
     cursor: pointer;
     color: #fff;
-    background:linear-gradient(to left, rgb(255,77,46), rgb(255,155,47));
+    background:linear-gradient(to left, rgba(59, 205, 250, 0.904), rgb(61, 161, 255));
     font-size: 20px;
     font-weight: 400;
     border-radius: 150px;
