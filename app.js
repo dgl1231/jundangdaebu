@@ -89,9 +89,3 @@ app.get('/sign_up', (req, res) => {
         title: "로그인 | " + siteData.title
     });
 });
-
-app.get('/login_check', (req, res) => {
-    var id = req.query.id;
-    var pn = req.query.pn;
-    res.send(`id : ${id}, pw : ${pw}`);
-});
