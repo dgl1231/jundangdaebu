@@ -4,8 +4,10 @@
     background-position: center center;
     background-size: 100%;
     width: auto;
-    height: 762px;
+    height: 750px;
     position: relative;
+    font-family: 'Jua', sans-serif;
+    display:flex;
 }
 /*
 .sign_in_field {
@@ -34,7 +36,11 @@ p {
     margin-bottom:20px;
 }
 */
-
+.main{
+    margin-top: 12%;
+    padding-left: 25%;
+    font-size: 70px;
+}
 body {
     margin: 0;
     height: 100%;
@@ -44,7 +50,8 @@ body {
 
 #content {
     position: absolute;
-    left: 50%;
+    margin-top:8%;
+    left: 65%;
     transform: translate(-50%);
     width: 460px;
 }
@@ -186,8 +193,9 @@ select {
     border: 0;
     cursor: pointer;
     color: #fff;
-    background-color: gray;
+    background:linear-gradient(to left, rgb(255,77,46), rgb(255,155,47));
     font-size: 20px;
     font-weight: 400;
-    font-family: Dotum,'돋움',Helvetica,sans-serif;
+    border-radius: 150px;
+    font-family: 'Jua', sans-serif;
 }
