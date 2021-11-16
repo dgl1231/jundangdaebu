@@ -101,10 +101,17 @@ app.post('/login_check', function(req,res){
     var phoneNo = req.body.pn;
     var verNo = req.body.lang;
     var logindata= [name, phoneNo, verNo];
-    var sql = 'SELECT NAME FROM MANSPAWNSHOP.USER WHERE CALL_NO = ' + phoneNo;
+    var sql = 'SELECT NAME FROM MANSPAWNSHOP.USER WHERE CALL_NO = ' + phoneNo +';';
+    var insql = 'INSERT INTO MANSPAWNSHOP.USER(NAME, CALL_NO) VALUES(\'' + name + '\',\''+ phoneNo+ '\');';
     conn.query(sql, logindata, function(err) {
         if(err) console.log('query is not excuted. insert fail...\n' + err);
-        else res.redirect('sex');
+        else conn.query(insql, logindata,function(err){
+            if(err) console.log('query is not excuted. insert fail...\n' + err);
+            else {
+                res.redirect('/');
+                loginsession = 1;
+            }
+        });
     });
 });
 

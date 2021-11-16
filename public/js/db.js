@@ -4,12 +4,13 @@ var express = require('express');
 var mysql = require('mysql');
 var app = express();
 
-var connection = mysql.createConnection({
+var connection = {
     host: '192.168.0.14',
-    user: 'root',
+    user: 'joker',
     password: 'dlehdrjs1!',
-    database: 'testDB'
-});
+    port: '3306',
+    database: 'manspawnshop'
+};
 module.exports = {
     init: function () {
         return mysql.createConnection(connection);
@@ -32,4 +33,4 @@ connection.connect(function(error) {
 });
 
 */
-connection.end();
+//connection.end();
