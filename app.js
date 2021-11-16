@@ -5,7 +5,10 @@ const express = require('express');
 const path = require('path')
 const PORT = process.env.PORT || 8000
 const app = express();
-
+const bodyParser = require('body-parser');
+const db_config = require(__dirname + '/public/js/db.js');
+const conn = db_config.init();
+db_config.connect(conn);
 
 const siteData = {
     title: "방구석 전당♡",
@@ -14,6 +17,7 @@ const siteData = {
 
 // Specific folder example
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({extended : true}));
 
 //app setting
 app.set('views', __dirname + '/views');
@@ -89,3 +93,18 @@ app.get('/sign_up', (req, res) => {
         title: "로그인 | " + siteData.title
     });
 });
+
+
+
+app.post('/login_check', function(req,res){
+    var name = req.body.id;
+    var phoneNo = req.body.pn;
+    var verNo = req.body.lang;
+    var logindata= [name, phoneNo, verNo];
+    var sql = 'SELECT NAME FROM MANSPAWNSHOP.USER WHERE CALL_NO = ' + phoneNo;
+    conn.query(sql, logindata, function(err) {
+        if(err) console.log('query is not excuted. insert fail...\n' + err);
+        else res.redirect('sex');
+    });
+});
+
