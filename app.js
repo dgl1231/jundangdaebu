@@ -132,46 +132,47 @@ app.post('/login_check', function(req,res){
     var loginPN = [phoneNo];
     var loginData = [name, phoneNo];
 
+    var SEX = [];
     const sql = 'SELECT NAME FROM MANSPAWNSHOP.USER WHERE CALL_NO = ?';
     const insql = 'INSERT INTO MANSPAWNSHOP.USER(NAME, CALL_NO) VALUES(?, ?)';
 
     conn.query(sql, loginPN, function(err, result) {
-        var userName = result[0].NAME;
         //if (인증번호 맞았는지) {
             if (err) {
                 console.log('query is not excuted. insert fail...\n' + err);
                 res.redirect('/sign_up');
                 return;
-            } else if (userName == null) {
-                conn.query(insql, loginData, function(err) {
-                    if (err) {
-                        // 서버 문제 DB 삽입 실패
-                        console.log('query is not excuted. insert fail...\n' + err);
-                        res.redirect('/sign_up');
-                        return;
-                    } else {
-                        console.log("로그인 성공");
+            } else {
+                if (result[0] == null) {
+                    conn.query(insql, loginData, function(err) {
+                        console.log(err);
+                        if (err) {
+                            // 서버 문제 DB 삽입 실패
+                            console.log('query is not excuted. insert fail...\n' + err);
+                            res.redirect('/sign_up');
+                            return;
+                        } else {
+                            console.log("신규 회원 로그인 성공");
+                            res.redirect('/');
+                            loginsession = 1;
+                        }
+                    });
+                } else {
+                    if (result[0].NAME == name) {
+                        console.log('기존 회원 로그인 성공')
                         res.redirect('/');
                         loginsession = 1;
+                    } else {
+                        // 로그인 실패
+                        console.log("기존 회원 로그인 실패");
+                        res.redirect('/sign_up');
+                        return;
                     }
-                });
-            } else {
-                if (userName == name) {
-                    console.log("로그인 성공");
-                    res.redirect('/');
-                    loginsession = 1;
-                } else {
-                    // 로그인 실패
-                    console.log("로그인 실패");
-                    res.redirect('/sign_up');
-                    return;
                 }
-
-            }
         //} else {
             // 로그인 실패
             // res.redirect('/sign_up');
             //return;
         //}
-    });
+    }});
 });
