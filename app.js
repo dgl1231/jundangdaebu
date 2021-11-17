@@ -66,14 +66,14 @@ app.get('/post', (req, res) => {
 });
 //한도문의
 
-app.get('/dambo/:page', (req, res, next) => {
+app.get('/dambo/:page', (req, res) => {
+    app.locals.styleNo = 3;
     var page = req.params.page;
     var sql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE FROM MANSPAWNSHOP.LIMIT_SEARCH_POST ORDER BY POST_NO DESC";
     var serchPost = 'SELECT * FROM MANSPAWNSHOP.LIMIT_SEARCH_POST WHERE POST_NO = ?';
     conn.query(sql, function (err, rows) {
         if (err) console.error("err : " + err);
         else {
-            app.locals.styleNo = 3;
             app.locals.login = loginsession;
             res.render(__dirname + '/views/dambo.ejs', {
                 title: "한도문의 | " + siteData.title,
@@ -174,4 +174,10 @@ app.post('/login_check', function(req,res){
             //return;
         //}
     });
+});
+
+
+app.get('/log_out', (req, res) => {
+    loginsession = 0;
+    res.redirect('/');
 });
