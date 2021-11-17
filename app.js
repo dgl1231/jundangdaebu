@@ -1,11 +1,14 @@
 //app.js
 //package settings
-const { Router } = require('express');
+const {
+    Router
+} = require('express');
 const express = require('express');
 const path = require('path')
 const PORT = process.env.PORT || 8000
 const app = express();
 const bodyParser = require('body-parser');
+const { POINT_CONVERSION_UNCOMPRESSED } = require('constants');
 const db_config = require(__dirname + '/public/js/db.js');
 const conn = db_config.init();
 db_config.connect(conn);
@@ -17,7 +20,9 @@ const siteData = {
 
 // Specific folder example
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 //app setting
 app.set('views', __dirname + '/views');
@@ -56,15 +61,30 @@ app.get('/post', (req, res) => {
     app.locals.login = loginsession;
     res.render(__dirname + '/views/post.ejs', {
         title: "배송안내 | " + siteData.title
-        
+
     });
 });
 //한도문의
-app.get('/dambo', (req, res) => {
-    app.locals.styleNo = 3;
-    app.locals.login = loginsession;
-    res.render(__dirname + '/views/dambo.ejs', {
-        title: "한도문의 | " + siteData.title
+
+app.get('/dambo/:page', (req, res, next) => {
+    var page = req.params.page;
+    var sql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE FROM MANSPAWNSHOP.LIMIT_SEARCH_POST ORDER BY POST_NO DESC";
+    var serchPost = 'SELECT * FROM MANSPAWNSHOP.LIMIT_SEARCH_POST WHERE POST_NO = ?';
+    conn.query(sql, function (err, rows) {
+        if (err) console.error("err : " + err);
+        else {
+            app.locals.styleNo = 3;
+            app.locals.login = loginsession;
+            res.render(__dirname + '/views/dambo.ejs', {
+                title: "한도문의 | " + siteData.title,
+                rows: rows, 
+                page:page, 
+                length:rows.length-1, 
+                page_num:10, 
+                pass:true
+
+            });
+        }
     });
 });
 //대출이력
@@ -73,7 +93,7 @@ app.get('/dambolist', (req, res) => {
     app.locals.login = loginsession;
     res.render(__dirname + '/views/dambolist.ejs', {
         title: "대출이력 | " + siteData.title
-        
+
     });
 });
 //마이페이지
@@ -82,7 +102,7 @@ app.get('/mypage', (req, res) => {
     app.locals.login = loginsession;
     res.render(__dirname + '/views/mypage.ejs', {
         title: "마이페이지 | " + siteData.title
-        
+
     });
 });
 //회원가입
@@ -146,6 +166,7 @@ app.post('/login_check', function(req,res){
                     res.redirect('/sign_up');
                     return;
                 }
+
             }
         //} else {
             // 로그인 실패
@@ -154,4 +175,3 @@ app.post('/login_check', function(req,res){
         //}
     });
 });
-

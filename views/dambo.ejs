@@ -1,30 +1,42 @@
-    <div class="body__container">
-        <div class="main-container">
-            <h2>게시글 리스트</h2>
-            <table border='1'>
-                <colgroup>
-                    <col width='60'>
-                    <col width='200'>
-                    <col width='100'>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>글번호</th>
-                        <th>글제목</th>
-                        <th>작성자</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(i = 0; i < list.length; i++) { %>
-                    <tr>
-                        <td><%=i+1 %></td>
-                        <td><%=list[i].TITLE %></td>
-                        <td><%=list[i].ID %></td>
-                    </tr>
-                    <% } %>
-                </tbody>
-            </table boader='1'>
-
-            <button onclick="location.href='../write'">글쓰기</button>
+<div class="body__container">
+    <div class="main-container">
+        <div class="title_back">
+            <div class="title">한도 문의</div>
         </div>
+        <table class="blueone">
+            <tr>
+                <th>No</th>
+                <th>제목</th>
+                <th>등록일</th>
+
+            </tr>
+            <%
+            var l = rows.length;
+            for(var i = (page * page_num) - page_num; i < (page * page_num); i++) {
+            if(i > length){
+                i++;
+            }else{
+                var data = rows[i];
+            %>
+            <tr>
+                <td><%= l-i %></td>
+                <td class="posttitle"><a href=""><%=data.TITLE%></a></td>
+                <td class="writedate"><%=data.WRITE_DATE%></td>
+            </tr>
+            <% }
+            }
+            %>
+            <tr>
+                <td colspan="6">
+                    <%
+                    for(var j = 0; j < rows.length / page_num; j++){
+                    %>
+                    [<a href="/dambo/<%= j + 1 %>"><%= j + 1 %></a>]
+                    <%
+                    }
+                    %>
+                </td>
+            </tr>
+        </table>
     </div>
+</div>

@@ -1,8 +1,66 @@
-.main-container{
-    background-image: url("../img/bg.jpg");
+.main-container {
+    background: #f5f6f7;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100%;
     width: auto;
-    height: 762px;
+    height: 750px;
+    position: relative;
+    font-family: "Jua", sans-serif;
+    display: block;
+}
+
+.title_back {
+    padding-top: 2%;
+}
+
+.title {
+    text-align: center;
+    font-size: 70px;
+    margin-top: 20px;
+}
+
+.blueone {
+    border-collapse: collapse;
+    margin-left: 29.5%;
+    margin-top: 50px;
+    width: 800px;
+    font-size: 18px;
+}
+
+.blueone th {
+    padding: 10px;
+    color: #168;
+    border-bottom: 3px solid #168;
+    text-align: center;
+}
+
+.postno {
+    border-right: 1px solid #ddd;
+    width: 100px;
+}
+
+.posttitle{
+    border-right: 1px solid #ddd;
+    width: 400px;
+}
+
+.writedate{
+    width: 100px;
+}
+
+.blueone td {
+    color: #669;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+
+}
+
+.blueone tr:hover td {
+    color: #004;
+}
+a{
+    text-decoration: none;
+    color: #669;
 }
