@@ -12,54 +12,73 @@
                     -<input type="password" id="jumin_no2" class="input--text" name="jumin_no2" size="10" maxlength="7"></p>
             </fieldset>
         </form> -->
-        <div class="main ">안녕하세요! <br> 방구석 전당대부 <br> 입니다 </div>
+        <div class="main ">안녕하세요! <br> 방구석 전당대부입니다 </div>
         <!-- content-->
         <div id="content">
             <form id="" name="" method="post" action="login_check" class="form_login">
                     <!-- NAME -->
                     <div>
-                        <h3 class="join_title"><label for="name">이 름</label></h3>
-                        <span class="box int_name">
-                            <input type="text" name="id" id="id" class="int" maxlength="20" placeholder="이름 입력">
-                        </span>
-                        <span class="error_next_box"></span>
+                        <h3 class="join_title">
+                            <label for="name" class="label">이 름</label>
+                            <span class="box int_name">
+                                <input type="text" name="id" id="id" class="int_n" maxlength="20" placeholder="이름 입력">
+                            </span>
+                            <span class="error_next_box"></span>
+                        </h3>
                     </div>
                     <!-- MOBILE -->
                     <div>
-                        <h3 class="join_title"><label for="phoneNo">휴 대 전 화</label></h3>
-                        <span class="box int_mobile">
-                            <input type="tel" name="pn" id="pn" class="int" maxlength="16" placeholder="전화번호 입력">
-                        </span>
-                        <span class="error_next_box"></span>
+                        <h3 class="join_title">
+                            <label for="phoneNo" class="label">휴 대 전 화</label>
+                            <span class="boxPhone int_mobile">
+                                <select id="select">
+                                    <option selected>통신사</option>
+                                    <option>LG U+</option>
+                                    <option>KT</option>
+                                    <option>SKT</option>
+                                    <option>알뜰폰</option>
+                                </select>
+                                <input type="tel" name="pn" id="pn" class="int" maxlength="11" placeholder="전화번호 입력">
+                                <button type="button" id="btnName">
+                                    <span>인증번호 받기</span>
+                                </button>
+                            </span>
+                            <span class="error_next_box">섹스</span>
+                        </h3>
+                        
                     </div>
+                    <div>
+                        <h3 class="join_title">
+                            <label for="verNo" class="label">인 증 번 호</label>
+                            <span class="boxPhone int_mobile">
+                                <input type="password" name="lang" id="lang" class="int_n" maxlength="6" placeholder="인증번호를 입력하세요.">
+                            </span>
+                            <span class="error_next_box"></span>
+                        </h3>
+                    </div>
+                    <!--
                     <div class="btn_area">
                         <button type="button" id="btnJoin">
                             <span>인증번호 받기</span>
                         </button>
                     </div>
-                    <div>
-                        <h3 class="join_title"><label for="verNo">인 증 번 호</label></h3>
-                        <span class="box int_mobile">
-                            <input type="password"name="lang" id="lang" class="int" maxlength="16" placeholder="인증번호 입력">
-                        </span>
-                        <span class="error_next_box"></span>
-                    </div>
-                    <!-- JOIN BTN-->
+                    -->
+                    <!-- 
                     <div class="btn_area">
                         <button type="button" id="btnJoin">
                             <span>인증번호 확인</span>
                         </button>
-                    </div>
+                    </div> -->
+
+                    <!-- JOIN BTN -->
                     <div class="btn_area">
-                        <button type="" id="btnJoin" herf= "../js/db.js"> 
+                        <button type="" id="btnJoin" herf= "../js/db.js">
                             <span>로그인</span>
                         </button>
                     </div>
+                     
             </form>
         </div>
         <!-- content-->
-
-
-
     </div>
 </div>

@@ -104,8 +104,25 @@ app.post('/login_check', function(req,res){
     var sql = 'SELECT NAME FROM MANSPAWNSHOP.USER WHERE CALL_NO = ' + phoneNo +';';
     var insql = 'INSERT INTO MANSPAWNSHOP.USER(NAME, CALL_NO) VALUES(\'' + name + '\',\''+ phoneNo+ '\');';
     conn.query(sql, logindata, function(err) {
+        if (err) {
+            
+        }
+        /* if (logindata.verNo == 인증번호) {
+            if 전화번호 == phoneNo 
+                if 이름 == name
+                    로그인 성공
+                else 로그인 실패
+            else
+                로그인 성공 + INSERT 구문
+        } else {
+            로그인 실패
+        } */
+        console.log('hihi');
+
+        // 전화번호 검색
         if(err) console.log('query is not excuted. insert fail...\n' + err);
         else conn.query(insql, logindata,function(err){
+            console.log('123123');
             if(err) console.log('query is not excuted. insert fail...\n' + err);
             else {
                 res.redirect('/');
