@@ -1,9 +1,7 @@
 //app.js
 //package settings
-const {
-    Router
-} = require('express');
 const express = require('express');
+const router = express.Router();
 const path = require('path')
 const PORT = process.env.PORT || 8000
 const app = express();
@@ -66,7 +64,7 @@ app.get('/post', (req, res) => {
 });
 //한도문의
 
-app.get('/dambo/:page', (req, res) => {
+app.get('/dambo?:page', async(req, res,) => {
     app.locals.styleNo = 3;
     app.locals.login = loginsession;
     var page = req.params.page;
@@ -75,7 +73,6 @@ app.get('/dambo/:page', (req, res) => {
     conn.query(sql, function (err, rows) {
         if (err) console.error("err : " + err);
         else {
-            console.log(app.locals.styleNo);
             res.render(__dirname + '/views/dambo.ejs', {
                 title: "한도문의 | " + siteData.title,
                 rows: rows, 
@@ -88,10 +85,10 @@ app.get('/dambo/:page', (req, res) => {
     });
 });
 //대출이력
-app.get('/dambolist', (req, res) => {
+app.get('/loanlist', (req, res) => {
     app.locals.styleNo = 4;
     app.locals.login = loginsession;
-    res.render(__dirname + '/views/dambolist.ejs', {
+    res.render(__dirname + '/views/loanlist.ejs', {
         title: "대출이력 | " + siteData.title
 
     });

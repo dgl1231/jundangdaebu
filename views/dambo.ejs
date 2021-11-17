@@ -19,19 +19,19 @@
                 var data = rows[i];
             %>
             <tr>
-                <td><%= l-i %></td>
-                <td class="posttitle"><a href=""><%=data.TITLE%></a></td>
+                <td class="postno"><%= l-i %></td>
+                <td class="posttitle"> &nbsp; <a href=""><%=data.TITLE%></a></td>
                 <td class="writedate"><%=data.WRITE_DATE%></td>
             </tr>
             <% }
             }
             %>
             <tr>
-                <td colspan="6">
+                <td class="page" colspan="6">
                     <%
                     for(var j = 0; j < rows.length / page_num; j++){
                     %>
-                    [<a href="/dambo/<%= j + 1 %>"><%= j + 1 %></a>]
+                    [<a href="/dambo<%= j + 1 %>"><%= j + 1 %></a>]
                     <%
                     }
                     %>

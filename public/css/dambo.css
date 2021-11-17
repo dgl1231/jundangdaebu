@@ -38,22 +38,25 @@
 .postno {
     border-right: 1px solid #ddd;
     width: 100px;
+    text-align: center;
 }
 
 .posttitle{
     border-right: 1px solid #ddd;
+    text-align: left;
     width: 400px;
 }
 
 .writedate{
     width: 100px;
+    text-align: center;
 }
 
 .blueone td {
     color: #669;
     padding: 10px;
     border-bottom: 1px solid #ddd;
-    text-align: center;
+    
 
 }
 
@@ -63,4 +66,7 @@
 a{
     text-decoration: none;
     color: #669;
+}
+.page{
+    text-align: center;
 }
