@@ -94,41 +94,64 @@ app.get('/sign_up', (req, res) => {
     });
 });
 
-
-
 app.post('/login_check', function(req,res){
     var name = req.body.id;
     var phoneNo = req.body.pn;
+    if (name == '') {
+        // 이름을 입력해주세요(팝업(?))
+        console.log("이름을 입력해주세요.");
+        res.redirect('/sign_up');
+        return;
+    } else if (phoneNo == '') {
+        console.log("전화번호를 입력해주세요.");
+        res.redirect('/sign_up');
+        return;
+    }
     var verNo = req.body.lang;
-    var logindata= [name, phoneNo, verNo];
-    var sql = 'SELECT NAME FROM MANSPAWNSHOP.USER WHERE CALL_NO = ' + phoneNo +';';
-    var insql = 'INSERT INTO MANSPAWNSHOP.USER(NAME, CALL_NO) VALUES(\'' + name + '\',\''+ phoneNo+ '\');';
-    conn.query(sql, logindata, function(err) {
-        if (err) {
-            
-        }
-        /* if (logindata.verNo == 인증번호) {
-            if 전화번호 == phoneNo 
-                if 이름 == name
-                    로그인 성공
-                else 로그인 실패
-            else
-                로그인 성공 + INSERT 구문
-        } else {
-            로그인 실패
-        } */
-        console.log('hihi');
 
-        // 전화번호 검색
-        if(err) console.log('query is not excuted. insert fail...\n' + err);
-        else conn.query(insql, logindata,function(err){
-            console.log('123123');
-            if(err) console.log('query is not excuted. insert fail...\n' + err);
-            else {
-                res.redirect('/');
-                loginsession = 1;
+    var loginPN = [phoneNo];
+    var loginData = [name, phoneNo];
+
+    const sql = 'SELECT NAME FROM MANSPAWNSHOP.USER WHERE CALL_NO = ?';
+    const insql = 'INSERT INTO MANSPAWNSHOP.USER(NAME, CALL_NO) VALUES(?, ?)';
+
+    conn.query(sql, loginPN, function(err, result) {
+        var userName = result[0].NAME;
+        //if (인증번호 맞았는지) {
+            if (err) {
+                console.log('query is not excuted. insert fail...\n' + err);
+                res.redirect('/sign_up');
+                return;
+            } else if (userName == null) {
+                conn.query(insql, loginData, function(err) {
+                    if (err) {
+                        // 서버 문제 DB 삽입 실패
+                        console.log('query is not excuted. insert fail...\n' + err);
+                        res.redirect('/sign_up');
+                        return;
+                    } else {
+                        console.log("로그인 성공");
+                        res.redirect('/');
+                        loginsession = 1;
+                    }
+                });
+            } else {
+                if (userName == name) {
+                    console.log("로그인 성공");
+                    res.redirect('/');
+                    loginsession = 1;
+                } else {
+                    // 로그인 실패
+                    console.log("로그인 실패");
+                    res.redirect('/sign_up');
+                    return;
+                }
             }
-        });
+        //} else {
+            // 로그인 실패
+            // res.redirect('/sign_up');
+            //return;
+        //}
     });
 });
 

@@ -7,8 +7,8 @@ var app = express();
 
 var connection = mysql.createConnection({
     host: '192.168.0.14',
-    user: 'root',
-    password: '153264ze',
+    user: 'joker',
+    password: 'dlehdrjs1!',
     database: 'testDB'
 });
 
@@ -19,16 +19,5 @@ connection.connect(function(error) {
         console.log('Connected');
     }
 });
-
-//app.get('/', function(req, resp) {
-    connection.query("SELECT * FROM TESTDB.TESTTABLE", function(error, rows, fields) {
-        if (!!error) {
-            console.log('Error in the query');
-        } else {
-            console.log(rows);
-            console.log('Success!');
-        }
-    });
-//});
 
 connection.end();
