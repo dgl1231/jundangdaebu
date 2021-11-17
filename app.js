@@ -131,8 +131,7 @@ app.post('/login_check', function(req,res){
 
     var loginPN = [phoneNo];
     var loginData = [name, phoneNo];
-
-    var SEX = [];
+    
     const sql = 'SELECT NAME FROM MANSPAWNSHOP.USER WHERE CALL_NO = ?';
     const insql = 'INSERT INTO MANSPAWNSHOP.USER(NAME, CALL_NO) VALUES(?, ?)';
 
