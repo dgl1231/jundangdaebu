@@ -1,11 +1,40 @@
 <div class="body__container">
     <div class="main-container">
-        <h2>게시글 작성</h2>
-        <form action='/writeAf' method='post'>
-            작성자 : <input type='text' name='id'><br>
-            제목 : <input type='text' name='title'><br>
-            내용 : <textarea name='content'></textarea><br>
-            <button type='submit'>글쓰기</button>
+        <div class="title_back">
+            <div class="title">게시글 작성</div>
+        </div>
+        <form action="/writesubmit" method="post" enctype="multipart/form-data">
+            <table class ="blueone" border="1">
+                <tr>
+                    <td class = "table_title">제목</td>
+                    <td><input type="text" name="title" id="title" required/></td>
+                </tr>
+                <tr>
+                    <td class = "table_title">내용</td>
+                    <td><textarea name="content" id="content" cols="80" rows="15" required></textarea></td>
+                </tr>
+                <tr>
+                    <td class = "table_title">패스워드</td>
+                    <td><input type="password" name="passwd" id="passwd" required/></td>
+                </tr>
+                <tr>
+                    <td class = "table_title">첨부파일</td>
+                    <td colspan="2">
+                        <input id="selfile" type="file" name="FileName">
+                    </td>
+                </tr>
+                <tr>
+                    <td class = "submit_btn_td"colspan="2">
+                        <div class = "submit_btn_con">
+                            <div class="submit_btn">
+                                <button type="" id="" herf= "">
+                                    <span>글쓰기</span>
+                                </button>
+                            </div>
+                    </div>
+                    </td>
+                </tr>
+            </table>
         </form>
     </div>
 </div>

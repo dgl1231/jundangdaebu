@@ -1,0 +1,11 @@
+.main-container {
+    background: #f5f6f7;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100%;
+    width: auto;
+    height: 750px;
+    position: relative;
+    font-family: "Jua", sans-serif;
+    display: block;
+}
