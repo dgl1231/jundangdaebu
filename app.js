@@ -2,8 +2,8 @@
 //package settings
 const express = require('express');
 const router = express.Router();
-const path = require('path')
-const PORT = process.env.PORT || 8000
+const path = require('path');
+const PORT = process.env.PORT || 8000;
 const app = express();
 const bodyParser = require('body-parser');
 const { POINT_CONVERSION_UNCOMPRESSED } = require('constants');
@@ -13,6 +13,8 @@ db_config.connect(conn);
 
 var loginsession = 0;
 var localUserID = '';
+
+app.locals.login = loginsession;
 
 const siteData = {
     title: "방구석 전당♡",
@@ -33,24 +35,22 @@ app.use(require('express-ejs-layouts'));
 app.set('layout', 'layout/layout');
 
 //listening
-app.listen(PORT, () => console.log('Listening on http://localhost:${ ' + PORT + ' }'))
+app.listen(PORT, () => console.log('Listening on http://localhost:${ ' + PORT + ' }'));
 
-express().use(require('express-ejs-layouts'))
+express().use(require('express-ejs-layouts'));
 //route randering
 //home
 app.get('/', (req, res) => {
     app.locals.styleNo = 0;
-    app.locals.login = loginsession;
     res.render('index.ejs', {
         title: "HOME | " + siteData.title,
         address: siteData.address
-    })
+    });
 });
 
 //대출받기;
 app.get('/loan', (req, res) => {
     app.locals.styleNo = 1;
-    app.locals.login = loginsession;
     res.render(__dirname + '/views/loan.ejs', {
         title: "대출받기 | " + siteData.title
     });
@@ -95,7 +95,19 @@ app.get('/loanlist', (req, res) => {
 });
 //마이페이지
 app.get('/mypage', (req, res) => {
+    var one = {
+        count: 0
+    }
+    var two = {
+        count: 1
+    }
+    var three = {
+        count: 2
+    }
+    var state = [one, two, three];
+
     app.locals.styleNo = 5;
+    app.locals.loanState = state;
     res.render(__dirname + '/views/mypage.ejs', {
         title: "마이페이지 | " + siteData.title
 

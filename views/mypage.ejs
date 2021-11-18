@@ -1,0 +1,97 @@
+<script defer src="../js/db.js"></script>
+<div class="body__container">
+    <div class="main-container">
+        <!-- 왼쪽 컨테이너 -->
+        <div class="leftContainer">
+            <!-- 회원 이름 나오는 박스 -->
+            <div id="userOutBox">
+                <!-- 회원 이름 나오는 동그라미 -->
+                <div id="userCircleBox">
+                    이동건<br>회원님
+                </div>
+                <!-- 데코용 흰 네모 -->
+                <div id="userInBox"></div>
+            </div>
+        </div>
+        <!-- 오른쪽 컨테이너 -->
+        <div class="rightContainer">
+            <!-- [대출] [내 한도 게시판] 버튼 -->
+            <div class="rightTopContainer">
+                <div class="choiceBox">
+                    Hi
+                </div>
+                <div class="choiceBox">
+                    He
+                </div>
+            </div>
+            <!-- :대출 진행중: :대출완료/상환중: :상환완료: -->
+            <div class="rightCenterContainer">
+                <!-- 실질적인 컨테이너 -->
+                <div class="rightCenter_left">
+                    <!-- 물리적 데이터 나오는 곳 -->
+                    <div class="loanStatus_top">
+                        <!-- 대출 진행중 -->
+                        <div class="loanState">
+                            <div class="loanStateTextBox">
+                                대출 진행중
+                            </div>
+                            <div class="loanStateCircleBox">
+                                <div id=loanStateCircle>
+                                    <!--
+                                    <%console.log(loanState[0].count)%>
+                                    <%console.log(loanState[1].count)%>
+                                    <%console.log(loanState[2].count)%>
+                                    -->
+                                    <li>
+                                        <a class="text">
+                                            <h3></h3>
+                                            개
+                                        </a>
+                                    </li>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 대출완료/상환중 -->
+                        <div class="loanState">
+                            <div class="loanStateTextBox">
+                                대출완료/상환중
+                            </div>
+                            <div class="loanStateCircleBox">
+                                <div id=loanStateCircle>
+                                    <!--
+                                    <%loanState[1].count%>
+                                    -->
+                                    개
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 상환완료 -->
+                        <div class="loanState">
+                            <div class="loanStateTextBox">
+                                상환완료
+                            </div>
+                            <div class="loanStateCircleBox">
+                                <div id=loanStateCircle>
+                                    <!--<%loanState[2].count%>-->
+                                    개
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 날짜선택, 조회 버튼-->
+                    <div class="loanStatus_bot">
+                        2021-11-17 ~ 2021-11-18
+                    </div>
+                </div>
+                <!-- 방구석 전당대부 그림 -->
+                <div class="rightCenter_right">
+                    이미지 넣어주세요
+                </div>
+            </div>
+            <!-- 대출 내역 or 내 한도 게시판 내역 -->
+            <div>
+
+            </div>
+        </div>
+    </div>
+</div>
