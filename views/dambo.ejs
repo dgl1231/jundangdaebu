@@ -3,6 +3,14 @@
         <div class="title_back">
             <div class="title">한도 문의</div>
         </div>
+        <%if(login == 1){
+        %>
+        <div class="write"><a href="/write">글쓰기</a></div>
+        <%}%>
+        <%if(login == 0){
+        %>
+        <div class="write"><a href="/sign_up">글쓰기</a></div>
+        <%}%>
         <table class="blueone">
             <tr>
                 <th>No</th>
@@ -37,8 +45,7 @@
                     %>
                 </td>
             </tr>
-           
-
+        
         </table>
     </div>
 </div>

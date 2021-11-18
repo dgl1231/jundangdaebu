@@ -6,13 +6,19 @@ const path = require('path')
 const PORT = process.env.PORT || 8000
 const app = express();
 const bodyParser = require('body-parser');
-const { POINT_CONVERSION_UNCOMPRESSED } = require('constants');
+const {
+    POINT_CONVERSION_UNCOMPRESSED
+} = require('constants');
 const db_config = require(__dirname + '/public/js/db.js');
 const conn = db_config.init();
 db_config.connect(conn);
+const fs = require('fs');
+const multer = require('multer');
+
 
 var loginsession = 0;
 var localUserID = '';
+app.locals.login = loginsession;
 
 const siteData = {
     title: "방구석 전당♡",
@@ -33,7 +39,12 @@ app.use(require('express-ejs-layouts'));
 app.set('layout', 'layout/layout');
 
 //listening
-app.listen(PORT, () => console.log('Listening on http://localhost:${ ' + PORT + ' }'))
+app.listen(PORT, () => {
+    var dir = './uploadedFiles';
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+
+    console.log('Listening on http://localhost:${ ' + PORT + ' }')
+});
 
 express().use(require('express-ejs-layouts'))
 //route randering
@@ -65,24 +76,25 @@ app.get('/post', (req, res) => {
 });
 //한도문의
 
-app.get('/dambo?:page', async(req, res,) => {
+app.get('/dambo?:page', async (req, res, ) => {
     app.locals.styleNo = 3;
+    app.locals.login = loginsession;
     var page = req.params.page;
     var sql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE FROM MANSPAWNSHOP.LIMIT_SEARCH_POST ORDER BY POST_NO DESC";
-    var serchPost = 'SELECT * FROM MANSPAWNSHOP.LIMIT_SEARCH_POST WHERE POST_NO = ?';
     conn.query(sql, function (err, rows) {
         if (err) console.error("err : " + err);
         else {
             res.render(__dirname + '/views/dambo.ejs', {
                 title: "한도문의 | " + siteData.title,
-                rows: rows, 
-                page:page, 
-                length:rows.length-1, 
-                page_num:10, 
-                pass:true
+                rows: rows,
+                page: page,
+                length: rows.length - 1,
+                page_num: 10,
+                pass: true,
             });
         }
     });
+
 });
 //대출이력
 app.get('/loanlist', (req, res) => {
@@ -108,6 +120,14 @@ app.get('/sign_up', (req, res) => {
         title: "로그인 | " + siteData.title
     });
 });
+//글싸기
+app.get('/write', (req, res) => {
+    app.locals.styleNo = 7;
+    res.render(__dirname + '/views/write.ejs', {
+        title: "글싸기 | " + siteData.title
+    });
+});
+
 //로그아웃
 app.get('/log_out', (req, res) => {
     localUserID = '';
@@ -116,7 +136,7 @@ app.get('/log_out', (req, res) => {
     res.redirect('/');
 });
 //로그인체크
-app.post('/login_check', function(req,res){
+app.post('/login_check', function (req, res) {
     var name = req.body.id;
     var phoneNo = req.body.pn;
     if (name == '') {
@@ -133,51 +153,107 @@ app.post('/login_check', function(req,res){
 
     var loginPN = [phoneNo];
     var loginData = [name, phoneNo];
-    
+
     const sql = 'SELECT NAME FROM MANSPAWNSHOP.USER WHERE CALL_NO = ?';
     const insql = 'INSERT INTO MANSPAWNSHOP.USER(NAME, CALL_NO) VALUES(?, ?)';
 
-    conn.query(sql, loginPN, function(err, result) {
+    conn.query(sql, loginPN, function (err, result) {
         //if (인증번호 맞았는지) {
-            if (err) {
-                console.log('query is not excuted. insert fail...\n' + err);
-                res.redirect('/sign_up');
-                return;
-            } else {
-                if (result[0] == null) {
-                    conn.query(insql, loginData, function(err) {
-                        console.log(err);
-                        if (err) {
-                            // 서버 문제 DB 삽입 실패
-                            console.log('query is not excuted. insert fail...\n' + err);
-                            res.redirect('/sign_up');
-                            return;
-                        } else {
-                            console.log("신규 회원 로그인 성공");
-                            localUserID = phoneNo;
-                            loginsession = 1;
-                            app.locals.login = loginsession;
-                            res.redirect('/');
-                        }
-                    });
-                } else {
-                    if (result[0].NAME == name) {
-                        console.log('기존 회원 로그인 성공');
+        if (err) {
+            console.log('query is not excuted. insert fail...\n' + err);
+            res.redirect('/sign_up');
+            return;
+        } else {
+            if (result[0] == null) {
+                conn.query(insql, loginData, function (err) {
+                    console.log(err);
+                    if (err) {
+                        // 서버 문제 DB 삽입 실패
+                        console.log('query is not excuted. insert fail...\n' + err);
+                        res.redirect('/sign_up');
+                        return;
+                    } else {
+                        console.log("신규 회원 로그인 성공");
                         localUserID = phoneNo;
                         loginsession = 1;
                         app.locals.login = loginsession;
                         res.redirect('/');
-                    } else {
-                        // 로그인 실패
-                        console.log("기존 회원 로그인 실패");
-                        res.redirect('/sign_up');
-                        return;
                     }
+                });
+            } else {
+                if (result[0].NAME == name) {
+                    console.log('기존 회원 로그인 성공');
+                    localUserID = phoneNo;
+                    loginsession = 1;
+                    app.locals.login = loginsession;
+                    res.redirect('/');
+                } else {
+                    // 로그인 실패
+                    console.log("기존 회원 로그인 실패");
+                    res.redirect('/sign_up');
+                    return;
                 }
-        //} else {
+            }
+            //} else {
             // 로그인 실패
             // res.redirect('/sign_up');
             //return;
-        //}
-    }});
+            //}
+        }
+    });
+});
+
+var storage = multer.diskStorage({ //  파일이름을 유지하기 위해 사용할 변수(중복방지를 위하여 시간을 넣어줫음)
+    destination(req, file, cb) {
+        cb(null, 'uploadedFiles/');
+    },
+    filename(req, file, cb) {
+        cb(null, `${Date.now()}__${file.originalname}`);
+    },
+});
+var upload = multer({
+    dest: 'uploadedFiles/'
+}); // multer로 파일이 저장될 위치만을 설정
+var uploadWithOriginalFilename = multer({
+    storage: storage
+}); // storage를 넣어 파일의 이름을 유지하는 미들웨어
+
+
+app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res) => {
+    var title = req.body.title;
+    var content = req.body.content;
+    var passwd = req.body.passwd;
+
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth() + 1;
+    var date = today.getDate();
+    var write_date = String(year) + String(month) + String(date);
+
+    var lastpostno = '';
+    var subpostno = '';
+    var postno = '';
+
+    var datas = [];
+
+    var sql = "SELECT POST_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM manspawnshop.limit_search_post B ORDER BY B.POST_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE D.ROWNUM='1';"
+
+    conn.query(sql, async function (err, rows) {
+        if (err) console.error("err : " + err);
+        lastpostno = rows[0].POST_NO;
+        subpostno = lastpostno.substr(0, 8);
+        if (write_date == subpostno) {
+            lastpostno = Number(lastpostno) + 1;
+            lastpostno = String(lastpostno);
+            postno = lastpostno;
+        } else {
+            postno = write_date + String('00001');
+        }
+        datas = [postno, title, write_date, content, localUserID, passwd];
+        sql = "INSERT INTO MANSPAWNSHOP.LIMIT_SEARCH_POST(POST_NO, TITLE, WRITE_DATE, CONTENT, CALL_NO, PASSWORD) VALUES(?, ?, ?, ?, ?, ?)";
+        conn.query(sql, datas, function (err, rows) {
+            if (err) console.error("err : " + err);
+            res.redirect('/dambo1');
+        });
+    });
 });

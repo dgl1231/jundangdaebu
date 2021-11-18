@@ -10,6 +10,26 @@
     display: block;
 }
 
+.write{
+    margin-top: 30px;
+    text-align: right;
+    margin-right: 600px;
+    
+}
+.write a{
+    outline: 3px solid #168;
+    box-shadow: 0 0 0 4px skyblue;
+    border-radius: 5px;
+    font-size: 30px;
+    
+}
+.write a:hover{
+    outline: 3px solid rgb(12, 83, 110);
+    box-shadow: 0 0 0 4px rgb(83, 155, 184);
+    border-radius: 8px;
+    font-size: 30px;
+}
+
 .title_back {
     padding-top: 2%;
 }
@@ -23,7 +43,7 @@
 .blueone {
     border-collapse: collapse;
     margin-left: 29.5%;
-    margin-top: 50px;
+    margin-top: 30px;
     width: 800px;
     font-size: 18px;
 }
@@ -46,7 +66,6 @@
     text-align: left;
     width: 400px;
 }
-
 .writedate{
     width: 100px;
     text-align: center;
@@ -66,6 +85,9 @@
 a{
     text-decoration: none;
     color: #669;
+}
+a:hover{
+    color: #004;
 }
 .page{
     text-align: center;
