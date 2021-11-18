@@ -14,11 +14,15 @@ const conn = db_config.init();
 db_config.connect(conn);
 const fs = require('fs');
 const multer = require('multer');
+const { url } = require('inspector');
 
 
 var loginsession = 0;
 var localUserID = '';
+var posttitle ='';
 app.locals.login = loginsession;
+var postno = [];
+var postinfo = [];
 
 const siteData = {
     title: "방구석 전당♡",
@@ -76,11 +80,11 @@ app.get('/post', (req, res) => {
 });
 //한도문의
 
-app.get('/dambo?:page', async (req, res, ) => {
+app.get('/dambo?:page', (req, res) => {
     app.locals.styleNo = 3;
     app.locals.login = loginsession;
     var page = req.params.page;
-    var sql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE FROM MANSPAWNSHOP.LIMIT_SEARCH_POST ORDER BY POST_NO DESC";
+    var sql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE,PASSWORD FROM MANSPAWNSHOP.LIMIT_SEARCH_POST ORDER BY POST_NO DESC";
     conn.query(sql, function (err, rows) {
         if (err) console.error("err : " + err);
         else {
@@ -91,8 +95,10 @@ app.get('/dambo?:page', async (req, res, ) => {
                 length: rows.length - 1,
                 page_num: 10,
                 pass: true,
+                postno:postno
             });
         }
+        postinfo = rows;
     });
 
 });
@@ -127,6 +133,20 @@ app.get('/write', (req, res) => {
         title: "글싸기 | " + siteData.title
     });
 });
+//글상세
+app.get('/board?:postno', (req, res) => {
+    var sex = req.params.postno;
+    console.log(sex);
+    app.locals.styleNo = 8;
+    console.log(postinfo[sex]);
+    var realsex = postinfo[sex];
+    res.render(__dirname + '/views/board.ejs', {
+        title: "한도 문의 본문 | "+ sex + siteData.title,
+        realsex:realsex
+    });
+});
+    
+
 
 //로그아웃
 app.get('/log_out', (req, res) => {
