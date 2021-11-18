@@ -84,7 +84,7 @@ app.get('/dambo?:page', (req, res) => {
     app.locals.styleNo = 3;
     app.locals.login = loginsession;
     var page = req.params.page;
-    var sql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE,PASSWORD FROM MANSPAWNSHOP.LIMIT_SEARCH_POST ORDER BY POST_NO DESC";
+    var sql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE,PASSWORD,CONTENT FROM MANSPAWNSHOP.LIMIT_SEARCH_POST ORDER BY POST_NO DESC";
     conn.query(sql, function (err, rows) {
         if (err) console.error("err : " + err);
         else {
