@@ -11,6 +11,9 @@ const db_config = require(__dirname + '/public/js/db.js');
 const conn = db_config.init();
 db_config.connect(conn);
 
+var loginsession = 0;
+var localUserID = '';
+
 const siteData = {
     title: "방구석 전당♡",
     address: "논현로 149길 엔타시아빌딩 4층"
@@ -31,7 +34,6 @@ app.set('layout', 'layout/layout');
 
 //listening
 app.listen(PORT, () => console.log('Listening on http://localhost:${ ' + PORT + ' }'))
-var loginsession = 0;
 
 express().use(require('express-ejs-layouts'))
 //route randering
@@ -56,7 +58,6 @@ app.get('/loan', (req, res) => {
 //택배
 app.get('/post', (req, res) => {
     app.locals.styleNo = 2;
-    app.locals.login = loginsession;
     res.render(__dirname + '/views/post.ejs', {
         title: "배송안내 | " + siteData.title
 
@@ -66,7 +67,6 @@ app.get('/post', (req, res) => {
 
 app.get('/dambo?:page', async(req, res,) => {
     app.locals.styleNo = 3;
-    app.locals.login = loginsession;
     var page = req.params.page;
     var sql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE FROM MANSPAWNSHOP.LIMIT_SEARCH_POST ORDER BY POST_NO DESC";
     var serchPost = 'SELECT * FROM MANSPAWNSHOP.LIMIT_SEARCH_POST WHERE POST_NO = ?';
@@ -96,21 +96,26 @@ app.get('/loanlist', (req, res) => {
 //마이페이지
 app.get('/mypage', (req, res) => {
     app.locals.styleNo = 5;
-    app.locals.login = loginsession;
     res.render(__dirname + '/views/mypage.ejs', {
         title: "마이페이지 | " + siteData.title
 
     });
 });
-//회원가입
+//로그인화면
 app.get('/sign_up', (req, res) => {
     app.locals.styleNo = 6;
-    app.locals.login = loginsession;
     res.render(__dirname + '/views/signup.ejs', {
         title: "로그인 | " + siteData.title
     });
 });
-
+//로그아웃
+app.get('/log_out', (req, res) => {
+    localUserID = '';
+    loginsession = 0;
+    app.locals.login = loginsession;
+    res.redirect('/');
+});
+//로그인체크
 app.post('/login_check', function(req,res){
     var name = req.body.id;
     var phoneNo = req.body.pn;
@@ -149,15 +154,19 @@ app.post('/login_check', function(req,res){
                             return;
                         } else {
                             console.log("신규 회원 로그인 성공");
-                            res.redirect('/');
+                            localUserID = phoneNo;
                             loginsession = 1;
+                            app.locals.login = loginsession;
+                            res.redirect('/');
                         }
                     });
                 } else {
                     if (result[0].NAME == name) {
-                        console.log('기존 회원 로그인 성공')
-                        res.redirect('/');
+                        console.log('기존 회원 로그인 성공');
+                        localUserID = phoneNo;
                         loginsession = 1;
+                        app.locals.login = loginsession;
+                        res.redirect('/');
                     } else {
                         // 로그인 실패
                         console.log("기존 회원 로그인 실패");
@@ -171,10 +180,4 @@ app.post('/login_check', function(req,res){
             //return;
         //}
     }});
-});
-
-
-app.get('/log_out', (req, res) => {
-    loginsession = 0;
-    res.redirect('/');
 });
