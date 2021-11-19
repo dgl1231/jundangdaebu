@@ -9,3 +9,51 @@
     font-family: "Jua", sans-serif;
     display: block;
 }
+.title_back {
+    padding-top: 2%;
+}
+
+.title {
+    text-align: center;
+    font-size: 70px;
+    margin-top: 20px;
+}
+.blueone {
+    border-collapse: collapse;
+    margin-left: 29.5%;
+    margin-top: 50px;
+    width: 800px;
+    font-size: 18px;
+}
+
+.blueone tr {
+    padding: 10px;
+    color: #168;
+    border-bottom: 2px solid #168;
+}
+.blueone .table_title {
+    padding: 10px;
+    width: 150px;
+    color: #168;
+    border-bottom: 2px solid #168;
+    border-left:2px solid #168;
+    border-top:2px solid #168;
+    border-right: 1px solid gray;
+    text-align: center;
+    
+}
+.blueone .table_content {
+    padding: 10px;
+    height: 200px;
+    width: 150px;
+    color: #168;
+    border-bottom: 2px solid #168;
+    border-left:2px solid #168;
+    border-right: 1px solid gray;
+    text-align: center;
+}
+.contentbackground{
+    background-color: rgba(240, 240, 240, 0.795);
+    border-top:2px solid #168;
+    border-right: 2px solid #168;
+}
