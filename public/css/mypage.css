@@ -3,39 +3,69 @@
     background-position: center center;
     background-size: 100%;
     width: auto;
-    height: 750px;
+    height: 3000px;
     position: relative;
     font-family: "Jua", sans-serif;
-    display: flex;
+    display: block;
+}
+
+.main_container {
+    width: 1100px;
+    display: block;
+    position: relative;
+    margin: 0 auto;
+}
+
+.myPage_logo {
+    display: block;
+    background: url("../img/logo.png") center center;
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .leftContainer {
-    width: 10%;
-    margin-left: 23%;
+    float: left;
+    width: 180px;
+    margin-right: 1%;
 }
 
 .rightContainer {
-    width: 40%;
+    float: left;
+    position: relative;
+    width: 760px;
     margin-left: 1%;
 }
 
 .rightTopContainer {
-    width: 100%;
-    height: 5%;
+    width: 900px;
+    height: 40px;
     margin-top: 12%;
 }
 
 .rightCenterContainer {
     position: relative;
-    width: 100%;
-    height: 20%;
-    margin-top: 2%;
+    width: 760px;
+    height: 170px;
+    margin-top: 2px;
+    border: 0.5px solid rgb(0, 0, 0);
 }
 
 .rightBottomContainer {
     width: 100%;
-    height: 70%;
-    margin-top: 2%;
+    height: 900px;
+    margin-top: 40px;
+}
+
+.choiceBox {
+    display: inline-block;
+    float: left;
+    width: 10%;
+    height: 100%;
+    border: 1px solid #000;
+    color: rgb(44, 44, 44);
+    line-height: 39px;
+    text-align: center;
 }
 
 .rightCenter_left {
@@ -46,55 +76,117 @@
 
 .rightCenter_right {
     float: left;
-    width: 29%;
+    width: 30%;
     height: 100%;
-    border: 1px solid #000;
 }
 
 .loanStatus_top {
     width: 100%;
     height: 70%;
-    border: 1px solid #000;
+    border: 0.5px solid rgb(0, 0, 0);
 }
 
 .loanStatus_bot {
     width: 100%;
-    height: 29%;
-    border: 1px solid #000;
+    height: 28%;
+    border: 0.5px solid rgb(0, 0, 0);
 }
 
-.choiceBox {
+.loanSearchBox {
+    position: relative;
+    z-index: 20;
+    margin: -1px 0 40px;
+    padding: 6.5px 24px;
+    border: rgb(134, 134, 134);
+    background-color: rgb(161, 161, 161);
+}
+
+.loanSearchBox:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+.loanDateGroup {
+    position: relative;
+    margin: 0 10px;
+    color:rgb(134, 134, 134);
+}
+
+.loanDate {
+    display: inline-block;
     float: left;
-    width: 10%;
-    height: 100%;
-    border: 1px solid #000;
+    position: relative;
+    width: 100px;
+    height: 30px;
+    border: 1px solid rgb(134, 134, 134);
+    background: white;
+    color: #808080;
+    text-indent: 10px;
+    line-height: 32px;
+    font-size: 13px;
+}
+
+.ico {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 15px;
+    height: 14px;
+    margin-top: -7px;
+    background-position: 0 0;
+}
+
+.ico, .select .ico, .btn_srch {
+    background: url(../../../../img/service/front/order/common_img/sp_search.png?20200615) no-repeat;
+}
+
+.wave {
+    float: left;
+    width: 10px;
+    line-height: 32px;
+    text-align: center;
+}
+
+.searchButton {
+    display: inline-block;
+    float: left;
+    position: relative;
+    width: 70px;
+    height: 25px;
+    border: 1px solid rgb(134, 134, 134);
+    background-color: white;
+    color: #808080;
+    line-height: 27px;
+    text-align: center;
+    font-size: 14px;
 }
 
 .loanState {
     float: left;
-    width: 32%;
+    width: 32.9%;
     height: 100%;
     margin: auto;
-    border: 1px solid #000;
 }
 
 .loanStateTextBox {
     width: 100%;
     height: 29%;
     float: left;
-    border: 1px solid #000;
+    line-height: 55px;
     text-align: center;
+    vertical-align: middle;
 }
 
 .loanStateCircleBox {
     width: 100%;
     height: 65%;
     float: left;
-    border: 1px solid #000;
 }
 
 #userOutBox {
-    width: 70%;
+    width: 130px;
     height: 150px;
     background-color: rgb(146, 221, 255);
     border: 1px solid #000;
@@ -111,11 +203,12 @@
     border: 0.5px solid rgb(134, 134, 134);
     margin: 15% 30.77% 0%;
     font-size: 15px;
-    padding: 0 auto;
+    line-height: 50px;
     text-align: center;
+    vertical-align: middle;
 }
 
-#loanStateCircle {
+.loanStateCircle {
     width: 50px;
     height: 50px;
     background-color: rgb(146, 221, 255);
@@ -123,7 +216,55 @@
     border: 0.5px solid rgb(0, 0, 0);
     margin: 5% 35% 5% 35%;
     text-align: center;
-    
+    line-height: 50px;
+}
+
+.loanDateBox {
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    border-radius: 70px;
+    border: 0.2px solid rgb(161, 161, 161);
+    text-align: center;
+    line-height: 30px;
+}
+
+.hr {
+    width: 760px;
+    margin: 25px 0 25px;
+    border: thin solid rgb(161, 161, 161);
+    text-align: center;
+}
+
+.loanInfo {
+    display: table;
+    width: 760px;
+    min-height: 161px;
+    padding: 15px 0 15px;
+    table-layout: fixed;
+}
+
+.picture {
+    display: table-cell;
+    position: relative;
+    width: 20%;
+    border:solid rgb(0, 0, 0);
+}
+
+.loanInfo_details {
+    display: table-cell;
+    padding-left: 130px;
+    position: relative;
+    width: 60%;
+    border: solid rgb(0, 0, 0);
+}
+
+.loanDocuments {
+    display: table-cell;
+    padding-left: 300px;
+    position: relative;
+    width: 20%;
+    border: solid rgb(0, 0, 0);
 }
 
 #userInBox {
@@ -143,6 +284,68 @@
     text-decoration-line:none;
 }
 
+div {
+    display: block;
+}
+
 h3 {
     font-size: 12px;
+}
+h4 {
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+td {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: gray;
+}
+
+select {
+    width: 100%;
+    height: 29px;
+    font-size: 15px;
+    background: #fff
+      url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100% 50%
+      no-repeat;
+    background-size: 20px 8px;
+    -webkit-appearance: none;
+    display: inline-block;
+    text-align: start;
+    border: none;
+    cursor: default;
+    font-family: Dotum, "돋움", Helvetica, sans-serif;
+  }
+
+.hr h4 {
+    margin: -15px 330px;
+    background: white;
 }

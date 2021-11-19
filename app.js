@@ -126,6 +126,7 @@ app.get('/mypage', (req, res) => {
 
     app.locals.styleNo = 5;
     app.locals.loanState = state;
+    var sql = "SELECT count(LOAN_NO) FROM LOAN A WHERE A.CALL_NO = ? AND STATEMENT = ? AND LOAN_DATE = ?";
     res.render(__dirname + '/views/mypage.ejs', {
         title: "마이페이지 | " + siteData.title
 
