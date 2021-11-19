@@ -9,3 +9,12 @@
     font-family: "Jua", sans-serif;
     display: block;
 }
+.title_back {
+    padding-top: 2%;
+}
+
+.title {
+    text-align: center;
+    font-size: 70px;
+    margin-top: 20px;
+}
