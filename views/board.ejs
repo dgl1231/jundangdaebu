@@ -17,11 +17,33 @@
                 <td class="contentbackground"> &nbsp; <%= realsex.WRITE_DATE%></td>
             </tr>
             </tr>
+
+
             <tr>
                 <td class="table_title">첨부파일</td>
-                <td class="contentbackground"> &nbsp; <%= realsex.WRITE_DATE%></td>
+
+                <td class="contentbackground-file">
+                    <%for(var i = 0; i < attached_P_N.length ; i++){%>
+                    <a name="<%= i%>" class="ATTA" href="/download/<%= i%>"><%= attached_P_N[i].DEFAULT_FILE_NAME %></a>
+                    <%}%>
+                </td>
+                
             </tr>
+            
         </table>
 
+        <table class="blueone-com" border="1">
+            <tr>
+                <td class="table_title">댓글</td>
+                <form action="/commentsave" method="post" >
+                    <td class="comment"><textarea name="content" id="content" cols="72" rows="5" required></textarea>
+                        <button type="" id="" herf= "">
+                            <span>댓글달기</span>
+                            </button></td>
+                </form>
+                
+            </tr>
+        </table>
+        
     </div>
 </div>

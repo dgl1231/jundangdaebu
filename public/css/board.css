@@ -4,7 +4,8 @@
     background-position: center center;
     background-size: 100%;
     width: auto;
-    height: 750px;
+    height: 100%;
+    min-height:760px;
     position: relative;
     font-family: "Jua", sans-serif;
     display: block;
@@ -56,4 +57,56 @@
     background-color: rgba(240, 240, 240, 0.795);
     border-top:2px solid #168;
     border-right: 2px solid #168;
+}
+.contentbackground-file{
+    height: 100%;
+    background-color: rgba(240, 240, 240, 0.795);
+    border-right: 2px solid #168;
+    border-top:2px solid #168;
+    
+}
+.ATTA{
+    padding-top:7px;
+    padding-right:10px;
+    display:block;
+    width: 100%;
+}
+.comment{
+    background-color: rgba(240, 240, 240, 0.795);
+    border-right: 2px solid #168;
+    height: 100px;
+}
+
+
+.blueone-com {
+    border-collapse: collapse;
+    margin-left: 29.5%;
+    width: 800px;
+    font-size: 18px;
+}
+
+.blueone-com tr {
+    padding: 10px;
+    color: #168;
+    border-bottom: 2px solid #168;
+}
+.blueone-com .table_title {
+    padding: 10px;
+    width: 150px;
+    color: #168;
+    border-bottom: 2px solid #168;
+    border-left:2px solid #168;
+    border-right: 1px solid gray;
+    text-align: center;
+    
+}
+.blueone-com .table_content {
+    padding: 10px;
+    height: 200px;
+    width: 150px;
+    color: #168;
+    border-bottom: 2px solid #168;
+    border-left:2px solid #168;
+    border-right: 1px solid gray;
+    text-align: center;
 }

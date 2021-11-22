@@ -17,17 +17,17 @@
     
 }
 .write a{
-    outline: 3px solid #168;
+    /*outline: 3px solid #168;
     box-shadow: 0 0 0 4px skyblue;
-    border-radius: 5px;
-    font-size: 30px;
+    /*border-radius: 5px;*/
+    font-size: 29px;
     
 }
 .write a:hover{
-    outline: 3px solid rgb(12, 83, 110);
+    /*outline: 3px solid rgb(12, 83, 110);
     box-shadow: 0 0 0 4px rgb(83, 155, 184);
-    border-radius: 8px;
-    font-size: 30px;
+    /*border-radius: 8px;*/
+    font-size: 29px;
 }
 
 .title_back {
