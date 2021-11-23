@@ -1,5 +1,78 @@
 <div class="body__container">
     <div class="main-container">
-        
+        <div class="container">
+            <div class="top">
+                <div class="title">배송절차안내</div>
+                <div class="buttoncontainer">
+                    <a href="javascript:vis(1);" class="btn1st" onclick="">1st</a>
+                    <a href="javascript:vis(2);" class="btn2nd" onclick="">2nd</a>
+                    <a href="javascript:vis(3);" class="btn3rd" onclick="">3rd</a>
+                    <script>
+                        function vis(n) {
+                            document.getElementById("content1st").style.display = "none";
+                            document.getElementById("content2nd").style.display = "none";
+                            document.getElementById("content3rd").style.display = "none";
+                            if (n == 1) {
+                                document.getElementById("content1st").style.display = "block";
+                            } else if (n == 2) {
+                                document.getElementById("content2nd").style.display = "block";
+                            } else if (n == 3) {
+                                document.getElementById("content3rd").style.display = "block";
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+
+            <div class="bottom">
+                <div id="content1st">
+                    <br><br>
+                    <div class="subtitle">포장</div>
+                    <br>
+                    <div class="content">고객님들의 소중한 물품을 보호하기 위해서 다음과 같은 배송방법을 참고해 주세요!</div>
+                    <br>
+                    <div class="content">명품 가방과 지갑 등은 구매시 포장되어있던 케이스를 보유중이시라면,</div>
+                    <div class="content">다음과 같이 상자에 구매상태와 동일하게 포장해주세요</div>
+                    <div class="content">(케이스가 없으신 경우에는 완충제로 상품 전체를 감싸고 테이핑한 후 박스포장하여 보내주세요.)</div>
+                    <br>
+                    <div class="content">명품 시계와 귀금속, 전자기기 등은 배송중에 손상되지 않도록</div>
+                    <div class="content">완충제로 상품 전체를 여러번 감싸고 테이핑한 후 보내주세요</div>
+                    <br>
+                    <div class="content">감사합니다:)</div>
+                </div>
+                <div id="content2nd">
+                    <br><br>
+                    <div class="subtitle">배송</div>
+                    <br>
+                    <div class="content">포장을 완료하셨다면, 다음의 주소로 물품을 보내주세요.</div>
+                    <br>
+                    <div class="content">- 배송 주소</div>
+                    <div class="content">(도로명 주소) 서울 특별시 강남구 논현로 149길 5, 엔타시아빌딩 4층</div>
+                    <div class="content">(지번 주소) 서울 특별시 강남구 논현동 8-9, 엔타시아 빌딩 4층</div>
+                    <br>
+                    <div class="content">택배사 별로 가격과 배송기간 등의 차이가 있을 수 있으며,</div>
+                    <div class="content">물품이 도착한 이후에 대출금 지급이 가능합니다.</div>
+                    <div class="content">평소 이용하시던 택배사를 통해 배송해주시고,</div>
+                    <div class="content">이용하시는 택배사가 없으신 경우에는 우체국택배를 추천드립니다:)</div>
+                    <br>
+                    <div class="content">감사합니다:)</div>
+                </div>
+                <div id="content3rd">
+                    <br><br>
+                    <div class="subtitle">배송시 유의사항</div>
+                    <br>
+                    <div class="content">1. 대출금 지급은 배송물의 도차기 이후에 가능하며,</div>
+                    <div class="content">배송 지연시에는 대출일이 지연될 수 있습니다.</div>
+                    <br>
+                    <div class="content">2. 배송 중 물품 손상에 대해서는 해당 택배사에 문의를 부탁드리며,</div>
+                    <div class="content">'물품 손상에 대한 책임은 당사와 관련없음'을 알려드립니다.</div>
+                    <br>
+                    <div class="content">3. 배송 시 발생하는 모든 비용은 고객님의 부담이며,</div>
+                    <div class="content">대출 취소 시 상품은 착불배송으로 반환됩니다.</div>
+                    <br>
+                    <div class="content">감사합니다:)</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

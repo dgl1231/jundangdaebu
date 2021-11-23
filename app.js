@@ -513,7 +513,7 @@ app.post('/commentsave', function (req, res, next) {
     var content = req.body.content;
     var contentNO = 0;
     var c_postno = realsex.POST_NO;
-
+    console.log(realsex);
     var sql = "SELECT COMMENT_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM manspawnshop.comment B WHERE POST_NO = ? ORDER BY B.COMMENT_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE D.ROWNUM='1'; ";
     conn.query(sql,c_postno , function (err, rows){
         if (err) console.error("err : " + err);
@@ -535,4 +535,14 @@ app.post('/commentsave', function (req, res, next) {
             if (err) console.error("err : " + err);
         });
     });
+});
+
+
+app.get('/deliver', function (req, res, next) {
+    app.locals.styleNo = 9;
+    app.locals.login = loginsession;
+    res.render(__dirname + '/views/deliver.ejs', {
+        title: "대출이력 | " + siteData.title
+    });
+
 });
