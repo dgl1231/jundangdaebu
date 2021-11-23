@@ -148,7 +148,6 @@ app.get('/mypage', (req, res) => {
                 if (result == null) {} else {
                     loanStateDatas[index] = result[0].A;
                     console.log(loanStateDatas[index]);
-                    continue;
                 }
             }
         });
@@ -235,7 +234,7 @@ app.get('/board?:postno', (req, res) => {
         }
 
     } else if (loginsession == 0) {
-        res.redirect('/sign_up');
+        res.send('<script type="text/javascript">alert("내 글만 볼 수 있어요!!");document.location.href="/sign_up";</script>');
     }
 });
 
