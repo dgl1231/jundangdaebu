@@ -17,6 +17,13 @@ const multer = require('multer');
 const {
     url
 } = require('inspector');
+var mime = require('mime');
+var iconvLite = require('iconv-lite');
+const {
+    exit
+} = require('process');
+
+
 
 
 var loginsession = 0;
@@ -89,7 +96,7 @@ app.get('/dambo?:page', (req, res) => {
     app.locals.styleNo = 3;
     app.locals.login = loginsession;
     var page = req.params.page;
-    var sql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE,PASSWORD,CONTENT FROM MANSPAWNSHOP.LIMIT_SEARCH_POST ORDER BY POST_NO DESC";
+    var sql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE,PASSWORD,CONTENT,CALL_NO FROM MANSPAWNSHOP.LIMIT_SEARCH_POST ORDER BY POST_NO DESC";
     conn.query(sql, function (err, rows) {
         if (err) console.error("err : " + err);
         else {
@@ -185,16 +192,51 @@ app.get('/write', (req, res) => {
 
 });
 //글상세
+var attached_P_N = [];
+
+var realsex
 app.get('/board?:postno', (req, res) => {
+    var comment_content = [];
     var sex = req.params.postno;
-    console.log(sex);
-    app.locals.styleNo = 8;
-    console.log(postinfo[sex]);
-    var realsex = postinfo[sex];
-    res.render(__dirname + '/views/board.ejs', {
-        title: "한도 문의 본문 | " + sex + siteData.title,
-        realsex: realsex
-    });
+    if (loginsession != 0) {
+        if (postinfo[sex].CALL_NO == localUserID || loginsession == 5) {
+            app.locals.styleNo = 8;
+            realsex = postinfo[sex];
+            var commentsql = "SELECT CONTENT FROM MANSPAWNSHOP.COMMENT WHERE POST_NO = ?";
+            conn.query(commentsql, realsex.POST_NO, function(err, rows){
+                if(rows[0]==null){
+                    comment_content[0] = null;
+                }
+                 else{
+                    for(var i = 0; i<rows.length;i++){
+                        comment_content[i] = rows[i];
+                        console.log("#i",i);
+                    }
+                }
+                
+            });
+
+            var sql = 'SELECT * FROM ATTACHED_FILE WHERE ATTACHED_POST_NO = ?';
+            var i;
+            conn.query(sql, realsex.POST_NO,  function (err, rows) {
+                if (err) console.log(err);
+                for (i = 0; i < rows.length; i++) {
+                    attached_P_N[i] = rows[i];
+                }
+                 res.render(__dirname + '/views/board.ejs', {
+                    title: "한도 문의 본문 | " + sex + siteData.title,
+                    comment_content:comment_content,
+                    realsex: realsex,
+                    attached_P_N: attached_P_N
+                });
+            });
+        }else{
+            res.send('<script type="text/javascript">alert("내 글만 볼 수 있어요!!");document.location.href="/";</script>');
+        }
+
+    } else if (loginsession == 0) {
+        res.redirect('/sign_up');
+    }
 });
 
 
@@ -276,16 +318,19 @@ app.post('/login_check', function (req, res) {
 
 const makeFolder = (dir) => {
     if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
+        console.log(dir);
+        fs.mkdirSync(dir, {
+            recursive: true
+        });
+        console.log(dir);
     }
 }
 var filepath = '';
-var changefilename = '';
 var storage = multer.diskStorage({ //  파일이름을 유지하기 위해 사용할 변수(중복방지를 위하여 시간을 넣어줫음)
     destination(req, file, cb) {
-        makeFolder('uploadedFiles/' + localUserID + '/' + datapostno + 1);
-        filepath = 'uploadedFiles/' + localUserID + '/' + datapostno + 1;
-        cb(null, 'uploadedFiles/' + localUserID + '/' + datapostno + 1);
+        makeFolder('uploadedFiles/' + localUserID + '/' + datapostno);
+        filepath = 'uploadedFiles/' + localUserID + '/' + datapostno;
+        cb(null, 'uploadedFiles/' + localUserID + '/' + datapostno);
     },
     filename(req, file, cb) {
         var today = new Date();
@@ -332,42 +377,54 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
     var sql = "SELECT POST_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM manspawnshop.limit_search_post B ORDER BY B.POST_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE D.ROWNUM='1';";
     conn.query(sql, function (err, rows) {
         if (err) console.error("err : " + err);
-        lastpostno = rows[0].POST_NO;
-        subpostno = lastpostno.substr(0, 8);
-        if (write_date == subpostno) {
-            lastpostno = Number(lastpostno) + 1;
-            lastpostno = String(lastpostno);
-            postno = lastpostno;
+        if (rows[0] != null) {
+            lastpostno = rows[0].POST_NO;
+            subpostno = lastpostno.substr(0, 8);
+            if (write_date == subpostno) {
+                lastpostno = Number(lastpostno) + 1;
+                lastpostno = String(lastpostno);
+                postno = lastpostno;
 
-        } else {
+            } else {
+                postno = write_date + String('00001');
+            }
+
+        }
+        if (rows[0] == null) {
             postno = write_date + String('00001');
         }
+
         datas = [postno, title, write_date, content, localUserID, passwd];
 
 
         sql = "INSERT INTO MANSPAWNSHOP.LIMIT_SEARCH_POST(POST_NO, TITLE, WRITE_DATE, CONTENT, CALL_NO, PASSWORD) VALUES(?, ?, ?, ?, ?, ?);";
         conn.query(sql, datas, async function (err, rows) {
             if (err) console.error("err : " + err);
-
             var attno = '';
             var attno2 = '';
             var subpostno = '';
+
+            console.log('fuck2');
             var filesch = "SELECT ATTACHED_FILE_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM manspawnshop.attached_file B ORDER BY B.ATTACHED_FILE_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE D.ROWNUM='1'";
             await conn.query(filesch, function (err, rows) {
                 if (err) console.error("err :" + err);
-                console.log("#1", rows[0].ATTACHED_FILE_NO);
-                attno = rows[0].ATTACHED_FILE_NO;
-                console.log("#2", attno);
-                subpostno = attno.substr(1, 8);
-                console.log("#3", subpostno);
-                attno2 = attno.substr(1, 16);
-                console.log("#4", attno2);
-                if (write_date == subpostno) {
-                    attno2 = Number(attno2) + 1;
-                    console.log("#5", attno2);
-                } else {
+                console.log(rows);
+                if (rows[0] != null) {
+                    attno = rows[0].ATTACHED_FILE_NO;
+                    subpostno = attno.substr(1, 8);
+                    attno2 = attno.substr(1, 16);
+                    if (write_date == subpostno) {
+                        console.log("#있을때", attno2);
+                        attno2 = Number(attno2) + 1;
+                    } else {
+                        attno2 = write_date + String('00000001');
+                    }
+                } else if (rows[0] == null) {
                     attno2 = write_date + String('00000001');
+                    console.log("#없을때", attno2);
                 }
+
+                console.log("#시작", attno2);
                 if (Array.isArray(files)) {
                     console.log('배열에 들어있는 파일 갯수 : %d', files.length);
                     for (var index = 0; index < files.length; index++) {
@@ -375,9 +432,10 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
                         filename = files[index].filename;
                         mimetype = files[index].mimetype;
                         size = files[index].size;
-                        console.log('현재 파일 정보 : ' + originalname + ',  ' + filename + ',  ' + mimetype + ',  ' + size);
-                        attacheddatas[index] = ['P' + String(attno2 + index), filepath, originalname, filename, size, mimetype, write_date, localUserID, postno];
-                        console.log('P' + String(attno2 + index));
+                        var filenumber = 'P' + String((Number(attno2) + index));
+                        console.log('현재 파일 정보 : ' + originalname + ',  ' + filename + ',  ' + mimetype + ',  ' + size + ', ' + filenumber);
+                        attacheddatas[index] = [filenumber, filepath, originalname, filename, size, mimetype, write_date, localUserID, postno];
+
                         sql = "INSERT INTO manspawnshop.attached_file(ATTACHED_FILE_NO, FILE_PATH, DEFAULT_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, FILE_EXTENSION, REGI_DATE, CALL_NO, ATTACHED_POST_NO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
                         conn.query(sql, attacheddatas[index], async function (err, rows) {
                             if (err) console.error("err : " + err);
@@ -403,10 +461,79 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
 
             res.redirect('/dambo1');
         });
+
     });
 
 });
 
-function filenoch(write_date) {
+app.get('/download/:i', function (req, res, next) {
+    console.log(req.params.i)
+    var file_No = req.params.i;
+    console.log(attached_P_N[file_No]);
 
+    var file = attached_P_N[file_No].FILE_PATH + '/' + attached_P_N[file_No].STORED_FILE_NAME;
+
+    try {
+        if (fs.existsSync(file)) { // 파일이 존재하는지 체크
+            var filename = path.basename(file); // 파일 경로에서 파일명(확장자포함)만 추출
+            var mimetype = mime.getType(file); // 파일의 타입(형식)을 가져옴
+
+            res.setHeader('Content-disposition', 'attachment; filename=' + getDownloadFilename(req, filename)); // 다운받아질 파일명 설정
+            res.setHeader('Content-type', mimetype); // 파일 형식 지정
+
+            var filestream = fs.createReadStream(file);
+            filestream.pipe(res);
+        } else {
+            res.send('해당 파일이 없습니다.');
+            return;
+        }
+    } catch (e) { // 에러 발생시
+        console.log(e);
+        res.send('파일을 다운로드하는 중에 에러가 발생하였습니다.');
+        return;
+    }
+});
+
+function getDownloadFilename(req, filename) {
+    var header = req.headers['user-agent'];
+
+    if (header.includes("MSIE") || header.includes("Trident")) {
+        return encodeURIComponent(filename).replace(/\\+/gi, "%20");
+    } else if (header.includes("Chrome")) {
+        return iconvLite.decode(iconvLite.encode(filename, "UTF-8"), 'ISO-8859-1');
+    } else if (header.includes("Opera")) {
+        return iconvLite.decode(iconvLite.encode(filename, "UTF-8"), 'ISO-8859-1');
+    } else if (header.includes("Firefox")) {
+        return iconvLite.decode(iconvLite.encode(filename, "UTF-8"), 'ISO-8859-1');
+    }
+    return filename;
 }
+
+
+app.post('/commentsave', function (req, res, next) {
+    var content = req.body.content;
+    var contentNO = 0;
+    var c_postno = realsex.POST_NO;
+
+    var sql = "SELECT COMMENT_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM manspawnshop.comment B WHERE POST_NO = ? ORDER BY B.COMMENT_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE D.ROWNUM='1'; ";
+    conn.query(sql,c_postno , function (err, rows){
+        if (err) console.error("err : " + err);
+        if(rows[0]==null){
+            contentNO = 0;
+            console.log("###############################");
+
+        }else{
+            console.log("###############################");
+            console.log("#1",rows[0].COMMENT_NO, contentNO);
+            contentNO = Number(rows[0].COMMENT_NO);
+            console.log("#2",rows[0].COMMENT_NO, contentNO);
+        }
+        var commentdata = [contentNO + 1,c_postno,content];
+        console.log("#end",contentNO);
+        console.log("###############################");
+        sql = 'INSERT INTO MANSPAWNSHOP.COMMENT(COMMENT_NO, POST_NO, CONTENT) VALUES(?, ?, ?);'
+        conn.query(sql,commentdata , function (err, rows){
+            if (err) console.error("err : " + err);
+        });
+    });
+});
