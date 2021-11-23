@@ -35,15 +35,24 @@
         <table class="blueone-com" border="1">
             <tr>
                 <td class="table_title">댓글</td>
+                <td class="commentarea">
+                    <%if(comment_content != null){%>
+                    <%for(var i=0; i < comment_content.length; i++){%>
+                    <p class = "rowcomment">&nbsp; <%= comment_content[i].CONTENT %></p>
+                    <%console.log(comment_content[i].CONTENT);}}%>
+            </td>
+            </tr>
+            <tr>
+                <td class="table_title">댓글달기</td>
                 <form action="/commentsave" method="post" >
-                    <td class="comment"><textarea name="content" id="content" cols="72" rows="5" required></textarea>
+                    <td class="comment">&nbsp;<textarea name="content" id="content" cols="72" rows="5" required></textarea>
                         <button type="" id="" herf= "">
                             <span>댓글달기</span>
                             </button></td>
                 </form>
-                
             </tr>
         </table>
+        <div class="margin"></div>
         
     </div>
 </div>

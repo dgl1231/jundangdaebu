@@ -164,22 +164,39 @@ app.get('/write', (req, res) => {
 });
 //글상세
 var attached_P_N = [];
+
 var realsex
 app.get('/board?:postno', (req, res) => {
+    var comment_content = [];
     var sex = req.params.postno;
     if (loginsession != 0) {
         if (postinfo[sex].CALL_NO == localUserID || loginsession == 5) {
             app.locals.styleNo = 8;
             realsex = postinfo[sex];
+            var commentsql = "SELECT CONTENT FROM MANSPAWNSHOP.COMMENT WHERE POST_NO = ?";
+            conn.query(commentsql, realsex.POST_NO, function(err, rows){
+                if(rows[0]==null){
+                    comment_content[0] = null;
+                }
+                 else{
+                    for(var i = 0; i<rows.length;i++){
+                        comment_content[i] = rows[i];
+                        console.log("#i",i);
+                    }
+                }
+                
+            });
+
             var sql = 'SELECT * FROM ATTACHED_FILE WHERE ATTACHED_POST_NO = ?';
             var i;
-            conn.query(sql, realsex.POST_NO, function (err, rows) {
+            conn.query(sql, realsex.POST_NO,  function (err, rows) {
                 if (err) console.log(err);
                 for (i = 0; i < rows.length; i++) {
                     attached_P_N[i] = rows[i];
                 }
-                res.render(__dirname + '/views/board.ejs', {
+                 res.render(__dirname + '/views/board.ejs', {
                     title: "한도 문의 본문 | " + sex + siteData.title,
+                    comment_content:comment_content,
                     realsex: realsex,
                     attached_P_N: attached_P_N
                 });
