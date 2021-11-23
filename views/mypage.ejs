@@ -1,14 +1,14 @@
 <script defer src="../js/db.js"></script>
 <div class="body__container">
     <div class="main-container">
-        <div class="main_container">
+        <div class="mainContainer">
             <!-- 왼쪽 컨테이너 -->
             <div class="leftContainer">
                 <!-- 회원 이름 나오는 박스 -->
                 <div id="userOutBox">
                     <!-- 회원 이름 나오는 동그라미 -->
                     <div id="userCircleBox">
-                        이동건 회원님
+                        이동건님
                     </div>
                     <!-- 데코용 흰 네모 -->
                     <div id="userInBox"></div>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="loanStateCircleBox">
                                     <div class="loanStateCircle">
-                                        <%=loanState[0].count%> 건
+                                        <%=loanState[0]%> 건
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="loanStateCircleBox">
                                     <div class="loanStateCircle">
-                                        <%=loanState[1].count%> 건
+                                        <%=loanState[1]%> 건
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="loanStateCircleBox">
                                     <div class="loanStateCircle">
-                                        <%=loanState[2].count%> 건
+                                        <%=loanState[2]%> 건
                                     </div>
                                 </div>
                             </div>
@@ -75,13 +75,13 @@
                                                 <div class="loanDateGroup">
                                                     <a href="" class="loanDate">
                                                         <span>2021-11-17</span>
-                                                        <span class="ico"></span>
+                                                        <span class="calendar_ico"></span>
                                                         <input type="hidden" id="" name="" value="" readonly>
                                                     </a>
                                                     <span class="wave">~</span>
                                                     <a href="" class="loanDate">
                                                         <span>2021-11-19</span>
-                                                        <span class="ico"></span>
+                                                        <span class="calendar_ico"></span>
                                                         <input type="hidden" id="" name="" value="" readonly>
                                                     </a>
                                                     <div id="" class="" style="right: 0px; top: 29px; display: block; z-index: 1;">
@@ -90,8 +90,12 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="" class="searchButton">
-                                                    전체조회
+                                                <a href="" class="listSearchBtn">
+                                                    <span>전체조회</span>
+                                                </a>
+                                                <a href="" class="searchBtn">
+                                                    <span>조회</span>
+                                                    <span class="search_ico"></span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -115,19 +119,42 @@
                         </h4>
                     </div>
                     <div class="loanInfo">
-                        <div class="picture">
-
+                        <div class="pictureBox">
+                            <div class="picture">
+                                
+                            </div>
                         </div>
-                        <div class="loanInfo_details">
-
+                        <div class="loanInfo_detail">
+                            <table class="loanInfo_inner">
+                                <tbody>
+                                    <tr class="modelName">
+                                        <td >
+                                            <%=loanInfo[0][0]%>
+                                        </td>
+                                    </tr>
+                                    <tr height="50%">
+                                        <td class="loanAmount">
+                                            <%=loanInfo[0][1]%>
+                                        </td>
+                                        <td class="realLoanDate">
+                                            <%=loanInfo[0][2]%>
+                                        </td>
+                                        <td class="loanStatement">
+                                            <%=loanInfo[0][3]%>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="loanDocuments">
-
+                            <a href="" class="loanDocuBtn">
+                                제출서류 내역
+                            </a>
                         </div>
                     </div>
                     <div class="hr">
                         <h4 class="loanDateBox">
-                            2021-11-19
+                            2021-11-18
                         </h4>
                     </div>
                 </div>

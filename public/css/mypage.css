@@ -2,16 +2,14 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100%;
-    width: auto;
     height: 3000px;
     position: relative;
     font-family: "Jua", sans-serif;
     display: block;
 }
 
-.main_container {
-    width: 1100px;
-    display: block;
+.mainContainer {
+    width: 1000px;
     position: relative;
     margin: 0 auto;
 }
@@ -20,6 +18,8 @@
     display: block;
     background: url("../img/logo.png") center center;
     background-size: 100%;
+    margin: 0 0 0 -1px;
+    border-left: 0.1px solid rgb(0, 0, 0);
     width: 100%;
     height: 100%;
 }
@@ -47,8 +47,7 @@
     position: relative;
     width: 760px;
     height: 170px;
-    margin-top: 2px;
-    border: 0.5px solid rgb(0, 0, 0);
+    border: 0.1px solid rgb(134, 134, 134);
 }
 
 .rightBottomContainer {
@@ -62,7 +61,6 @@
     float: left;
     width: 10%;
     height: 100%;
-    border: 1px solid #000;
     color: rgb(44, 44, 44);
     line-height: 39px;
     text-align: center;
@@ -76,29 +74,23 @@
 
 .rightCenter_right {
     float: left;
-    width: 30%;
+    width: 29.9%;
     height: 100%;
 }
 
 .loanStatus_top {
     width: 100%;
     height: 70%;
-    border: 0.5px solid rgb(0, 0, 0);
 }
 
 .loanStatus_bot {
     width: 100%;
-    height: 28%;
-    border: 0.5px solid rgb(0, 0, 0);
+    border-top: 0.1px solid rgb(161, 161, 161);
 }
 
 .loanSearchBox {
     position: relative;
-    z-index: 20;
-    margin: -1px 0 40px;
-    padding: 6.5px 24px;
-    border: rgb(134, 134, 134);
-    background-color: rgb(161, 161, 161);
+    padding: 6.5px 35px;
 }
 
 .loanSearchBox:after {
@@ -114,28 +106,29 @@
 }
 
 .loanDate {
-    display: inline-block;
+    display: inline;
     float: left;
     position: relative;
     width: 100px;
     height: 30px;
     border: 1px solid rgb(134, 134, 134);
     background: white;
-    color: #808080;
-    text-indent: 10px;
-    line-height: 32px;
+    color: rgb(0, 0, 0);
+    text-indent: 8px;
+    line-height: 35px;
     font-size: 13px;
 }
 
-.ico {
+.calendar_ico {
     display: inline-block;
     position: absolute;
-    top: 50%;
-    right: 10px;
-    width: 15px;
-    height: 14px;
-    margin-top: -7px;
-    background-position: 0 0;
+    background: url("../img/calendar.png") center center;
+    background-size: 100%;
+    background-color: rgb(255, 255, 255);
+    bottom: 20%;
+    margin-left: 4px;
+    width: 17px;
+    height: 17px;
 }
 
 .ico, .select .ico, .btn_srch {
@@ -149,7 +142,7 @@
     text-align: center;
 }
 
-.searchButton {
+.listSearchBtn {
     display: inline-block;
     float: left;
     position: relative;
@@ -157,10 +150,38 @@
     height: 25px;
     border: 1px solid rgb(134, 134, 134);
     background-color: white;
-    color: #808080;
+    color: rgb(0, 0, 0);
     line-height: 27px;
+    margin-left: 32px;
     text-align: center;
     font-size: 14px;
+}
+
+.searchBtn {
+    display: inline-block;
+    float: left;
+    position: relative;
+    width: 60px;
+    height: 25px;
+    border: 1px solid rgb(134, 134, 134);
+    background-color: rgb(146, 221, 255);
+    color: rgb(0, 0, 0);
+    line-height: 27px;
+    margin-left: 40px;
+    text-indent: 12px;
+    font-size: 14px;
+}
+
+.search_ico {
+    display: inline-block;
+    position: absolute;
+    background: url("../img/magnifier.png") center center;
+    background-size: 100%;
+    background-color: rgb(146, 221, 255);
+    bottom: 20%;
+    margin-left: 4px;
+    width: 17px;
+    height: 17px;
 }
 
 .loanState {
@@ -186,12 +207,11 @@
 }
 
 #userOutBox {
-    width: 130px;
-    height: 150px;
+    width: 160px;
+    height: 180px;
     background-color: rgb(146, 221, 255);
     border: 1px solid #000;
     margin-top: 50%;
-    margin-left: 15%;
     /*margin: auto; */
 }
 
@@ -213,8 +233,8 @@
     height: 50px;
     background-color: rgb(146, 221, 255);
     border-radius: 50%;
-    border: 0.5px solid rgb(0, 0, 0);
-    margin: 5% 35% 5% 35%;
+    border: 1px solid rgb(146, 221, 255);
+    margin: 7% 35% 5% 35%;
     text-align: center;
     line-height: 50px;
 }
@@ -224,47 +244,99 @@
     width: 100px;
     height: 30px;
     border-radius: 70px;
-    border: 0.2px solid rgb(161, 161, 161);
+    border: 0.1px solid rgb(161, 161, 161);
     text-align: center;
-    line-height: 30px;
+    line-height: 31px;
 }
 
 .hr {
     width: 760px;
     margin: 25px 0 25px;
-    border: thin solid rgb(161, 161, 161);
+    border: 0.1px solid rgb(161, 161, 161);
     text-align: center;
 }
 
 .loanInfo {
     display: table;
     width: 760px;
-    min-height: 161px;
-    padding: 15px 0 15px;
+    height: 150px;
+    padding: 5px 0 5px;
     table-layout: fixed;
 }
 
-.picture {
+.pictureBox {
     display: table-cell;
     position: relative;
-    width: 20%;
-    border:solid rgb(0, 0, 0);
+    height: 100%;
+    width: 24%;
+    vertical-align: middle;
 }
 
-.loanInfo_details {
+.picture {
+    overflow: hidden;
+    text-align: center;
+    display: block;
+    background: url("../img/logo.png") center center;
+    background-size: 100%;
+    border: 1px solid rgb(161, 161, 161);
+    padding: 10px 10px;
+    width: 100%;
+    min-height: 120px;
+}
+
+.loanInfo_detail {
     display: table-cell;
-    padding-left: 130px;
     position: relative;
-    width: 60%;
-    border: solid rgb(0, 0, 0);
+    height: 100%;
+    width: 50%;
+}
+
+.loanInfo_inner {
+    min-height: 155px;
+    width: 100%;
+    padding: 25px 0px 25px 60px;
+}
+
+.modelName {
+    height: 50%;
+    font-size: 20px;
+}
+
+.loanAmount {
+    float: 10px;
+    width: 40%;
+    height: 100%;
+}
+
+.realLoanDate {
+    width: 35%;
+    height: 100%;
+}
+
+.loanStatement {
+    width: 25%;
+    height: 100%;
 }
 
 .loanDocuments {
     display: table-cell;
-    padding-left: 300px;
     position: relative;
-    width: 20%;
-    border: solid rgb(0, 0, 0);
+    vertical-align: middle;
+    padding: 0 30px;
+}
+
+.loanDocuBtn {
+    display: block;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid rgb(161, 161, 161);
+    background-color: rgb(255, 255, 255);
+    color: rgb(30, 30, 30);
+    font-size: 18px;
+    text-decoration: none;
+    box-sizing: border-box;
+    appearance: none;
 }
 
 #userInBox {

@@ -85,7 +85,6 @@ app.get('/post', (req, res) => {
     });
 });
 //한도문의
-
 app.get('/dambo?:page', (req, res) => {
     app.locals.styleNo = 3;
     app.locals.login = loginsession;
@@ -115,29 +114,59 @@ app.get('/loanlist', (req, res) => {
     app.locals.login = loginsession;
     res.render(__dirname + '/views/loanlist.ejs', {
         title: "대출이력 | " + siteData.title
-
     });
 });
 //마이페이지
 app.get('/mypage', (req, res) => {
-    var one = {
-        count: 0
-    }
-    var two = {
-        count: 1
-    }
-    var three = {
-        count: 2
-    }
-    var state = [one, two, three];
+
+    var loanState = ['LoanStatement01', 'LoanStatement02', 'LoanStatement03'];
+    var loanStateDatas = new Array(3);
+    var dbValues = new Array(2);
+    var l = 1;
+
+    localUserID = '123123';
+
+    const loanStateSql = 'SELECT count(LOAN_NO) AS A FROM MANSPAWNSHOP.LOAN A WHERE A.CALL_NO = ? AND A.STATEMENT = ?';
+
+
+    loanState.forEach(function (item, index, arr) {
+        dbValues = [localUserID, item];
+
+        conn.query(loanStateSql, dbValues, function (err, result) {
+            if (err) {
+                console.log('#!!#query is not excuted. insert fail...\n' + err);
+                res.redirect('/mypage');
+                return;
+            } else {
+                if (result == null) {} else {
+                    loanStateDatas[index] = result[0].A;
+                    console.log(loanStateDatas[index]);
+                    continue;
+                }
+            }
+        });
+        l = 0;
+    });
+
+    while (l == 1) {}
+
+    console.log('%%%%%%%%%%%');
+    console.log(loanStateDatas);
+
+    var loanInfoDatas = [
+        ['Rolex', '50,000,000원', '2021.11.22', '대출 진행중'],
+        ['1', '1'],
+        ['11', '22']
+    ];
 
     app.locals.styleNo = 5;
-    app.locals.loanState = state;
-    var sql = "SELECT count(LOAN_NO) FROM LOAN A WHERE A.CALL_NO = ? AND STATEMENT = ? AND LOAN_DATE = ?";
+    var sql = "SELECT count(LOAN_NO) MANSPAWNSHOP.FROM LOAN A WHERE A.CALL_NO = ? AND STATEMENT = ? AND LOAN_DATE = ?";
     res.render(__dirname + '/views/mypage.ejs', {
-        title: "마이페이지 | " + siteData.title
-
+        title: "마이페이지 | " + siteData.title,
+        loanState: loanStateDatas,
+        loanInfo: loanInfoDatas
     });
+
 });
 //로그인화면
 app.get('/sign_up', (req, res) => {
@@ -341,37 +370,37 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
                 }
                 if (Array.isArray(files)) {
                     console.log('배열에 들어있는 파일 갯수 : %d', files.length);
-                   for (var index = 0; index < files.length; index++) {
-                       originalname = files[index].originalname;
-                       filename = files[index].filename;
-                       mimetype = files[index].mimetype;
-                       size = files[index].size;
-                       console.log('현재 파일 정보 : ' + originalname + ',  ' + filename + ',  ' + mimetype + ',  ' + size);
-                       attacheddatas[index] = ['P'+String(attno2+index), filepath, originalname, filename, size, mimetype, write_date, localUserID, postno];
-                       console.log('P'+String(attno2+index));
-                       sql = "INSERT INTO manspawnshop.attached_file(ATTACHED_FILE_NO, FILE_PATH, DEFAULT_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, FILE_EXTENSION, REGI_DATE, CALL_NO, ATTACHED_POST_NO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                       conn.query(sql, attacheddatas[index], async function (err, rows) {
-                           if (err) console.error("err : " + err);
-                       });
-                   }
-               } else {
-                   var index = 0;
-                   console.log('파일 갯수 : 1');
-                   originalname = files[index].originalname;
-                   filename = files[index].filename;
-                   mimetype = files[index].mimetype;
-                   size = files[index].size;
-   
-                   var filenokey = filenoch(write_date);
-                   attacheddatas[index] = [filenokey, filepath, originalname, filename, size, mimetype, write_date, localUserID, postno];
-                   sql = "INSERT INTO manspawnshop.attached_file(ATTACHED_FILE_NO, FILE_PATH, DEFAULT_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, FILE_EXTENSION, REGI_DATE, CALL_NO, ATTACHED_POST_NO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                   conn.query(sql, attacheddatas[index], async function (err, rows) {
-                       if (err) console.error("err : " + err);
-                   });
-               }
+                    for (var index = 0; index < files.length; index++) {
+                        originalname = files[index].originalname;
+                        filename = files[index].filename;
+                        mimetype = files[index].mimetype;
+                        size = files[index].size;
+                        console.log('현재 파일 정보 : ' + originalname + ',  ' + filename + ',  ' + mimetype + ',  ' + size);
+                        attacheddatas[index] = ['P' + String(attno2 + index), filepath, originalname, filename, size, mimetype, write_date, localUserID, postno];
+                        console.log('P' + String(attno2 + index));
+                        sql = "INSERT INTO manspawnshop.attached_file(ATTACHED_FILE_NO, FILE_PATH, DEFAULT_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, FILE_EXTENSION, REGI_DATE, CALL_NO, ATTACHED_POST_NO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                        conn.query(sql, attacheddatas[index], async function (err, rows) {
+                            if (err) console.error("err : " + err);
+                        });
+                    }
+                } else {
+                    var index = 0;
+                    console.log('파일 갯수 : 1');
+                    originalname = files[index].originalname;
+                    filename = files[index].filename;
+                    mimetype = files[index].mimetype;
+                    size = files[index].size;
+
+                    var filenokey = filenoch(write_date);
+                    attacheddatas[index] = [filenokey, filepath, originalname, filename, size, mimetype, write_date, localUserID, postno];
+                    sql = "INSERT INTO manspawnshop.attached_file(ATTACHED_FILE_NO, FILE_PATH, DEFAULT_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, FILE_EXTENSION, REGI_DATE, CALL_NO, ATTACHED_POST_NO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                    conn.query(sql, attacheddatas[index], async function (err, rows) {
+                        if (err) console.error("err : " + err);
+                    });
+                }
             });
 
-           
+
             res.redirect('/dambo1');
         });
     });
