@@ -73,8 +73,7 @@ header .main-menu {
     display: block;
     padding: 15px;
     margin-top: 8px;
-    color: black;
-    border:2px dashed gray;
+    color: rgb(30, 184, 255);
     text-decoration-line:none;
 }
 .sign_up_btn:hover {
