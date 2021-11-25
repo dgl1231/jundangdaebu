@@ -22,7 +22,12 @@ var iconvLite = require('iconv-lite');
 const {
     exit
 } = require('process');
-const { query } = require('express');
+const {
+    query
+} = require('express');
+const {
+    CONNREFUSED
+} = require('dns');
 
 
 
@@ -121,9 +126,6 @@ app.get('/loanlist', (req, res) => {
     app.locals.styleNo = 4;
     app.locals.login = loginsession;
 
-
-
-
     res.render(__dirname + '/views/loanlist.ejs', {
         title: "대출이력 | " + siteData.title
     });
@@ -143,8 +145,10 @@ app.get('/mypage?', (req, res) => {
     var loanInfoDatas = new Array();
     var loanDateDatas = new Array();
     var searchDate = new Array();
+    var docuCount = new Array();
+    var documents = new Array();
 
-    if(url[1] != null) { 
+    if (url[1] != null) {
         var params = new URLSearchParams(url[1]);
         queryData = [localUserID, params.get('date1'), params.get('date2')];
         searchDate = [params.get('date1'), params.get('date2')];
@@ -162,8 +166,10 @@ app.get('/mypage?', (req, res) => {
     }
 
     const loanStateSql = 'SELECT COUNT(LOAN_NO) AS count FROM MANSPAWNSHOP.LOAN A WHERE A.CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY STATEMENT;';
-    const loanInfoSql = 'SELECT * FROM ( SELECT * FROM (SELECT A.LOAN_PRINCIPAL, A.LOAN_DATE, A.STATEMENT, B.PRODUCT FROM MANSPAWNSHOP.LOAN AS A LEFT OUTER JOIN( SELECT * FROM MANSPAWNSHOP.security ) AS B ON (B.LOAN_NO = A.LOAN_NO) WHERE A.CALL_NO = ? ) AS C LEFT OUTER JOIN( SELECT *  FROM manspawnshop.code_entity ) AS D ON (C.PRODUCT = D.C_ID) WHERE C.LOAN_DATE BETWEEN ? AND ?) AS E LEFT OUTER JOIN( SELECT F.C_ID AS LOAN_ID , F.C_NAME AS STATENAME FROM manspawnshop.code_entity F ) AS G ON (E.STATEMENT = G.LOAN_ID) ORDER BY LOAN_ID DESC';
+    const loanInfoSql = "SELECT * FROM ( SELECT * FROM (SELECT A.LOAN_PRINCIPAL, A.LOAN_DATE, A.STATEMENT, A.LOAN_NO, B.PRODUCT FROM MANSPAWNSHOP.LOAN AS A LEFT OUTER JOIN( SELECT * FROM MANSPAWNSHOP.security ) AS B ON (B.LOAN_NO = A.LOAN_NO) WHERE A.CALL_NO = ?) AS C LEFT OUTER JOIN( SELECT *  FROM manspawnshop.code_entity ) AS D ON (C.PRODUCT = D.C_ID) WHERE C.LOAN_DATE BETWEEN ? AND ?) AS E LEFT OUTER JOIN( SELECT F.C_ID AS LOAN_ID , F.C_NAME AS STATENAME FROM manspawnshop.code_entity F ) AS G ON (E.STATEMENT = G.LOAN_ID) ORDER BY LOAN_NO DESC";
     const loanDateSql = 'SELECT LOAN_DATE, COUNT(LOAN_DATE) AS COUNT FROM MANSPAWNSHOP.LOAN WHERE CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY LOAN_DATE ORDER BY LOAN_DATE DESC';
+    const documentCountSql = 'SELECT A.LOAN_NO, COUNT(B.DOCU_NO) AS count FROM (SELECT * FROM MANSPAWNSHOP.LOAN WHERE CALL_NO = ? AND LOAN_DATE BETWEEN ? AND ?) A LEFT OUTER JOIN(SELECT * FROM DOCUMENT) B ON (A.LOAN_NO = B.LOAN_NO) GROUP BY LOAN_NO ORDER BY A.LOAN_NO DESC';
+    const documentsSql = 'SELECT * FROM MANSPAWNSHOP.DOCUMENT WHERE CALL_NO = ? AND SEND_IN_DATE BETWEEN ? AND ? ORDER BY LOAN_NO DESC';
 
     conn.query(loanStateSql, queryData, function (err, result) {
         if (err) {
@@ -171,7 +177,9 @@ app.get('/mypage?', (req, res) => {
             res.redirect('/mypage');
             return;
         } else {
-            if (result == null) {} else {
+            if (result[0] == null) {
+                loanStateDatas = null;
+            } else {
                 loanStateDatas = result;
 
                 conn.query(loanInfoSql, queryData, function (err, result) {
@@ -180,15 +188,19 @@ app.get('/mypage?', (req, res) => {
                         res.redirect('/mypage');
                         return;
                     } else {
-                        if (result == null) {
+                        if (result[0] == null) {
                             loanInfoDatas = null;
                         } else {
                             for (var i = 0; i < result.length; i++) {
                                 var a = result[i].LOAN_PRINCIPAL;
+                                console.log(a);
                                 a = String(a);
                                 var _length = a.length;
+                                
                                 var position = 1;
                                 var h = _length % 3;
+                                
+
                                 var _mod = _length / 3;
                                 var n = 0;
 
@@ -199,11 +211,12 @@ app.get('/mypage?', (req, res) => {
                                 } else {
                                     position = 3;
                                 }
-
+                                
                                 for (; n < _mod; n++) {
-                                    if (h == 0 || position >= _length) {
+                                    if (position >= _length) {
                                         break;
                                     }
+
                                     a = [a.slice(0, position), ',', a.slice(position)].join('');
                                     position += 4;
                                 }
@@ -213,28 +226,62 @@ app.get('/mypage?', (req, res) => {
                             }
 
                             conn.query(loanDateSql, queryData, function (err, result) {
-                                var count = 0
+                                var count = 0;
                                 if (err) {
                                     console.log('#!!#query is not excuted. insert fail...\n' + err);
                                     res.redirect('/mypage');
                                     return;
                                 } else {
-                                    if (result == null) {} else {
+                                    if (result[0] == null) {} else {
                                         for (var i = 0; i < result.length; i++) {
                                             count += result[i].COUNT;
                                         }
                                         loanDateDatas = result;
+
+                                        conn.query(documentCountSql, queryData, function (err, result) {
+
+                                            if (err) {
+                                                console.log('#!!#query is not excuted. insert fail...\n' + err);
+                                                res.redirect('/mypage');
+                                                return;
+                                            } else {
+                                                if (result[0] == null) {
+                                                    docuCount = null;
+                                                }
+                                                else {
+                                                    docuCount = result;
+                                                }
+                                                conn.query(documentsSql, queryData, function (err, result) {
+
+                                                    if (err) {
+                                                        console.log('#!!#query is not excuted. insert fail...\n' + err);
+                                                        res.redirect('/mypage');
+                                                        return;
+                                                    } else {
+                                                        if (result[0] == null) {
+                                                            documents = null;
+                                                        } else {
+                                                            documents = result;
+
+
+                                                            res.render(__dirname + '/views/mypage.ejs', {
+                                                                title: "마이페이지 | " + siteData.title,
+                                                                loanState: loanStateDatas,
+                                                                loanInfo: loanInfoDatas,
+                                                                loanDate: loanDateDatas,
+                                                                documents: documents,
+                                                                searchDate: searchDate,
+                                                                docuCount: docuCount,
+                                                                count: count
+                                                            });
+                                                        }
+                                                    }
+                                                });
+
+                                            }
+                                        });
                                     }
                                 }
-
-                                res.render(__dirname + '/views/mypage.ejs', {
-                                    title: "마이페이지 | " + siteData.title,
-                                    loanState: loanStateDatas,
-                                    loanInfo: loanInfoDatas,
-                                    loanDate: loanDateDatas,
-                                    searchDate: searchDate,
-                                    count: count
-                                });
                             });
                         }
                     }

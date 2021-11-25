@@ -2,7 +2,8 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100%;
-    min-height: 100%;
+    min-height: 1200px;
+    height: 100%;
     position: relative;
     font-family: "Jua", sans-serif;
     display: block;
@@ -54,7 +55,7 @@
 
 .rightBottomContainer {
     width: 100%;
-    min-height: 600px;
+    min-height: 800px;
     margin-top: 40px;
 }
 
