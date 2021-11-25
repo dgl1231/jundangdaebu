@@ -1,0 +1,65 @@
+.main-container {
+    background: #f5f6f7;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100%;
+    width: auto;
+    height: 100%;
+    min-height:760px;
+    position: relative;
+    font-family: "Jua", sans-serif;
+    display: block;
+}
+.container{
+    padding-top: 6%;
+    padding-left: 25%;
+}
+.top{
+    font-size: 50px;
+    display: flex;
+}
+.top .title{
+    font-size: 80px;
+}
+.top .buttoncontainer{
+    margin-left: 100px;
+    padding-top: 25px;
+}
+.top .buttoncontainer .a{
+    text-decoration-line: none;
+}
+.top .buttoncontainer #btn1st{
+    color:rgb(88, 109, 204);
+    margin-left:20px;
+    font-size: 65px;
+    text-decoration-line: none;
+}
+.top .buttoncontainer #btn2nd{
+    color:rgb(94, 169, 219);
+    margin-left:20px;
+    text-decoration-line: none;
+}
+.top .buttoncontainer #btn3rd{
+    color:rgb(94, 169, 219);
+    margin-left:20px;
+    text-decoration-line: none;
+}
+
+.bottom{
+    font-size: 25px;
+    color:rgb(58, 58, 58);
+}
+.bottom .subtitle{
+    font-size: 40px;
+    color:rgb(36, 36, 36);
+}
+
+#content1st{
+    display: block;
+}
+#content2nd{
+    display: none;
+}
+#content3rd{
+    display: none;
+}

@@ -48,7 +48,7 @@ const siteData = {
 // Specific folder example
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: false
 }));
 
 //app setting
@@ -120,6 +120,10 @@ app.get('/dambo?:page', (req, res) => {
 app.get('/loanlist', (req, res) => {
     app.locals.styleNo = 4;
     app.locals.login = loginsession;
+
+
+
+
     res.render(__dirname + '/views/loanlist.ejs', {
         title: "대출이력 | " + siteData.title
     });
@@ -258,12 +262,15 @@ app.get('/write', (req, res) => {
 });
 //글상세
 var attached_P_N = [];
-
 var realsex
+var nowpn = 0;
 app.get('/board?:postno', (req, res) => {
     var comment_content = [];
     var sex = req.params.postno;
+    nowpn = sex;
+    console.log("#1", postinfo[sex].CALL_NO);
     if (loginsession != 0) {
+        console.log("#2", postinfo[sex].CALL_NO);
         if (postinfo[sex].CALL_NO == localUserID || loginsession == 5) {
             app.locals.styleNo = 8;
             realsex = postinfo[sex];
@@ -577,26 +584,174 @@ app.post('/commentsave', function (req, res, next) {
     var content = req.body.content;
     var contentNO = 0;
     var c_postno = realsex.POST_NO;
-
+    console.log(realsex);
     var sql = "SELECT COMMENT_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM manspawnshop.comment B WHERE POST_NO = ? ORDER BY B.COMMENT_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE D.ROWNUM='1'; ";
     conn.query(sql, c_postno, function (err, rows) {
         if (err) console.error("err : " + err);
         if (rows[0] == null) {
             contentNO = 0;
-            console.log("###############################");
-
         } else {
-            console.log("###############################");
-            console.log("#1", rows[0].COMMENT_NO, contentNO);
             contentNO = Number(rows[0].COMMENT_NO);
-            console.log("#2", rows[0].COMMENT_NO, contentNO);
         }
         var commentdata = [contentNO + 1, c_postno, content];
-        console.log("#end", contentNO);
-        console.log("###############################");
+
         sql = 'INSERT INTO MANSPAWNSHOP.COMMENT(COMMENT_NO, POST_NO, CONTENT) VALUES(?, ?, ?);'
         conn.query(sql, commentdata, function (err, rows) {
             if (err) console.error("err : " + err);
+
         });
     });
+
+    console.log(nowpn);
+    res.redirect("/board" + nowpn);
+
+});
+
+
+app.get('/deliver', function (req, res, next) {
+    app.locals.styleNo = 9;
+    app.locals.login = loginsession;
+    res.render(__dirname + '/views/deliver.ejs', {
+        title: "대출이력 | " + siteData.title
+    });
+
+});
+
+var lastloan_no = "";
+var lastsec_no = "";
+app.get('/menage', function (req, res, next) {
+    app.locals.styleNo = 10;
+    app.locals.login = loginsession;
+
+    var sql = 'SELECT LOAN_NO FROM MANSPAWNSHOP.LOAN;';
+    conn.query(sql, function (err, a_rows) {
+        if (err) console.error("err : " + err);
+        if (a_rows[0].LOAN_NO == null) {} else {
+            sql = 'SELECT LOAN_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM manspawnshop.LOAN B ORDER BY B.LOAN_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
+            conn.query(sql, function (err, a_rows) {
+                if (err) console.error("err : " + err);
+                lastloan_no = a_rows[0].LOAN_NO;
+            });
+
+            sql = 'SELECT SEC_NO FROM MANSPAWNSHOP.SECURITY;'
+            conn.query(sql, function (err, b_rows) {
+                if (err) console.error("err : " + err);
+                if (b_rows[0].SEC_NO == null) {} else {
+                    sql = 'SELECT SEC_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM manspawnshop.security B ORDER BY B.SEC_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
+                    conn.query(sql, function (err, b_rows) {
+                        if (err) console.error("err : " + err);
+                        lastsec_no = b_rows[0].SEC_NO;
+                    });
+                }
+            });
+
+        }
+    });
+    res.render(__dirname + '/views/menage.ejs', {
+        title: "관리페이지 | " + siteData.title,
+        lastloan_no: lastloan_no,
+        lastsec_no: lastsec_no
+    });
+
+});
+
+var loan_date = '';
+var give_date = '';
+var filepath = '';
+var storage = multer.diskStorage({ //  파일이름을 유지하기 위해 사용할 변수(중복방지를 위하여 시간을 넣어줫음)
+    destination(req, file, cb) {
+        makeFolder('uploadedFiles/' + 'loan' + '/' + loan_date + '/' + give_date);
+        filepath = 'uploadedFiles/' + 'loan' + '/' + loan_date + '/' + give_date;
+        cb(null, 'uploadedFiles/' + 'loan' + '/' + loan_date + '/' + give_date);
+    },
+    filename(req, file, cb) {
+        var today = new Date();
+        changefilename = `${give_date}__${file.originalname}`;
+        cb(null, `${give_date}__${file.originalname}`);
+    },
+});
+var upload = multer({
+    storage: storage,
+    limits: {
+        file: 10,
+        fileSize: 1024 * 1024 * 1024
+    }
+});
+
+app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
+
+    var total_loan = req.body.total_loan;
+    var principal = req.body.principal;
+    var repayment = req.body.repayment;
+    loan_date = req.body.loan_date;
+    var expirationed = req.body.expirationed;
+    var expenses = req.body.expenses;
+    var day_loan = req.body.day_loan;
+    var interest = req.body.interest;
+    var state = req.body.state;
+    give_date = req.body.give_date;
+    var brand = req.body.brand;
+    var price = req.body.price;
+    var get_date = req.body.get_date;
+    var product = req.body.product;
+
+
+
+    var phone = req.body.phone;
+
+    var loan_no = '';
+    var sec_no = '';
+
+    var loan_data = [];
+    var sec_data = [];
+
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth() + 1;
+    var date = today.getDate();
+    var today_date = String(year) + String(month) + String(date);
+
+    console.log("#1 lastloan_no", lastloan_no);
+    if (lastloan_no != null) {
+        var loandt = lastloan_no.substr(1, 8);
+        if (loandt == today_date) {
+            loandt = lastloan_no.substr(1, 16);
+            loan_no = Number(loandt) + 1;
+            loan_no = String(loan_no);
+            loan_no = 'L' + loan_no;
+            console.log("#1 loan_no", loan_no);
+        }
+    } else {
+        loan_no = 'L' + today_date + String('00000001');
+        console.log("#2 loan_no", loan_no);
+    }
+
+    loan_data = [loan_no, total_loan, principal, repayment, loan_date, expirationed, expenses, day_loan, interest, phone]
+    var sql = 'INSERT INTO MANSPAWNSHOP.LOAN VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    conn.query(sql, loan_data, function (err, rows) {
+        if (err) console.error("err : " + err);
+
+    });
+
+    if (lastsec_no != null) {
+        var loandt = lastsec_no.substr(0, 7);
+        if (loandt == today_date) {
+            loandt = lastsec_no.substr(11, 15);
+            sec_no = today_date + product + loandt;
+            sec_no = String(sec_no);
+            console.log("#3 sec_no", sec_no);
+
+        }
+    } else {
+        sec_no = today_date + product + String('00001');
+        console.log("#4 sec_no", sec_no);
+    }
+
+    sec_data = [sec_no, give_date, brand, price, get_date, , phone, loan_no];
+    sql = 'INSERT INTO MANSPAWNSHOP.SECURITY VALUES (?, ?, ?, ?, ?, ?, ?)';
+    conn.query(sql, sec_data, function (err, rows) {
+        if (err) console.error("err : " + err);
+
+    });
+    res.redirect('/menage');
 });
