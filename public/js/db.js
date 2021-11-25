@@ -9,7 +9,8 @@ var connection = {
     user: 'joker',
     password: 'dlehdrjs1!',
     port: '3306',
-    database: 'manspawnshop'
+    database: 'manspawnshop',
+    dateStrings: "date"
 };
 module.exports = {
     init: function () {

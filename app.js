@@ -22,6 +22,7 @@ var iconvLite = require('iconv-lite');
 const {
     exit
 } = require('process');
+const { query } = require('express');
 
 
 
@@ -123,57 +124,122 @@ app.get('/loanlist', (req, res) => {
         title: "대출이력 | " + siteData.title
     });
 });
-//마이페이지
-app.get('/mypage', (req, res) => {
 
-    var loanState = ['LoanStatement01', 'LoanStatement02', 'LoanStatement03'];
-    var loanStateDatas = new Array(3);
-    var dbValues = new Array(2);
-    var l = 1;
+//마이페이지
+app.get('/mypage?', (req, res) => {
 
     localUserID = '123123';
 
-    const loanStateSql = 'SELECT count(LOAN_NO) AS A FROM MANSPAWNSHOP.LOAN A WHERE A.CALL_NO = ? AND A.STATEMENT = ?';
-
-
-    loanState.forEach(function (item, index, arr) {
-        dbValues = [localUserID, item];
-
-        conn.query(loanStateSql, dbValues, function (err, result) {
-            if (err) {
-                console.log('#!!#query is not excuted. insert fail...\n' + err);
-                res.redirect('/mypage');
-                return;
-            } else {
-                if (result == null) {} else {
-                    loanStateDatas[index] = result[0].A;
-                    console.log(loanStateDatas[index]);
-                }
-            }
-        });
-        l = 0;
-    });
-
-    while (l == 1) {}
-
-    console.log('%%%%%%%%%%%');
-    console.log(loanStateDatas);
-
-    var loanInfoDatas = [
-        ['Rolex', '50,000,000원', '2021.11.22', '대출 진행중'],
-        ['1', '1'],
-        ['11', '22']
-    ];
+    var url = req.url.split('?');
+    var queryData = new Array();
 
     app.locals.styleNo = 5;
-    var sql = "SELECT count(LOAN_NO) MANSPAWNSHOP.FROM LOAN A WHERE A.CALL_NO = ? AND STATEMENT = ? AND LOAN_DATE = ?";
-    res.render(__dirname + '/views/mypage.ejs', {
-        title: "마이페이지 | " + siteData.title,
-        loanState: loanStateDatas,
-        loanInfo: loanInfoDatas
-    });
 
+    var loanStateDatas = new Array(3);
+    var loanInfoDatas = new Array();
+    var loanDateDatas = new Array();
+    var searchDate = new Array();
+
+    if(url[1] != null) { 
+        var params = new URLSearchParams(url[1]);
+        queryData = [localUserID, params.get('date1'), params.get('date2')];
+        searchDate = [params.get('date1'), params.get('date2')];
+    } else {
+        var today = new Date();
+
+        var year = today.getFullYear();
+        var month = today.getMonth() + 1;
+        var day = today.getDate();
+
+        var _today = year + "-" + month + "-" + day;
+
+        queryData = [localUserID, '2021-11-22', _today];
+        searchDate = ['2021-11-22', _today];
+    }
+
+    const loanStateSql = 'SELECT COUNT(LOAN_NO) AS count FROM MANSPAWNSHOP.LOAN A WHERE A.CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY STATEMENT;';
+    const loanInfoSql = 'SELECT * FROM ( SELECT * FROM (SELECT A.LOAN_PRINCIPAL, A.LOAN_DATE, A.STATEMENT, B.PRODUCT FROM MANSPAWNSHOP.LOAN AS A LEFT OUTER JOIN( SELECT * FROM MANSPAWNSHOP.security ) AS B ON (B.LOAN_NO = A.LOAN_NO) WHERE A.CALL_NO = ? ) AS C LEFT OUTER JOIN( SELECT *  FROM manspawnshop.code_entity ) AS D ON (C.PRODUCT = D.C_ID) WHERE C.LOAN_DATE BETWEEN ? AND ?) AS E LEFT OUTER JOIN( SELECT F.C_ID AS LOAN_ID , F.C_NAME AS STATENAME FROM manspawnshop.code_entity F ) AS G ON (E.STATEMENT = G.LOAN_ID) ORDER BY LOAN_ID DESC';
+    const loanDateSql = 'SELECT LOAN_DATE, COUNT(LOAN_DATE) AS COUNT FROM MANSPAWNSHOP.LOAN WHERE CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY LOAN_DATE ORDER BY LOAN_DATE DESC';
+
+    conn.query(loanStateSql, queryData, function (err, result) {
+        if (err) {
+            console.log('#!!#query is not excuted. insert fail...\n' + err);
+            res.redirect('/mypage');
+            return;
+        } else {
+            if (result == null) {} else {
+                loanStateDatas = result;
+
+                conn.query(loanInfoSql, queryData, function (err, result) {
+                    if (err) {
+                        console.log('#!!#query is not excuted. insert fail...\n' + err);
+                        res.redirect('/mypage');
+                        return;
+                    } else {
+                        if (result == null) {
+                            loanInfoDatas = null;
+                        } else {
+                            for (var i = 0; i < result.length; i++) {
+                                var a = result[i].LOAN_PRINCIPAL;
+                                a = String(a);
+                                var _length = a.length;
+                                var position = 1;
+                                var h = _length % 3;
+                                var _mod = _length / 3;
+                                var n = 0;
+
+                                if (h == 1) {
+                                    position = 1;
+                                } else if (h == 2) {
+                                    position = 2;
+                                } else {
+                                    position = 3;
+                                }
+
+                                for (; n < _mod; n++) {
+                                    if (h == 0 || position >= _length) {
+                                        break;
+                                    }
+                                    a = [a.slice(0, position), ',', a.slice(position)].join('');
+                                    position += 4;
+                                }
+
+                                result[i].LOAN_PRINCIPAL = a;
+                                loanInfoDatas.push(result[i]);
+                            }
+
+                            conn.query(loanDateSql, queryData, function (err, result) {
+                                var count = 0
+                                if (err) {
+                                    console.log('#!!#query is not excuted. insert fail...\n' + err);
+                                    res.redirect('/mypage');
+                                    return;
+                                } else {
+                                    if (result == null) {} else {
+                                        for (var i = 0; i < result.length; i++) {
+                                            count += result[i].COUNT;
+                                        }
+                                        loanDateDatas = result;
+                                    }
+                                }
+
+                                res.render(__dirname + '/views/mypage.ejs', {
+                                    title: "마이페이지 | " + siteData.title,
+                                    loanState: loanStateDatas,
+                                    loanInfo: loanInfoDatas,
+                                    loanDate: loanDateDatas,
+                                    searchDate: searchDate,
+                                    count: count
+                                });
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    });
 });
+
 //로그인화면
 app.get('/sign_up', (req, res) => {
     app.locals.styleNo = 6;
@@ -202,34 +268,33 @@ app.get('/board?:postno', (req, res) => {
             app.locals.styleNo = 8;
             realsex = postinfo[sex];
             var commentsql = "SELECT CONTENT FROM MANSPAWNSHOP.COMMENT WHERE POST_NO = ?";
-            conn.query(commentsql, realsex.POST_NO, function(err, rows){
-                if(rows[0]==null){
+            conn.query(commentsql, realsex.POST_NO, function (err, rows) {
+                if (rows[0] == null) {
                     comment_content[0] = null;
-                }
-                 else{
-                    for(var i = 0; i<rows.length;i++){
+                } else {
+                    for (var i = 0; i < rows.length; i++) {
                         comment_content[i] = rows[i];
-                        console.log("#i",i);
+                        console.log("#i", i);
                     }
                 }
-                
+
             });
 
             var sql = 'SELECT * FROM ATTACHED_FILE WHERE ATTACHED_POST_NO = ?';
             var i;
-            conn.query(sql, realsex.POST_NO,  function (err, rows) {
+            conn.query(sql, realsex.POST_NO, function (err, rows) {
                 if (err) console.log(err);
                 for (i = 0; i < rows.length; i++) {
                     attached_P_N[i] = rows[i];
                 }
-                 res.render(__dirname + '/views/board.ejs', {
+                res.render(__dirname + '/views/board.ejs', {
                     title: "한도 문의 본문 | " + sex + siteData.title,
-                    comment_content:comment_content,
+                    comment_content: comment_content,
                     realsex: realsex,
                     attached_P_N: attached_P_N
                 });
             });
-        }else{
+        } else {
             res.send('<script type="text/javascript">alert("내 글만 볼 수 있어요!!");document.location.href="/";</script>');
         }
 
@@ -356,7 +421,6 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
     var month = today.getMonth() + 1;
     var date = today.getDate();
     var write_date = String(year) + String(month) + String(date);
-
 
     var files = req.files;
 
@@ -515,23 +579,23 @@ app.post('/commentsave', function (req, res, next) {
     var c_postno = realsex.POST_NO;
 
     var sql = "SELECT COMMENT_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM manspawnshop.comment B WHERE POST_NO = ? ORDER BY B.COMMENT_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE D.ROWNUM='1'; ";
-    conn.query(sql,c_postno , function (err, rows){
+    conn.query(sql, c_postno, function (err, rows) {
         if (err) console.error("err : " + err);
-        if(rows[0]==null){
+        if (rows[0] == null) {
             contentNO = 0;
             console.log("###############################");
 
-        }else{
+        } else {
             console.log("###############################");
-            console.log("#1",rows[0].COMMENT_NO, contentNO);
+            console.log("#1", rows[0].COMMENT_NO, contentNO);
             contentNO = Number(rows[0].COMMENT_NO);
-            console.log("#2",rows[0].COMMENT_NO, contentNO);
+            console.log("#2", rows[0].COMMENT_NO, contentNO);
         }
-        var commentdata = [contentNO + 1,c_postno,content];
-        console.log("#end",contentNO);
+        var commentdata = [contentNO + 1, c_postno, content];
+        console.log("#end", contentNO);
         console.log("###############################");
         sql = 'INSERT INTO MANSPAWNSHOP.COMMENT(COMMENT_NO, POST_NO, CONTENT) VALUES(?, ?, ?);'
-        conn.query(sql,commentdata , function (err, rows){
+        conn.query(sql, commentdata, function (err, rows) {
             if (err) console.error("err : " + err);
         });
     });
