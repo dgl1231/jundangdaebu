@@ -46,24 +46,24 @@
                 <tbody>
                     <tr>
                         <td><a class="guide-btn" href="/dambo1">한도 조회</a></th>
-                        <td><a id="show1" data-togle class="guide-btn" href="#">필요서류안내</a></th>
+                        <td><a id="show1" class="guide-btn" href="#">필요서류안내</a></th>
                         <td><a class="guide-btn" href="/mypage">대출진행 상황안내</a></th>
-                        <td><a id="show2" data-togle class="guide-btn" href="#">매월 이자 상환 방법</a></th>
+                        <td><a id="show2" class="guide-btn" href="#">매월 이자 상환 방법</a></th>
                     </tr>
                     <tr>
                         <td><a class="guide-btn" href="/deliver">담보 절차 안내</a></th>
-                        <td><a id="show3" data-togle class="guide-btn" href="#">전자계약이란?</a></th>
-                        <td><a id="show4" data-togle class="guide-btn" href="#">이자 안내</a></th>
+                        <td><a id="show3" class="guide-btn" href="#">전자계약이란?</a></th>
+                        <td><a id="show4" class="guide-btn" href="#">이자 안내</a></th>
                         <td><a class="guide-btn" href=""></a></th>
                     </tr>
                     <tr>
                         <td><a class="guide-btn" href="/deliver">담보 배송</a></th>
-                        <td><a id="show5" data-togle class="guide-btn" href="#">전자계약 절차안내</a></th>
-                        <td><a id="show6" data-togle class="guide-btn" href="#">대출시 유의사항</a></th>
+                        <td><a id="show5" class="guide-btn" href="#">전자계약 절차안내</a></th>
+                        <td><a id="show6" class="guide-btn" href="#">대출시 유의사항</a></th>
                     </tr>
                     <tr>
-                        <td><a id="show7" data-togle class="guide-btn" href="#">대출한도 안내</a></th>
-                        <td><a id="show8" data-togle class="guide-btn" href="#">서류 첨부시 유의사항</a></th>
+                        <td><a id="show7" class="guide-btn" href="#">대출한도 안내</a></th>
+                        <td><a id="show8" class="guide-btn" href="#">서류 첨부시 유의사항</a></th>
                         <td>
                             </th>
                         <td>
@@ -72,11 +72,11 @@
                 </tbody>
             </table>
             <div class=" start">
-                                <%if(login == 0){%>
-                                <a href="/sign_up">
-                                    <%}else if(login != 0){%>
-                                    <a href="/goloan">
-                                        <%}%>
+                <%if(login == 0){%>
+                <a href="/sign_up">
+                    <%}else if(login != 0){%>
+                    <a href="/deliver">
+                        <%}%>
                 <img class="startbutton" src="../img/loan/deba.png" alt=""></a>
             </div>
 
@@ -89,10 +89,10 @@
         <div class="loan-mid-btn">
                 <a href="/dambo1"><img class="dacul-btn1" src="../img/loan/시세 확인.png" alt=""></a>
                 <%if(login == 0){%>
-                                        <a href="/sign_up">
-                                            <%}else if(login != 0){%>
-                                            <a href="/deliver">
-                                                <%}%>
+                        <a href="/sign_up">
+                            <%}else if(login != 0){%>
+                            <a href="/deliver">
+                                <%}%>
                 <img class="dacul-btn2" src="../img/loan/대출 확인.png" alt=""></a>
         </div>
         <div class="loan-bottom-human">
@@ -110,7 +110,7 @@
                         <button id="close1" class="close">X</button> 
                     </div>
                     <div class="popup-bottom">
-                        <div class="con_pop">
+                        <div class="con_pop1">
                             내용
                         </div>
                     </div>
@@ -129,10 +129,22 @@
                         <button id="close2" class="close">X</button> 
                     </div>
                     <div class="popup-bottom">
-                        <div class="con_pop">
-                            내용
+                        <div class="con_pop1">
+                            
+                        <p>1.상환일 안내</p> <br>
+                            <p>대출 계약 시 안내받으신 이자를 계약서에 기재된 상환일에 매월 납부하시고,</p><br>
+                            <p>만기일에 고지된 잔금 및 이자를 납부하시면 됩니다.</p> <br><br>
+                            <p >2.상환계좌 안내</p><br>
+                            <p>대출 계약 시 안내받으신 이자를 아래의 계좌에  </p><br>
+                            <p>대출자의 성명이 기재되도록 납부해주시면 됩니다. </p><br><br>
+                            <p>[계좌번호]</p>    <br> 
+                            <p>국민은행 000-00000-0000000 방구석전당대부 </p><br>
+                            <p>상환 방법에 관한 자세한 내용은</p><br>
+                            <p><a calss="mpbtn" href="/mypage">>마이페이지<</a> 에서 확인하실 수 있습니다. </p><br>
+                            
                         </div>
-                    </div>
+                    
+                        </div>
                 </div>
             </div>
         </div>
@@ -148,7 +160,7 @@
                         <button id="close3" class="close">X</button> 
                     </div>
                     <div class="popup-bottom">
-                        <div class="con_pop">
+                        <div class="con_pop1">
                             내용
                         </div>
                     </div>
@@ -167,8 +179,23 @@
                         <button id="close4" class="close">X</button> 
                     </div>
                     <div class="popup-bottom">
-                        <div class="con_pop">
-                            내용
+                        <div class="popup-bottom-con">
+                        <div class="con_pop1">
+                            <p>대출 진행 시 해당 담보의 종류와 상태에 따라 한도와 금리가 책정됩니다.</p> <br>
+                            <p>평균 금리는 월 0.83% 내외로, 전당포 중 최저금리로 대출 가능하시고</p><br>
+                            <p>정확한 금리는 대출 계약 체결 시 고지해드립니다.</p> <br>
+                            <p class="solo_pop">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                [이자 계산법]</p><br>
+                            <p>대출원금(원) X 월 금리(%) = 매월 납부 이자  </p><br>
+                            <p>이외에 문의사항이 있으신 경우, 아래 연락처로 답변을 받으실 수 있습니다.</p>    <br> <br>
+                        </div>
+                        <div class="con_pop2">
+                            <p>KAKAO TALK : banggusuk </p><br>
+                            <p>MOBILE     : 010-4082-5606 </p><br>
+                            <p>Tel        : 02) </p><br>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -186,7 +213,7 @@
                         <button id="close5" class="close">X</button> 
                     </div>
                     <div class="popup-bottom">
-                        <div class="con_pop">
+                        <div class="con_pop1">
                             내용
                         </div>
                     </div>
@@ -205,9 +232,11 @@
                         <button id="close6" class="close">X</button> 
                     </div>
                     <div class="popup-bottom">
-                        <div class="con_pop">
-                            내용
+                        <div class="con_pop1">
+                            담보 대출 약관 서류 첨부
+                            <a href="/file/file.zip" download="대출약관서류" class="attachedfile" role="button">대출약관서류 다운로드 <<<<</a>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -224,8 +253,20 @@
                         <button id="close7" class="close">X</button> 
                     </div>
                     <div class="popup-bottom">
-                        <div class="con_pop">
-                            내용
+                        <div class="popup-bottom-con">
+                        <div class="con_pop1">
+                            <p> 위의 '담보 절차 안내'를 확인하시고 '담보 배송'까지 완료 하셨다면,</p> <br>
+                            <p>저희 방구석에서 물품의 상태를 확인하고,</p><br>
+                            <p>로그인 시 입력하셨던 연락처 정보를 통해</p> <br>
+                            <p>해당 물품의 대출 한도금액을 고지해드립니다. </p><br>
+                            <p>이외에 문의사항이 있으신 경우, </p><br>
+                            <p>아래 연락처로 답변을 받으실 수 있습니다. </p>    <br><br>
+                        </div>
+                        <div class="con_pop2">
+                            <p>KAKAO TALK : banggusuk </p><br>
+                            <p>MOBILE     : 010-4082-5606 </p><br>
+                            <p>Tel        : 02) </p><br>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -243,7 +284,7 @@
                         <button id="close8" class="close">X</button> 
                     </div>
                     <div class="popup-bottom">
-                        <div class="con_pop">
+                        <div class="con_pop1">
                             내용
                         </div>
                     </div>

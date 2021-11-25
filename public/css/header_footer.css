@@ -3,11 +3,11 @@
     margin: 0 auto;
     box-sizing: border-box;
     position: relative;
-    font-size: 25px;
 }
 header.section{
     border-bottom:2px solid rgba(146, 146, 146, 0.664);
-    font-family: 'Cute Font', cursive;
+    font-family: 'Jua',sans-serif;
+    font-size: 20px;
     font-weight: bolder;
 
 }
