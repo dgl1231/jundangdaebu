@@ -3,11 +3,11 @@
     margin: 0 auto;
     box-sizing: border-box;
     position: relative;
-    font-size: 25px;
 }
 header.section{
     border-bottom:2px solid rgba(146, 146, 146, 0.664);
-    font-family: 'Cute Font', cursive;
+    font-family: 'Jua',sans-serif;
+    font-size: 20px;
     font-weight: bolder;
 
 }
@@ -73,8 +73,7 @@ header .main-menu {
     display: block;
     padding: 15px;
     margin-top: 8px;
-    color: black;
-    border:2px dashed gray;
+    color: rgb(30, 184, 255);
     text-decoration-line:none;
 }
 .sign_up_btn:hover {
