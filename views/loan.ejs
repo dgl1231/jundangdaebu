@@ -1,104 +1,256 @@
-    <div class="body__container">
+<script defer src="/js/pop.js"></script>
 
-        <div class="main-container">
-            <div class="loan-top">
-                대출절차
+<div class="body__container">
+    <div class="main-container">
+        <div class="loan-top">
+            대출절차
+        </div>
+        <div class="loan-tb">
+            <div class="step1">
+                <img class="step1-img" src="../img/loan/step1.png" alt="">
             </div>
-            <div class="loan-tb">
-                <div class="step1">
-                    <img class="step1-img" src="../img/loan/step1.png" alt="">
-                </div>
-                <div class="step2">
-                    <img class="step2-img" src="../img/loan/step2.png" alt="">
-                </div>
-                <div class="step3">
-                    <img class="step3-img" src="../img/loan/step3.png" alt="">
-                </div>
-                <div class="step4">
-                    <img class="step4-img" src="../img/loan/step4.png" alt="">
-                </div>
+            <div class="step2">
+                <img class="step2-img" src="../img/loan/step2.png" alt="">
             </div>
-            <div class="loan-middle">
-                <div class="step1">
-                    <img class="step1img" src="../img/loan/steppoint1.png" alt="">
-                </div>
-                <div class="step2">
-                    <img class="step2img" src="../img/loan/steppoint2.png" alt="">
-                </div>
-                <div class="step3">
-                    <img class="step3img" src="../img/loan/steppoint3.png" alt="">
-                </div>
-                <div class="step4">
-                    <img class="step4img" src="../img/loan/steppoint4.png" alt="">
-                </div>
+            <div class="step3">
+                <img class="step3-img" src="../img/loan/step3.png" alt="">
             </div>
-            <div class="loan-bottom">
-                <table class="type11">
-                    <thead>
-                        <tr>
-                            <th scope="cols">한 도 조 회</th>
-                            <th scope="cols">전 자 계 약</th>
-                            <th scope="cols">대 출 진 행</th>
-                            <th scope="cols">상 환 절 차</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a class="guide-btn" href="/dambo1">한도 조회</a></th>
-                            <td><a class="guide-btn" href="">필요서류 안내</a></th>
-                            <td><a class="guide-btn" href="">대출진행 상황안내</a></th>
-                            <td><a class="guide-btn" href="">매월 이자 상환 방법</a></th>
-                        </tr>
-                        <tr>
-                            <td><a class="guide-btn" href="">담보 절차 안내</a></th>
-                            <td><a class="guide-btn" href="">전자계약이란?</a></th>
-                            <td><a class="guide-btn" href="">이자 안내</a></th>
-                            <td><a class="guide-btn" href=""></a></th>
-                        </tr>
-                        <tr>
-                            <td><a class="guide-btn" href="">담보 배송</a></th>
-                            <td><a class="guide-btn" href="">전자계약 절차안내</a></th>
-                            <td><a class="guide-btn" href="">대출시 유의사항</a></th>
-                            <td><a class="guide-btn" href=""></a></th>
-                        </tr>
-                        <tr>
-                            <td><a class="guide-btn" href="">대출한도 안내</a></th>
-                            <td><a class="guide-btn" href="">서류 첨부시 유의사항</a></th>
-                            <td>
-                                </th>
-                            <td>
-                                </th>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="start">
-                    <%if(login == 0){%>
-                    <a href="/sign_up">
-                    <%}else if(login != 0){%>
-                    <a href="/goloan">
-                    <%}%>
-                        <img class="startbutton" src="../img/loan/deba.png" alt=""></a>
-                </div>
+            <div class="step4">
+                <img class="step4-img" src="../img/loan/step4.png" alt="">
+            </div>
+        </div>
+        <div class="loan-middle">
+            <div class="step1">
+                <img class="step1img" src="../img/loan/steppoint1.png" alt="">
+            </div>
+            <div class="step2">
+                <img class="step2img" src="../img/loan/steppoint2.png" alt="">
+            </div>
+            <div class="step3">
+                <img class="step3img" src="../img/loan/steppoint3.png" alt="">
+            </div>
+            <div class="step4">
+                <img class="step4img" src="../img/loan/steppoint4.png" alt="">
+            </div>
+        </div>
+        <div class="loan-bottom">
+            <table class="type11">
+                <thead>
+                    <tr>
+                        <th scope="cols">한 도 조 회</th>
+                        <th scope="cols">전 자 계 약</th>
+                        <th scope="cols">대 출 진 행</th>
+                        <th scope="cols">상 환 절 차</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a class="guide-btn" href="/dambo1">한도 조회</a></th>
+                        <td><a id="show1" data-togle class="guide-btn" href="#">필요서류안내</a></th>
+                        <td><a class="guide-btn" href="/mypage">대출진행 상황안내</a></th>
+                        <td><a id="show2" data-togle class="guide-btn" href="#">매월 이자 상환 방법</a></th>
+                    </tr>
+                    <tr>
+                        <td><a class="guide-btn" href="/deliver">담보 절차 안내</a></th>
+                        <td><a id="show3" data-togle class="guide-btn" href="#">전자계약이란?</a></th>
+                        <td><a id="show4" data-togle class="guide-btn" href="#">이자 안내</a></th>
+                        <td><a class="guide-btn" href=""></a></th>
+                    </tr>
+                    <tr>
+                        <td><a class="guide-btn" href="/deliver">담보 배송</a></th>
+                        <td><a id="show5" data-togle class="guide-btn" href="#">전자계약 절차안내</a></th>
+                        <td><a id="show6" data-togle class="guide-btn" href="#">대출시 유의사항</a></th>
+                    </tr>
+                    <tr>
+                        <td><a id="show7" data-togle class="guide-btn" href="#">대출한도 안내</a></th>
+                        <td><a id="show8" data-togle class="guide-btn" href="#">서류 첨부시 유의사항</a></th>
+                        <td>
+                            </th>
+                        <td>
+                            </th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class=" start">
+                                <%if(login == 0){%>
+                                <a href="/sign_up">
+                                    <%}else if(login != 0){%>
+                                    <a href="/goloan">
+                                        <%}%>
+                <img class="startbutton" src="../img/loan/deba.png" alt=""></a>
             </div>
 
         </div>
-        
-        <div class="main-container">
-            <div class="loan-top-how">
+    </div>
+    <div class="main-container">
+        <div class="loan-top-how">
                 내 물건은 얼마나 할까?
-            </div>
-            <div class="loan-mid-btn">
+        </div>
+        <div class="loan-mid-btn">
                 <a href="/dambo1"><img class="dacul-btn1" src="../img/loan/시세 확인.png" alt=""></a>
                 <%if(login == 0){%>
-                    <a href="/sign_up">
-                    <%}else if(login != 0){%>
-                        <a href="/deliver">
-                    <%}%>
+                                        <a href="/sign_up">
+                                            <%}else if(login != 0){%>
+                                            <a href="/deliver">
+                                                <%}%>
                 <img class="dacul-btn2" src="../img/loan/대출 확인.png" alt=""></a>
-            </div>
-            <div class="loan-bottom-human">
+        </div>
+        <div class="loan-bottom-human">
                 <img class="human" src="../img/loan/human.png" alt="">
+            
+        </div>
+        <!---------------------------------------------------------------------->
+        <div id = "pop1" class="bg1" onclick="">
+            <div class="window">
+                <div class="popup">
+                    <div class="popup-top"> 
+                        <div class="title_pop">
+                            필요서류안내
+                        </div>
+                        <button id="close1" class="close">X</button> 
+                    </div>
+                    <div class="popup-bottom">
+                        <div class="con_pop">
+                            내용
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <div id = "pop2" class="bg2" onclick="">
+            <div class="window">
+                <div class="popup">
+                    <div class="popup-top"> 
+                        <div class="title_pop">
+                            매월 이자 상환 방법
+                        </div>
+                        <button id="close2" class="close">X</button> 
+                    </div>
+                    <div class="popup-bottom">
+                        <div class="con_pop">
+                            내용
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <div id = "pop3" class="bg3" onclick="">
+            <div class="window">
+                <div class="popup">
+                    <div class="popup-top"> 
+                        <div class="title_pop">
+                            전자계약이란?
+                        </div>
+                        <button id="close3" class="close">X</button> 
+                    </div>
+                    <div class="popup-bottom">
+                        <div class="con_pop">
+                            내용
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <div id = "pop4" class="bg4" onclick="">
+            <div class="window">
+                <div class="popup">
+                    <div class="popup-top"> 
+                        <div class="title_pop">
+                            이자 안내
+                        </div>
+                        <button id="close4" class="close">X</button> 
+                    </div>
+                    <div class="popup-bottom">
+                        <div class="con_pop">
+                            내용
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <div id = "pop5" class="bg5" onclick="">
+            <div class="window">
+                <div class="popup">
+                    <div class="popup-top"> 
+                        <div class="title_pop">
+                            전자계약 절차안내
+                        </div>
+                        <button id="close5" class="close">X</button> 
+                    </div>
+                    <div class="popup-bottom">
+                        <div class="con_pop">
+                            내용
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <div id = "pop6" class="bg6" onclick="">
+            <div class="window">
+                <div class="popup">
+                    <div class="popup-top"> 
+                        <div class="title_pop">
+                            대출시 유의사항
+                        </div>
+                        <button id="close6" class="close">X</button> 
+                    </div>
+                    <div class="popup-bottom">
+                        <div class="con_pop">
+                            내용
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <div id = "pop7" class="bg7" onclick="">
+            <div class="window">
+                <div class="popup">
+                    <div class="popup-top"> 
+                        <div class="title_pop">
+                            대출한도 안내
+                        </div>
+                        <button id="close7" class="close">X</button> 
+                    </div>
+                    <div class="popup-bottom">
+                        <div class="con_pop">
+                            내용
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
+        <!---------------------------------------------------------------------->
+        <div id = "pop8" class="bg8" onclick="">
+            <div class="window">
+                <div class="popup">
+                    <div class="popup-top"> 
+                        <div class="title_pop">
+                            서류 첨부시 유의사항
+                        </div>
+                        <button id="close8" class="close">X</button> 
+                    </div>
+                    <div class="popup-bottom">
+                        <div class="con_pop">
+                            내용
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------->
 
     </div>
+</div>

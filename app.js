@@ -582,8 +582,8 @@ app.get('/menage', function (req, res, next) {
     });
     res.render(__dirname + '/views/menage.ejs', {
         title: "관리페이지 | " + siteData.title,
-        lastloan_no:lastloan_no,
-        lastsec_no:lastsec_no
+        lastloan_no: lastloan_no,
+        lastsec_no: lastsec_no
     });
 
 });
@@ -627,8 +627,8 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
     var price = req.body.price;
     var get_date = req.body.get_date;
     var product = req.body.product;
-    
-    
+
+
 
     var phone = req.body.phone;
 
@@ -644,7 +644,7 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
     var date = today.getDate();
     var today_date = String(year) + String(month) + String(date);
 
-    console.log("#1 lastloan_no",lastloan_no);
+    console.log("#1 lastloan_no", lastloan_no);
     if (lastloan_no != null) {
         var loandt = lastloan_no.substr(1, 8);
         if (loandt == today_date) {
@@ -652,16 +652,16 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
             loan_no = Number(loandt) + 1;
             loan_no = String(loan_no);
             loan_no = 'L' + loan_no;
-            console.log("#1 loan_no",loan_no);
+            console.log("#1 loan_no", loan_no);
         }
     } else {
         loan_no = 'L' + today_date + String('00000001');
-        console.log("#2 loan_no",loan_no);
+        console.log("#2 loan_no", loan_no);
     }
-    
+
     loan_data = [loan_no, total_loan, principal, repayment, loan_date, expirationed, expenses, day_loan, interest, phone]
     var sql = 'INSERT INTO MANSPAWNSHOP.LOAN VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-    conn.query(sql,loan_data, function (err, rows) {
+    conn.query(sql, loan_data, function (err, rows) {
         if (err) console.error("err : " + err);
 
     });
@@ -669,20 +669,20 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
     if (lastsec_no != null) {
         var loandt = lastsec_no.substr(0, 7);
         if (loandt == today_date) {
-            loandt = lastsec_no.substr(11,15);
-            sec_no = today_date+product+loandt;
+            loandt = lastsec_no.substr(11, 15);
+            sec_no = today_date + product + loandt;
             sec_no = String(sec_no);
-            console.log("#3 sec_no",sec_no);
+            console.log("#3 sec_no", sec_no);
 
         }
     } else {
-        sec_no = today_date +product+ String('00001');
-        console.log("#4 sec_no",sec_no);
+        sec_no = today_date + product + String('00001');
+        console.log("#4 sec_no", sec_no);
     }
-    
+
     sec_data = [sec_no, give_date, brand, price, get_date, , phone, loan_no];
     sql = 'INSERT INTO MANSPAWNSHOP.SECURITY VALUES (?, ?, ?, ?, ?, ?, ?)';
-    conn.query(sql,sec_data, function (err, rows) {
+    conn.query(sql, sec_data, function (err, rows) {
         if (err) console.error("err : " + err);
 
     });
