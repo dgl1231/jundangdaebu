@@ -4,9 +4,9 @@
             <div class="top">
                 <div class="title">배송절차안내</div>
                 <div class="buttoncontainer">
-                    <a href="javascript:vis(1);" class="btn1st" onclick="">1st</a>
-                    <a href="javascript:vis(2);" class="btn2nd" onclick="">2nd</a>
-                    <a href="javascript:vis(3);" class="btn3rd" onclick="">3rd</a>
+                    <a href="javascript:vis(1);" id="btn1st" onclick="">1st</a>
+                    <a href="javascript:vis(2);" id="btn2nd" onclick="">2nd</a>
+                    <a href="javascript:vis(3);" id="btn3rd" onclick="">3rd</a>
                     <script>
                         function vis(n) {
                             document.getElementById("content1st").style.display = "none";
@@ -14,10 +14,28 @@
                             document.getElementById("content3rd").style.display = "none";
                             if (n == 1) {
                                 document.getElementById("content1st").style.display = "block";
+                                document.getElementById("btn1st").style.color = "rgb(88, 109, 204)";
+                                document.getElementById("btn2nd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn1st").style.fontSize = "65px";
+                                document.getElementById("btn2nd").style.fontSize = "50px";
+                                document.getElementById("btn3rd").style.fontSize = "50px";
                             } else if (n == 2) {
                                 document.getElementById("content2nd").style.display = "block";
+                                document.getElementById("btn1st").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn2nd").style.color = "rgb(88, 109, 204)";
+                                document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn1st").style.fontSize = "50px";
+                                document.getElementById("btn2nd").style.fontSize = "65px";
+                                document.getElementById("btn3rd").style.fontSize = "50px";
                             } else if (n == 3) {
                                 document.getElementById("content3rd").style.display = "block";
+                                document.getElementById("btn1st").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn2nd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn3rd").style.color = "rgb(88, 109, 204)";
+                                document.getElementById("btn1st").style.fontSize = "50px";
+                                document.getElementById("btn2nd").style.fontSize = "50px";
+                                document.getElementById("btn3rd").style.fontSize = "65px";
                             }
                         }
                     </script>

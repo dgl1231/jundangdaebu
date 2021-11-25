@@ -9,32 +9,29 @@
     font-family: "Jua", sans-serif;
     display: block;
 }
-
 .title_back {
     padding-top: 2%;
 }
 
 .title {
     text-align: center;
-    font-size: 70px;
+    font-size: 40px;
     margin-top: 20px;
 }
-.board{
-    padding-top: 40px;
-    width: 100%;
-    height: 550px;
-    display: flex;
-}
-.leftpadding{
-    width: 10%;
-    height: 400px;
-}
-.rightpadding{
-    width: 10%;
-    height: 400px;
-}
 
-.mainboard{
-    width: 80%;
-    height: 400px;
+.blueone{
+    margin-top:20px;
+}
+.FUCK_in{
+    margin-top:10px;
+}
+.FUCK{
+    margin-top:20px;
+}
+.loan{
+    padding-left: 42.5%;
+    width: 20%;
+}
+.submit_btn_td{
+    text-align: center;
 }

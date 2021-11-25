@@ -36,10 +36,10 @@
             <tr>
                 <td class="table_title">댓글</td>
                 <td class="commentarea">
-                    <%if(comment_content != null){%>
+                    <%if(comment_content[0] != null){ %>
                     <%for(var i=0; i < comment_content.length; i++){%>
                     <p class = "rowcomment">&nbsp; <%= comment_content[i].CONTENT %></p>
-                    <%console.log(comment_content[i].CONTENT);}}%>
+                    <%}}%>
             </td>
             </tr>
             <tr>
