@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const PORT = process.env.PORT || 8001;
+const PORT = normalizePort(process.env.PORT || '8001');;
 const app = express();
 const bodyParser = require('body-parser');
 const {
@@ -28,6 +28,23 @@ const {
 const {
     CONNREFUSED
 } = require('dns');
+
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
 
 
 
@@ -65,10 +82,11 @@ app.set('layout', 'layout/layout');
 
 //listening
 app.listen(PORT, () => {
-    var dir = './uploadedFiles';
+    var dir = __dirname+'/uploadedFiles';
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
-    console.log('Listening on http://localhost:${ ' + PORT + ' }')
+    console.log('Listening on http://localhost:${ ' + PORT + ' }');
+    console.log(__dirname + '/uploadedFiles');
 });
 
 express().use(require('express-ejs-layouts'));
