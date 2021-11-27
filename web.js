@@ -164,6 +164,7 @@ app.get('/mypage?', (req, res) => {
     var searchDate = new Array();
     var docuCount = new Array();
     var documents = new Array();
+    var count = 0;
 
     if (url[1] != null) {
         var params = new URLSearchParams(url[1]);
@@ -195,8 +196,11 @@ app.get('/mypage?', (req, res) => {
             return;
         } else {
             if (result[0] == null) {
-
                 loanStateDatas = null;
+                loanInfoDatas = null;
+                loanDateDatas = null;
+                docuCount = null;
+                documents = null;
             } else {
                 loanStateDatas = result;
 
@@ -208,6 +212,9 @@ app.get('/mypage?', (req, res) => {
                     } else {
                         if (result[0] == null) {
                             loanInfoDatas = null;
+                            loanDateDatas = null;
+                            docuCount = null;
+                            documents = null;
                         } else {
                             for (var i = 0; i < result.length; i++) {
                                 var a = result[i].LOAN_PRINCIPAL;
@@ -244,13 +251,17 @@ app.get('/mypage?', (req, res) => {
                             }
 
                             conn.query(loanDateSql, queryData, function(err, result) {
-                                var count = 0;
+
                                 if (err) {
                                     console.log('#!!#query is not excuted. insert fail...\n' + err);
                                     res.redirect('/mypage');
                                     return;
                                 } else {
-                                    if (result[0] == null) {} else {
+                                    if (result[0] == null) {
+                                        loanDateDatas = null;
+                                        docuCount = null;
+                                        documents = null;
+                                    } else {
                                         for (var i = 0; i < result.length; i++) {
                                             count += result[i].COUNT;
                                         }
@@ -265,6 +276,7 @@ app.get('/mypage?', (req, res) => {
                                             } else {
                                                 if (result[0] == null) {
                                                     docuCount = null;
+                                                    documents = null;
                                                 } else {
                                                     docuCount = result;
                                                 }
@@ -279,18 +291,6 @@ app.get('/mypage?', (req, res) => {
                                                             documents = null;
                                                         } else {
                                                             documents = result;
-
-
-                                                            res.render(__dirname + '/views/mypage.ejs', {
-                                                                title: "마이페이지 | " + siteData.title,
-                                                                loanState: loanStateDatas,
-                                                                loanInfo: loanInfoDatas,
-                                                                loanDate: loanDateDatas,
-                                                                documents: documents,
-                                                                searchDate: searchDate,
-                                                                docuCount: docuCount,
-                                                                count: count
-                                                            });
                                                         }
                                                     }
                                                 });
@@ -304,6 +304,16 @@ app.get('/mypage?', (req, res) => {
                     }
                 });
             }
+            res.render(__dirname + '/views/mypage.ejs', {
+                title: "마이페이지 | " + siteData.title,
+                loanState: loanStateDatas,
+                loanInfo: loanInfoDatas,
+                loanDate: loanDateDatas,
+                documents: documents,
+                searchDate: searchDate,
+                docuCount: docuCount,
+                count: count
+            });
         }
     });
 });
