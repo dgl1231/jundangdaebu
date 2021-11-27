@@ -443,11 +443,27 @@ app.post('/login_check', function (req, res) {
                 });
             } else {
                 if (result[0].NAME == name) {
-                    console.log('기존 회원 로그인 성공');
                     localUserID = phoneNo;
-                    loginsession = 1;
-                    app.locals.login = loginsession;
-                    res.redirect('/');
+                    usersql = 'SELECT USER_CODE FROM dgl1231.user WHERE CALL_NO = ?'
+                    conn.query(usersql, localUserID, function (err, usercode) {
+                        if (err) console.log("err : ", err);
+                        if (usercode[0].USER_CODE == null) {
+                            console.log('기존 회원 로그인 성공');
+                            console.log(usercode);
+                            loginsession = 1;
+                            app.locals.login = loginsession;
+                            res.redirect('/');
+                        } else {
+                            console.log('관리자 로그인 성공');
+                            console.log(usercode);
+                            loginsession = 5;
+                            app.locals.login = loginsession;
+                            res.redirect('/');
+                        }
+                    });
+
+
+
                 } else {
                     // 로그인 실패
                     console.log("기존 회원 로그인 실패");
@@ -479,7 +495,7 @@ var filepath = '';
 var storage = multer.diskStorage({ //  파일이름을 유지하기 위해 사용할 변수(중복방지를 위하여 시간을 넣어줫음)
     destination(req, file, cb) {
         console.log("#씨~!발 mkaeFolder", __dirname, localUserID, datapostno);
-        makeFolder(__dirname +'uploadedFiles/' + localUserID + '/' + datapostno);
+        makeFolder(__dirname + 'uploadedFiles/' + localUserID + '/' + datapostno);
         filepath = __dirname + 'uploadedFiles/' + localUserID + '/' + datapostno;
         cb(null, __dirname + 'uploadedFiles/' + localUserID + '/' + datapostno);
         console.log()
