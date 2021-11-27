@@ -31,19 +31,19 @@ const {
 
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+    var port = parseInt(val, 10);
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+    if (port >= 0) {
+        // port number
+        return port;
+    }
 
-  return false;
+    return false;
 }
 
 
@@ -82,7 +82,7 @@ app.set('layout', 'layout/layout');
 
 //listening
 app.listen(PORT, () => {
-    var dir = __dirname+'/uploadedFiles';
+    var dir = __dirname + '/uploadedFiles';
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
     console.log(__dirname + '/uploadedFiles');
@@ -120,7 +120,7 @@ app.get('/dambo?:page', (req, res) => {
     app.locals.login = loginsession;
     var page = req.params.page;
     var sql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE,PASSWORD,CONTENT,CALL_NO FROM dgl1231.limit_search_post ORDER BY POST_NO DESC";
-    conn.query(sql, function (err, rows) {
+    conn.query(sql, function(err, rows) {
         if (err) console.error("err : " + err);
         else {
             res.render(__dirname + '/views/dambo.ejs', {
@@ -182,24 +182,25 @@ app.get('/mypage?', (req, res) => {
         searchDate = ['2021-11-22', _today];
     }
 
-    const loanStateSql = 'SELECT COUNT(LOAN_NO) AS count FROM dgl1231.LOAN A WHERE A.CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY STATEMENT;';
-    const loanInfoSql = "SELECT * FROM ( SELECT * FROM (SELECT A.LOAN_PRINCIPAL, A.LOAN_DATE, A.STATEMENT, A.LOAN_NO, B.PRODUCT FROM dgl1231.LOAN AS A LEFT OUTER JOIN( SELECT * FROM dgl1231.security ) AS B ON (B.LOAN_NO = A.LOAN_NO) WHERE A.CALL_NO = ?) AS C LEFT OUTER JOIN( SELECT *  FROM dgl1231.code_entity ) AS D ON (C.PRODUCT = D.C_ID) WHERE C.LOAN_DATE BETWEEN ? AND ?) AS E LEFT OUTER JOIN( SELECT F.C_ID AS LOAN_ID , F.C_NAME AS STATENAME FROM dgl1231.code_entity F ) AS G ON (E.STATEMENT = G.LOAN_ID) ORDER BY LOAN_NO DESC";
-    const loanDateSql = 'SELECT LOAN_DATE, COUNT(LOAN_DATE) AS COUNT FROM dgl1231.LOAN WHERE CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY LOAN_DATE ORDER BY LOAN_DATE DESC';
-    const documentCountSql = 'SELECT A.LOAN_NO, COUNT(B.DOCU_NO) AS count FROM (SELECT * FROM dgl1231.LOAN WHERE CALL_NO = ? AND LOAN_DATE BETWEEN ? AND ?) A LEFT OUTER JOIN(SELECT * FROM DOCUMENT) B ON (A.LOAN_NO = B.LOAN_NO) GROUP BY LOAN_NO ORDER BY A.LOAN_NO DESC';
-    const documentsSql = 'SELECT * FROM dgl1231.DOCUMENT WHERE CALL_NO = ? AND SEND_IN_DATE BETWEEN ? AND ? ORDER BY LOAN_NO DESC';
+    const loanStateSql = 'SELECT COUNT(LOAN_NO) AS count FROM dgl1231.loan A WHERE A.CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY STATEMENT;';
+    const loanInfoSql = "SELECT * FROM ( SELECT * FROM (SELECT A.LOAN_PRINCIPAL, A.LOAN_DATE, A.STATEMENT, A.LOAN_NO, B.PRODUCT FROM dgl1231.loan AS A LEFT OUTER JOIN( SELECT * FROM dgl1231.security ) AS B ON (B.LOAN_NO = A.LOAN_NO) WHERE A.CALL_NO = ?) AS C LEFT OUTER JOIN( SELECT *  FROM dgl1231.code_entity ) AS D ON (C.PRODUCT = D.C_ID) WHERE C.LOAN_DATE BETWEEN ? AND ?) AS E LEFT OUTER JOIN( SELECT F.C_ID AS LOAN_ID , F.C_NAME AS STATENAME FROM dgl1231.code_entity F ) AS G ON (E.STATEMENT = G.LOAN_ID) ORDER BY LOAN_NO DESC";
+    const loanDateSql = 'SELECT LOAN_DATE, COUNT(LOAN_DATE) AS COUNT FROM dgl1231.loan WHERE CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY LOAN_DATE ORDER BY LOAN_DATE DESC';
+    const documentCountSql = 'SELECT A.LOAN_NO, COUNT(B.DOCU_NO) AS count FROM (SELECT * FROM dgl1231.loan WHERE CALL_NO = ? AND LOAN_DATE BETWEEN ? AND ?) A LEFT OUTER JOIN(SELECT * FROM document) B ON (A.LOAN_NO = B.LOAN_NO) GROUP BY LOAN_NO ORDER BY A.LOAN_NO DESC';
+    const documentsSql = 'SELECT * FROM dgl1231.document WHERE CALL_NO = ? AND SEND_IN_DATE BETWEEN ? AND ? ORDER BY LOAN_NO DESC';
 
-    conn.query(loanStateSql, queryData, function (err, result) {
+    conn.query(loanStateSql, queryData, function(err, result) {
         if (err) {
             console.log('#!!#query is not excuted. insert fail...\n' + err);
             res.redirect('/mypage');
             return;
         } else {
             if (result[0] == null) {
+
                 loanStateDatas = null;
             } else {
                 loanStateDatas = result;
 
-                conn.query(loanInfoSql, queryData, function (err, result) {
+                conn.query(loanInfoSql, queryData, function(err, result) {
                     if (err) {
                         console.log('#!!#query is not excuted. insert fail...\n' + err);
                         res.redirect('/mypage');
@@ -213,10 +214,10 @@ app.get('/mypage?', (req, res) => {
                                 console.log(a);
                                 a = String(a);
                                 var _length = a.length;
-                                
+
                                 var position = 1;
                                 var h = _length % 3;
-                                
+
 
                                 var _mod = _length / 3;
                                 var n = 0;
@@ -228,7 +229,7 @@ app.get('/mypage?', (req, res) => {
                                 } else {
                                     position = 3;
                                 }
-                                
+
                                 for (; n < _mod; n++) {
                                     if (position >= _length) {
                                         break;
@@ -242,7 +243,7 @@ app.get('/mypage?', (req, res) => {
                                 loanInfoDatas.push(result[i]);
                             }
 
-                            conn.query(loanDateSql, queryData, function (err, result) {
+                            conn.query(loanDateSql, queryData, function(err, result) {
                                 var count = 0;
                                 if (err) {
                                     console.log('#!!#query is not excuted. insert fail...\n' + err);
@@ -255,7 +256,7 @@ app.get('/mypage?', (req, res) => {
                                         }
                                         loanDateDatas = result;
 
-                                        conn.query(documentCountSql, queryData, function (err, result) {
+                                        conn.query(documentCountSql, queryData, function(err, result) {
 
                                             if (err) {
                                                 console.log('#!!#query is not excuted. insert fail...\n' + err);
@@ -264,11 +265,10 @@ app.get('/mypage?', (req, res) => {
                                             } else {
                                                 if (result[0] == null) {
                                                     docuCount = null;
-                                                }
-                                                else {
+                                                } else {
                                                     docuCount = result;
                                                 }
-                                                conn.query(documentsSql, queryData, function (err, result) {
+                                                conn.query(documentsSql, queryData, function(err, result) {
 
                                                     if (err) {
                                                         console.log('#!!#query is not excuted. insert fail...\n' + err);
@@ -338,8 +338,8 @@ app.get('/board?:postno', (req, res) => {
         if (postinfo[sex].CALL_NO == localUserID || loginsession == 5) {
             app.locals.styleNo = 8;
             realsex = postinfo[sex];
-            var commentsql = "SELECT CONTENT FROM dgl1231.COMMENT WHERE POST_NO = ?";
-            conn.query(commentsql, realsex.POST_NO, function (err, rows) {
+            var commentsql = "SELECT CONTENT FROM dgl1231.comment WHERE POST_NO = ?";
+            conn.query(commentsql, realsex.POST_NO, function(err, rows) {
                 if (rows[0] == null) {
                     comment_content[0] = null;
                 } else {
@@ -351,9 +351,9 @@ app.get('/board?:postno', (req, res) => {
 
             });
 
-            var sql = 'SELECT * FROM ATTACHED_FILE WHERE ATTACHED_POST_NO = ?';
+            var sql = 'SELECT * FROM attached_file WHERE ATTACHED_POST_NO = ?';
             var i;
-            conn.query(sql, realsex.POST_NO, function (err, rows) {
+            conn.query(sql, realsex.POST_NO, function(err, rows) {
                 if (err) console.log(err);
                 for (i = 0; i < rows.length; i++) {
                     attached_P_N[i] = rows[i];
@@ -384,7 +384,7 @@ app.get('/log_out', (req, res) => {
     res.redirect('/');
 });
 //로그인체크
-app.post('/login_check', function (req, res) {
+app.post('/login_check', function(req, res) {
     var name = req.body.id;
     var phoneNo = req.body.pn;
     if (name == '') {
@@ -402,10 +402,10 @@ app.post('/login_check', function (req, res) {
     var loginPN = [phoneNo];
     var loginData = [name, phoneNo];
 
-    const sql = 'SELECT NAME FROM dgl1231.USER WHERE CALL_NO = ?';
-    const insql = 'INSERT INTO dgl1231.USER(NAME, CALL_NO) VALUES(?, ?)';
+    const sql = 'SELECT NAME FROM dgl1231.user WHERE CALL_NO = ?';
+    const insql = 'INSERT INTO dgl1231.user(NAME, CALL_NO) VALUES(?, ?)';
 
-    conn.query(sql, loginPN, function (err, result) {
+    conn.query(sql, loginPN, function(err, result) {
         //if (인증번호 맞았는지) {
         if (err) {
             console.log('query is not excuted. insert fail...\n' + err);
@@ -413,7 +413,7 @@ app.post('/login_check', function (req, res) {
             return;
         } else {
             if (result[0] == null) {
-                conn.query(insql, loginData, function (err) {
+                conn.query(insql, loginData, function(err) {
                     console.log(err);
                     if (err) {
                         // 서버 문제 DB 삽입 실패
@@ -509,7 +509,7 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
     var filenokey = [];
 
     var sql = "SELECT POST_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.limit_search_post B ORDER BY B.POST_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE D.ROWNUM='1';";
-    conn.query(sql, function (err, rows) {
+    conn.query(sql, function(err, rows) {
         if (err) console.error("err : " + err);
         if (rows[0] != null) {
             lastpostno = rows[0].POST_NO;
@@ -531,8 +531,10 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
         datas = [postno, title, write_date, content, localUserID, passwd];
 
 
-        sql = "INSERT INTO dgl1231.LIMIT_SEARCH_POST(POST_NO, TITLE, WRITE_DATE, CONTENT, CALL_NO, PASSWORD) VALUES(?, ?, ?, ?, ?, ?);";
-        conn.query(sql, datas, async function (err, rows) {
+        sql = "INSERT INTO dgl1231.limit_search_post(POST_NO, TITLE, WRITE_DATE, CONTENT, CALL_NO, PASSWORD) VALUES(?, ?, ?, ?, ?, ?);";
+
+        conn.query(sql, datas, async function(err, rows) {
+
             if (err) console.error("err : " + err);
             var attno = '';
             var attno2 = '';
@@ -540,7 +542,7 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
 
             console.log('fuck2');
             var filesch = "SELECT ATTACHED_FILE_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.attached_file B ORDER BY B.ATTACHED_FILE_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE D.ROWNUM='1'";
-            await conn.query(filesch, function (err, rows) {
+            await conn.query(filesch, function(err, rows) {
                 if (err) console.error("err :" + err);
                 console.log(rows);
                 if (rows[0] != null) {
@@ -571,7 +573,7 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
                         attacheddatas[index] = [filenumber, filepath, originalname, filename, size, mimetype, write_date, localUserID, postno];
 
                         sql = "INSERT INTO dgl1231.attached_file(ATTACHED_FILE_NO, FILE_PATH, DEFAULT_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, FILE_EXTENSION, REGI_DATE, CALL_NO, ATTACHED_POST_NO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                        conn.query(sql, attacheddatas[index], async function (err, rows) {
+                        conn.query(sql, attacheddatas[index], async function(err, rows) {
                             if (err) console.error("err : " + err);
                         });
                     }
@@ -586,7 +588,7 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
                     var filenokey = filenoch(write_date);
                     attacheddatas[index] = [filenokey, filepath, originalname, filename, size, mimetype, write_date, localUserID, postno];
                     sql = "INSERT INTO dgl1231.attached_file(ATTACHED_FILE_NO, FILE_PATH, DEFAULT_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, FILE_EXTENSION, REGI_DATE, CALL_NO, ATTACHED_POST_NO) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                    conn.query(sql, attacheddatas[index], async function (err, rows) {
+                    conn.query(sql, attacheddatas[index], async function(err, rows) {
                         if (err) console.error("err : " + err);
                     });
                 }
@@ -600,7 +602,7 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
 
 });
 
-app.get('/download/:i', function (req, res, next) {
+app.get('/download/:i', function(req, res, next) {
     console.log(req.params.i)
     var file_No = req.params.i;
     console.log(attached_P_N[file_No]);
@@ -644,13 +646,13 @@ function getDownloadFilename(req, filename) {
 }
 
 
-app.post('/commentsave', function (req, res, next) {
+app.post('/commentsave', function(req, res, next) {
     var content = req.body.content;
     var contentNO = 0;
     var c_postno = realsex.POST_NO;
     console.log(realsex);
     var sql = "SELECT COMMENT_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.comment B WHERE POST_NO = ? ORDER BY B.COMMENT_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE D.ROWNUM='1'; ";
-    conn.query(sql, c_postno, function (err, rows) {
+    conn.query(sql, c_postno, function(err, rows) {
         if (err) console.error("err : " + err);
         if (rows[0] == null) {
             contentNO = 0;
@@ -659,8 +661,9 @@ app.post('/commentsave', function (req, res, next) {
         }
         var commentdata = [contentNO + 1, c_postno, content];
 
-        sql = 'INSERT INTO dgl1231.COMMENT(COMMENT_NO, POST_NO, CONTENT) VALUES(?, ?, ?);'
-        conn.query(sql, commentdata, function (err, rows) {
+        sql = 'INSERT INTO dgl1231.comment(COMMENT_NO, POST_NO, CONTENT) VALUES(?, ?, ?);';
+        conn.query(sql, commentdata, function(err, rows) {
+
             if (err) console.error("err : " + err);
 
         });
@@ -672,7 +675,7 @@ app.post('/commentsave', function (req, res, next) {
 });
 
 
-app.get('/deliver', function (req, res, next) {
+app.get('/deliver', function(req, res, next) {
     app.locals.styleNo = 9;
     app.locals.login = loginsession;
     res.render(__dirname + '/views/deliver.ejs', {
@@ -683,26 +686,27 @@ app.get('/deliver', function (req, res, next) {
 
 var lastloan_no = "";
 var lastsec_no = "";
-app.get('/menage', function (req, res, next) {
+app.get('/menage', function(req, res, next) {
     app.locals.styleNo = 10;
     app.locals.login = loginsession;
 
     var sql = 'SELECT LOAN_NO FROM dgl1231.LOAN;';
-    conn.query(sql, function (err, a_rows) {
+    conn.query(sql, function(err, a_rows) {
         if (err) console.error("err : " + err);
         if (a_rows[0].LOAN_NO == null) {} else {
             sql = 'SELECT LOAN_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.LOAN B ORDER BY B.LOAN_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
-            conn.query(sql, function (err, a_rows) {
+            conn.query(sql, function(err, a_rows) {
                 if (err) console.error("err : " + err);
                 lastloan_no = a_rows[0].LOAN_NO;
             });
 
-            sql = 'SELECT SEC_NO FROM dgl1231.SECURITY;'
-            conn.query(sql, function (err, b_rows) {
+            sql = 'SELECT SEC_NO FROM dgl1231.SECURITY;';
+            conn.query(sql, function(err, b_rows) {
+
                 if (err) console.error("err : " + err);
                 if (b_rows[0].SEC_NO == null) {} else {
                     sql = 'SELECT SEC_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.security B ORDER BY B.SEC_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
-                    conn.query(sql, function (err, b_rows) {
+                    conn.query(sql, function(err, b_rows) {
                         if (err) console.error("err : " + err);
                         lastsec_no = b_rows[0].SEC_NO;
                     });
@@ -742,7 +746,7 @@ var upload = multer({
     }
 });
 
-app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
+app.post('/loanwrite', upload.array('FileName'), function(req, res, next) {
 
     var total_loan = req.body.total_loan;
     var principal = req.body.principal;
@@ -791,8 +795,9 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
     }
 
     loan_data = [loan_no, total_loan, principal, repayment, loan_date, expirationed, expenses, day_loan, interest, phone]
-    var sql = 'INSERT INTO dgl1231.LOAN VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-    conn.query(sql, loan_data, function (err, rows) {
+    var sql = 'INSERT INTO dgl1231.loan VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+
+    conn.query(sql, loan_data, function(err, rows) {
         if (err) console.error("err : " + err);
 
     });
@@ -812,8 +817,8 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
     }
 
     sec_data = [sec_no, give_date, brand, price, get_date, , phone, loan_no];
-    sql = 'INSERT INTO dgl1231.SECURITY VALUES (?, ?, ?, ?, ?, ?, ?)';
-    conn.query(sql, sec_data, function (err, rows) {
+    sql = 'INSERT INTO dgl1231.security VALUES (?, ?, ?, ?, ?, ?, ?)';
+    conn.query(sql, sec_data, function(err, rows) {
         if (err) console.error("err : " + err);
 
     });
