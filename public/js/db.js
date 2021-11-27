@@ -23,15 +23,3 @@ module.exports = {
         });
     }
 }
-
-/*
-connection.connect(function(error) {
-    if (!!error) {
-        console.log('Error');
-    } else {
-        console.log('Connected');
-    }
-});
-
-*/
-//connection.end();

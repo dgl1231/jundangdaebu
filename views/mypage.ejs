@@ -1,321 +1,311 @@
-<script defer src="../js/db.js"></script>
-
 <div class="body__container">
     <div class="main-container">
         <div class="mainContainer">
             <!-- 왼쪽 컨테이너 -->
-            <div class="leftContainer">
-                <!-- 회원 이름 나오는 박스 -->
-                <div id="userOutBox">
-                    <!-- 회원 이름 나오는 동그라미 -->
-                    <div id="userCircleBox">
-                        이동건님
+            <%selectedCalendar = 0;%>
+                <div class="leftContainer">
+                    <!-- 회원 이름 나오는 박스 -->
+                    <div id="userOutBox">
+                        <!-- 회원 이름 나오는 동그라미 -->
+                        <div id="userCircleBox">
+                            이동건님
+                        </div>
+                        <!-- 데코용 흰 네모 -->
+                        <div id="userInBox"></div>
                     </div>
-                    <!-- 데코용 흰 네모 -->
-                    <div id="userInBox"></div>
                 </div>
-            </div>
-            <!-- 오른쪽 컨테이너 -->
-            <div class="rightContainer">
-                <!-- [대출] [내 한도 게시판] 버튼 -->
-                <div class="rightTopContainer">
-                    <a href="" class="choiceBox">
+                <!-- 오른쪽 컨테이너 -->
+                <div class="rightContainer">
+                    <!-- [대출] [내 한도 게시판] 버튼 -->
+                    <div class="rightTopContainer">
+                        <a href="" class="choiceBox">
                         대출 현황
                     </a>
-                    <a href="" class="choiceBox">
+                        <a href="" class="choiceBox">
                         내 게시물
                     </a>
-                </div>
-                <!-- :대출 진행중: :대출완료/상환중: :상환완료: -->
-                <div class="rightCenterContainer">
-                    <!-- 실질적인 컨테이너 -->
-                    <div class="rightCenter_left">
-                        <!-- 물리적 데이터 나오는 곳 -->
-                        <div class="loanStatus_top">
-                            <!-- 대출 진행중 -->
-                            <div class="loanState">
-                                <div class="loanStateTextBox">
-                                    대출 진행중
-                                </div>
-                                <div class="loanStateCircleBox">
-                                    <div class="loanStateCircle">
-                                        <%if (loanState[0] != null) {%>
-                                        <%=loanState[0].count%>
-                                        <%} else {%>
-                                        0
-                                        <%}%> 건
+                    </div>
+                    <!-- :대출 진행중: :대출완료/상환중: :상환완료: -->
+                    <div class="rightCenterContainer">
+                        <!-- 실질적인 컨테이너 -->
+                        <div class="rightCenter_left">
+                            <!-- 물리적 데이터 나오는 곳 -->
+                            <div class="loanStatus_top">
+                                <!-- 대출 진행중 -->
+                                <div class="loanState">
+                                    <div class="loanStateTextBox">
+                                        대출 진행중
                                     </div>
-                                </div>
-                            </div>
-                            <!-- 대출완료/상환중 -->
-                            <div class="loanState">
-                                <div class="loanStateTextBox">
-                                    대출완료/상환중
-                                </div>
-                                <div class="loanStateCircleBox">
-                                    <div class="loanStateCircle">
-                                        <%if (loanState[1] != null) {%>
-                                        <%=loanState[1].count%>
-                                        <%} else {%>
-                                        0
-                                        <%}%> 건
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 상환완료 -->
-                            <div class="loanState">
-                                <div class="loanStateTextBox">
-                                    상환완료
-                                </div>
-                                <div class="loanStateCircleBox">
-                                    <div class="loanStateCircle">
-                                        <%if (loanState[2] != null) {%>
-                                        <%=loanState[2].count%>
-                                        <%} else {%>
-                                        0
-                                        <%}%> 건
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 날짜선택, 조회 버튼-->
-                        <div class="loanStatus_bot">
-                            <div class="loanSearchBox">
-                                <table cellpadding="0" cellspacing="0" border="0" class="">
-                                    <tbody>
-                                        
-                                        <tr>
-                                            <td>
-                                                <div class="loanDateGroup">
-                                                    <a href="#" id="prev_date" class="loanDate">
-                                                        <span id="prevDate" name="prevDate"><%=searchDate[0]%></span>
-                                        <span class="calendar_ico"></span>
-                                        <input type="hidden" id="" name="" value="" readonly>
-                                        </a>
-                                        <span class="wave">~</span>
-                                        <a href="#" id="next_date" class="loanDate">
-                                            <span id="nextDate" name="nextDate"><%=searchDate[1]%></span>
-                                            <span class="calendar_ico"></span>
-                                            <input type="hidden" id="" name="" value="" readonly>
-                                        </a>
-                                        <div id="chk_calendar" class="check_calendar"
-                                            style="right: 0px; top: 29px; display: block; z-index: 1;">
-                                            <div class="check_month">
-                                                <a href="#" class="calendar_month_prev_btn">다시 해야함</a>
-                                                <span class="calendar_title_year">
-                                                    <span class="">
-                                                        <span class="">2</span>
-                                                    </span>
-                                                    <span class="">
-                                                        <span class="">0</span>
-                                                    </span>
-                                                    <span class="">
-                                                        <span class="">2</span>
-                                                    </span>
-                                                    <span class="">
-                                                        <span class="">1</span>
-                                                    </span>
-                                                </span>
-                                                <span class="calendar_title_month">11</span>
-                                                <a href="" class="calendar_month_next_btn">이것도 다시 해야함</a>
-                                            </div>
-
-                                            <div class="check_day">
-                                                <table cellpading="0" cellspacing="0" border="0" style="width: 100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">
-                                                                <span>일</span>
-                                                            </th>
-                                                            <th scope="col">
-                                                                <span>월</span>
-                                                            </th>
-                                                            <th scope="col">
-                                                                <span>화</span>
-                                                            </th>
-                                                            <th scope="col">
-                                                                <span>수</span>
-                                                            </th>
-                                                            <th scope="col">
-                                                                <span>목</span>
-                                                            </th>
-                                                            <th scope="col">
-                                                                <span>금</span>
-                                                            </th>
-                                                            <th scope="col">
-                                                                <span>토</span>
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr class="">
-                                                            <td>
-                                                                <a class="calendar_date" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="calendar_date" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="calendar_date" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="calendar_date" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="calendar_date" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="calendar_date" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="calendar_date" herf=""></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="">
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="">
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="">
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="">
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="" herf=""></a>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                    <div class="loanStateCircleBox">
+                                        <div class="loanStateCircle">
+                                            <%if (loanState != null) {%>
+                                                <%if (loanState[0] != null) {%>
+                                                    <%=loanState[0].count%>
+                                                        <%} else {}} else {%>
+                                                            0
+                                                            <%}%> 건
                                         </div>
                                     </div>
-                                    </td>
+                                </div>
+                                <!-- 대출완료/상환중 -->
+                                <div class="loanState">
+                                    <div class="loanStateTextBox">
+                                        대출완료/상환중
+                                    </div>
+                                    <div class="loanStateCircleBox">
+                                        <div class="loanStateCircle">
+                                            <%if (loanState != null) {%>
+                                                <%if (loanState[1] != null) {%>
+                                                    <%=loanState[1].count%>
+                                                        <%} else {}} else {%>
+                                                            0
+                                                            <%}%> 건
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 상환완료 -->
+                                <div class="loanState">
+                                    <div class="loanStateTextBox">
+                                        상환완료
+                                    </div>
+                                    <div class="loanStateCircleBox">
+                                        <div class="loanStateCircle">
+                                            <%if (loanState != null) {%>
+                                                <%if (loanState[2] != null) {%>
+                                                    <%=loanState[2].count%>
+                                                        <%} else {}} else {%>
+                                                            0
+                                                            <%}%> 건
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 날짜선택, 조회 버튼-->
+                            <div class="loanStatus_bot">
+                                <div class="loanSearchBox">
+                                    <table cellpadding="0" cellspacing="0" border="0" class="">
+                                        <tbody>
 
-                                    <script>
+                                            <tr>
+                                                <td>
+                                                    <div class="loanDateGroup">
+                                                        <a href="#" id="prev_date" class="loanDate">
+                                                            <span id="prevDate" name="prevDate"><%=searchDate[0]%></span>
+                                                            <span class="calendar_ico"></span>
+                                                            <input type="hidden" id="" name="" value="" readonly>
+                                                        </a>
+                                                        <span class="wave">~</span>
+                                                        <a href="#" id="next_date" class="loanDate">
+                                                            <span id="nextDate" name="nextDate"><%=searchDate[1]%></span>
+                                                            <span class="calendar_ico"></span>
+                                                            <input type="hidden" id="" name="" value="" readonly>
+                                                        </a>
 
-                                    </script>
+                                                        <div class="hello"></div>
+                                                        <div id="chk_calendar" class="check_calendar" style="right: 0px; top: 29px; display: block; z-index: 1;">
+                                                            <div class="check_month">
+                                                                <a href="#" class="calendar_month_prev_btn"></a>
+                                                                <span class="calendar_title_year">
+                                                    <span class="">
 
-                                    <td>
-                                        <a href="#" id="all_search_btn" class="listSearchBtn">
-                                            <span>전체조회</span>
-                                        </a>
-                                        <a href="#" id="section_search_btn" class="searchBtn">
-                                            <span>조회</span>
-                                            <span class="search_ico"></span>
-                                        </a>
-                                    </td>
-                                    </tr>
+                                                        <span>
+                                                            <span id="year0"></span>
+                                                                </span>
+                                                                <span><span id="year1"></span></span>
+                                                                <span><span id="year2"></span></span>
+                                                                <span><span id="year3"></span></span>
+                                                                </span>
 
-                                    <script>
-                                        window.onload = function () {
-                                            var calendar = document.getElementById('chk_calendar');
-                                            var prev_date = document.getElementById('prev_date');
-                                            var next_date = document.getElementById('next_date');
-                                            var allSearchBtn = document.getElementById('all_search_btn');
-                                            var searchBtn = document.getElementById('section_search_btn');
-                                            var prevDate = document.getElementById('prevDate').innerHTML;
-                                            var nextDate = document.getElementById('nextDate').innerHTML;
 
-                                            prev_date.onclick = function () {
-                                                calendar.style.visibility = 'visible';
-                                            };
+                                                                </span>
+                                                                </span>
 
-                                            next_date.onclick = function () {
-                                                calendar.style.visibility = 'visible';
-                                            };
+                                                                <div class="calendar_title_month"></div>
+                                                                <a href="#" class="calendar_month_next_btn"></a>
+                                                            </div>
 
-                                            allSearchBtn.onclick = function () {
-                                                location.href = "/mypage";
-                                                return false;
-                                            };
+                                                            <div class="check_day">
+                                                                <table cellpading="0" cellspacing="0" border="0">
+                                                                    <thead>
+                                                                        <div class="weekdays">
+                                                                            <div class="sunDay" scope="col">
+                                                                                <span>일</span>
+                                                                            </div>
+                                                                            <div scope="col">
+                                                                                <span>월</span>
+                                                                            </div>
+                                                                            <div scope="col">
+                                                                                <span>화</span>
+                                                                            </div>
+                                                                            <div scope="col">
+                                                                                <span>수</span>
+                                                                            </div>
+                                                                            <div scope="col">
+                                                                                <span>목</span>
+                                                                            </div>
+                                                                            <div scope="col">
+                                                                                <span>금</span>
+                                                                            </div>
+                                                                            <div class="satDay" scope="col">
+                                                                                <span>토</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </thead>
+                                                                    <div class="calendar_date">
+                                                                    </div>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
 
-                                            searchBtn.onclick = function () {
-                                                location.href = "/mypage?date1=" + prevDate + "&date2=" +
-                                                    nextDate;
-                                                return false;
-                                            };
-                                        };
-                                    </script>
-                                    </tbody>
+
+                                                <td>
+                                                    <a href="" id="all_search_btn" class="listSearchBtn">
+                                                        <span>전체조회</span>
+                                                    </a>
+                                                    <a href="#" id="section_search_btn" class="searchBtn">
+                                                        <span>조회</span>
+                                                        <span class="search_ico"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <script>
+                                                window.onload = function() {
+                                                    var calendar = document.getElementById('chk_calendar');
+                                                    var prev_date = document.getElementById('prev_date');
+                                                    var next_date = document.getElementById('next_date');
+                                                    var allSearchBtn = document.getElementById('all_search_btn');
+                                                    var searchBtn = document.getElementById('section_search_btn');
+                                                    var prevDate = document.getElementById('prevDate').innerHTML;
+                                                    var nextDate = document.getElementById('nextDate').innerHTML;
+
+                                                    prev_date.onclick = function() {
+                                                        selectedCalendar = 1;
+                                                        calendar.style.visibility = 'visible';
+                                                    };
+
+                                                    next_date.onclick = function() {
+                                                        selectedCalendar = 2;
+                                                        calendar.style.visibility = 'visible';
+                                                    };
+
+                                                    allSearchBtn.onclick = function() {
+                                                        location.href = "/mypage";
+                                                        return false;
+                                                    };
+
+                                                    searchBtn.onclick = function() {
+                                                        location.href = "/mypage?date1=" + prevDate + "&date2=" +
+                                                            nextDate;
+                                                        return false;
+                                                    };
+                                                };
+                                            </script>
+
+                                            <script>
+                                                const date = new Date();
+                                                var selectDateNo = 0;
+
+                                                function renderCalender() {
+
+                                                    var selectDate = new Array();
+
+                                                    date.setDate(1);
+
+                                                    const year = String(date.getFullYear());
+
+                                                    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+
+                                                    const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
+
+                                                    const firstDayIndex = date.getDay();
+
+                                                    const lastDayIndex = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay();
+
+                                                    const nextDays = 7 - lastDayIndex - 1;
+
+                                                    for (let l = 0; l < year.length; l++) {
+                                                        document.getElementById('year' + l).innerHTML = year.substr(l, 1);
+                                                    }
+
+                                                    document.querySelector('.calendar_title_month').innerHTML = date.getMonth() + 1;
+
+                                                    let days = "";
+
+                                                    for (let x = firstDayIndex; x > 0; x--) {
+                                                        days += `<div href="#" id="date${selectDateNo}" class="prev-date">${prevLastDay - x + 1}</div>`;
+                                                    }
+                                                    selectDate.push(document.querySelectorAll(".prev-date"));
+
+                                                    for (let i = 1; i <= lastDay; i++) {
+                                                        if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
+                                                            days += `<div href="#" id="date${selectDateNo}" class="today">${i}</div>`;
+                                                        } else {
+                                                            days += `<a href="#" id="date${selectDateNo}">${i}</a>`;
+                                                        }
+                                                    }
+
+
+                                                    for (let j = 1; j <= nextDays; j++) {
+                                                        days += `<div href="#" id="date${selectDateNo}" class="next-date">${j}</div>`;
+                                                    }
+
+                                                    var m = firstDayIndex;
+
+                                                    for (; m < selectDateNo - nextDays + 1; m++) {
+                                                        alert(m);
+                                                        /*
+                                                        selectDate.push(document.getElementById('date' + m));
+
+                                                        selectDate.addEventListener('click',
+                                                            () => {
+                                                                if (selectedCalendar == 1) {
+                                                                    const hello = document.getElementById('prevDate').innerHTML;
+                                                                    alert(hello)
+                                                                    hello = year + '-' + (date.getMonth() + 1) + '-' + document.getElementById('date' + a).innerHTML
+                                                                    alert(hello);
+                                                                } else if (selectedCalendar == 2) {
+                                                                    document.getElementById('nextDate').innerHTML = year + '-' + (date.getMonth() + 1) + '-' + document.getElementById('date' + a).innerHTML;
+                                                                }
+
+                                                                document.getElementById('chk_calendar').style.visibility = hidden;
+                                                            });
+                                                            */
+
+                                                    }
+
+                                                    document.querySelector('.calendar_date').innerHTML = days;
+                                                }
+
+                                                document.querySelector('.calendar_month_prev_btn').addEventListener('click',
+                                                    () => {
+                                                        date.setMonth(date.getMonth() - 1);
+                                                        renderCalender();
+                                                    });
+
+                                                document.querySelector('.calendar_month_next_btn').addEventListener('click',
+                                                    () => {
+                                                        date.setMonth(date.getMonth() + 1);
+                                                        renderCalender();
+                                                    });
+                                                /*
+                                                for (let a = 0; a < selectDateNo + 1; a++) {
+                                                    document.getElementById('date' + a).addEventListener('click',
+                                                        () => {
+                                                            if (selectedCalendar == 1) {
+                                                                document.getElementById('prevDate').innerHTML = year + '-' + (date.getMonth() + 1) + '-' + document.getElementById('date' + a).innerHTML;
+                                                            } else if (selectedCalendar == 2) {
+                                                                document.getElementById('nextDate').innerHTML = year + '-' + (date.getMonth() + 1) + '-' + document.getElementById('date' + a).innerHTML;
+                                                            }
+                                                        });
+
+                                                }*/
+
+                                                renderCalender();
+                                            </script>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -326,111 +316,108 @@
 
                             </div>
                         </div>
-
-
                     </div>
                     <!-- 대출 내역 or 내 한도 게시판 내역 -->
                     <div class="rightBottomContainer">
                         <%if (count == 0) {%>
-                        <div class="hr">
-                        </div>
-                        <div class="empty_section">
+                            <div class="hr"></div>
+                            <div class="empty_section"></div>
+                            <div class="hr"></div>
+                            <%} else {%>
+                                <%var loanDateCount = 0; var j = 0;%>
+                                    <%var k = 0; var a = 0;%>
+                                        <%for(var i = 0; i < count; i++) {%>
+                                            <div class="hr">
+                                                <h4 class="loanDateBox">
+                                                    <%=loanDate[i].LOAN_DATE%>
+                                                </h4>
+                                            </div>
+                                            <%loanDateCount += loanDate[i].COUNT; var l = 0;%>
+                                                <%for(; j < loanDateCount; j++) {%>
+                                                    <div class="loanInfo">
+                                                        <div class="pictureBox">
+                                                            <div class="picture"></div>
+                                                        </div>
+                                                        <div class="loanInfo_detail">
+                                                            <table class="loanInfo_inner">
+                                                                <tbody>
+                                                                    <tr class="modelName">
+                                                                        <td>
+                                                                            <%=loanInfo[j].C_NAME%>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr height="50%">
+                                                                        <td class="loanAmount">
+                                                                            <%=loanInfo[j].LOAN_PRINCIPAL%>원
+                                                                        </td>
+                                                                        <td class="realLoanDate">
+                                                                            <%=loanInfo[j].LOAN_DATE%>
+                                                                        </td>
+                                                                        <td class="loanStatement">
+                                                                            <%=loanInfo[j].STATENAME%>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="loanDocuments">
+                                                            <a href="#" id="loanDocuBtn<%=j%>" class="loanDocuBtn">
+                                제출서류 내역
+                            </a>
+                                                            <div id="modal_wrap<%=j%>" class="modal_wrap">
+                                                                <div class="modal_top">
+                                                                    <div class="modal_top_text">
+                                                                        제출서류
+                                                                    </div>
+                                                                    <div class="modal_top_box">
+                                                                        <a href="#" id="modal_close<%=j%>" class="modal_close">
+                                                                            <span class="modal_close_ico"></span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal_bottom">
+                                                                    <div class="modal_bottom_inner">
+                                                                        <%if (docuCount[j] != null) {%>
+                                                                            <%a += docuCount[j].count%>
+                                                                                <%for (; k < a; k++) {%>
+                                                                                    <p>
+                                                                                        <a name="<%=k%>" href="" class="attached_documents">
+                                                                                            <%=documents[k].DEFAULT_DOCU_NAME%>
+                                                                                        </a>
+                                                                                    </p>
+                                                                                    <%}} else {%>
+                                                                                        <%}%>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-                        </div>
-                        <div class="hr">
-                        </div>
-                        <%} else {%>
-                        <%var loanDateCount = 0; var j = 0;%>
-                        <%var k = 0; var a = 0;%>
-                        <%for(var i = 0; i < count; i++) {%>
-                        <div class="hr">
-                            <h4 class="loanDateBox">
-                                <%=loanDate[i].LOAN_DATE%>
-                            </h4>
-                        </div>
-                        <%loanDateCount += loanDate[i].COUNT;%>
-                        <%for(; j < loanDateCount; j++) {%>
-                        <div class="loanInfo">
-                            <div class="pictureBox">
-                                <div class="picture">
+                                                        <script>
+                                                            function onClick() {
+                                                                document.getElementById('modal_wrap<%=j%>').style.display =
+                                                                    'block';
+                                                            }
 
-                                </div>
-                            </div>
-                            <div class="loanInfo_detail">
-                                <table class="loanInfo_inner">
-                                    <tbody>
-                                        <tr class="modelName">
-                                            <td>
-                                                <%=loanInfo[j].C_NAME%>
-                                            </td>
-                                        </tr>
-                                        <tr height="50%">
-                                            <td class="loanAmount">
-                                                <%=loanInfo[j].LOAN_PRINCIPAL%>원
-                                            </td>
-                                            <td class="realLoanDate">
-                                                <%=loanInfo[j].LOAN_DATE%>
-                                            </td>
-                                            <td class="loanStatement">
-                                                <%=loanInfo[j].STATENAME%>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="loanDocuments">
-                                <a href="#" id="loanDocuBtn<%=j%>" class="loanDocuBtn">
-                                    제출서류 내역
-                                </a>
-                                <div id="modal_wrap<%=j%>" class="modal_wrap">
-                                    <div class="modal_top">
-                                        <div class="modal_top_text">
-                                            제출서류
-                                        </div>
-                                        <div class="modal_top_box">
-                                            <a href="#" id="modal_close<%=j%>" class="modal_close">
-                                                <span class="modal_close_ico"></span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="modal_bottom">
-                                        <div class="modal_bottom_inner">
-                                            <%if (docuCount[j] != null) {%>
-                                            <%a += docuCount[j].count%>
-                                            <%for (; k < a; k++) {%>
-                                            <p>
-                                                <a name="<%=k%>" href="" class="attached_documents">
-                                                    <%=documents[k].DEFAULT_DOCU_NAME%>
-                                                    <%console.log(documents[k].DEFAULT_DOCU_NAME) %>
-                                                </a>
-                                            </p>
-                                            <%}} else {%>
-                                            <%}%>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                                            function offClick() {
+                                                                document.getElementById('modal_wrap<%=j%>').style.display = 'none';
+                                                            }
 
-                            <script>
-                                function onClick() {
-                                        document.getElementById('modal_wrap<%=j%>').style.display = 'block';
-                                            }
+                                                            document.getElementById('loanDocuBtn<%=j%>').addEventListener('click',
+                                                                onClick);
+                                                            document.getElementById('modal_close<%=j%>').addEventListener('click',
+                                                                offClick);
+                                                        </script>
+                                                    </div>
+                                                    <%l++;%>
+                                                        <%if (l != loanDate[i].COUNT) { %>
+                                                            <div class="hr"></div>
+                                                            <%}%>
 
-                                            function offClick() {
-                                            document.getElementById('modal_wrap<%=j%>').style.display = 'none';
-                                            }
-
-                                            document.getElementById('loanDocuBtn<%=j%>').addEventListener('click',
-                                            onClick);
-                                            document.getElementById('modal_close<%=j%>').addEventListener('click',
-                                            offClick);
-                                            </script>
-                                        </div>
-                                        <%}%>
-                    <%}%>
-                                        <%}%>   
+                                                                <%}%>
+                                                                    <%}%>
+                                                                        <%}%>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>

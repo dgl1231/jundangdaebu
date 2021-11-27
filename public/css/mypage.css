@@ -61,7 +61,6 @@
 
 .choiceBox {
     display: inline-block;
-    float: left;
     width: 10%;
     height: 100%;
     color: rgb(44, 44, 44);
@@ -105,7 +104,7 @@
 .loanDateGroup {
     position: relative;
     margin: 0 10px;
-    color:rgb(134, 134, 134);
+    color: rgb(134, 134, 134);
 }
 
 .loanDate {
@@ -134,7 +133,9 @@
     height: 17px;
 }
 
-.ico, .select .ico, .btn_srch {
+.ico,
+.select .ico,
+.btn_srch {
     background: url(../../../../img/service/front/order/common_img/sp_search.png?20200615) no-repeat;
 }
 
@@ -147,7 +148,6 @@
 
 .listSearchBtn {
     display: inline-block;
-    float: left;
     position: relative;
     width: 70px;
     height: 25px;
@@ -162,7 +162,6 @@
 
 .searchBtn {
     display: inline-block;
-    float: left;
     position: relative;
     width: 60px;
     height: 25px;
@@ -248,7 +247,7 @@
     width: 220px;
 }
 
-.check_month {
+.check_calendar .check_month {
     position: relative;
     padding: 12px 0 7px;
     border: 0.1px solid rgb(161, 161, 161);
@@ -257,15 +256,27 @@
     text-align: center;
 }
 
-.calendar_month_prev_btn {
-    left: 40px;
-    background-position: 0 -50px m !important;
+.check_calendar .check_month a.calendar_month_prev_btn {
+    left: 30px;
+    background-position: 0 -45px !important;
+    background: url("../img/button/month_prev_btn.png") center center;
+    background-size: 200%;
+}
+
+.check_calendar .check_month a.calendar_month_next_btn {
+    right: 30px;
+    background-position: -20px -45px !important;
+    background: url("../img/button/month_next_btn.png") center center;
+    background-size: 200%;
+}
+
+.check_calendar .check_month a {
     display: inline-block;
     overflow: hidden;
     position: absolute !important;
     top: 50%;
-    width: 11px !important;
-    height: 21px !important;
+    width: 20px !important;
+    height: 30px !important;
     margin-top: -10px;
     border: none !important;
     line-height: 9999px;
@@ -281,25 +292,11 @@
 .calendar_title_month {
     display: inline-block;
     overflow: hidden;
-    width: 28px;
+    width: 45px;
     height: 40px;
     margin: 0 auto;
     background-position: -50px -100px;
     font-size: 40px;
-}
-
-.calendar_month_next_btn {
-    right: 40px;
-    background-position: -20px -50px !important;
-    display: inline-block;
-    overflow: hidden;
-    position: absolute !important;
-    top: 50%;
-    width: 11px !important;
-    height: 21px !important;
-    margin-top: -10px;
-    border: none !important;
-    line-height: 9999px;
 }
 
 .check_day {
@@ -315,23 +312,81 @@
     color: rgb(161, 161, 161);
 }
 
-.check_calendar .check_day td {
-    padding: 2px 0 3px;
-    font-size: 11px;
-    text-align: center;
+.weekdays {
+    width: 190px;
+    height: 25px;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+}
+
+.satDay {
+    color: rgb(121, 156, 255);
+}
+
+.sunDay {
+    color: rgb(255, 72, 72);
+}
+
+.weekdays div {
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.1rem;
+    width: calc(230px / 7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .calendar_date {
-    display: block;
-    width: 24px;
-    height: 23px;
-    margin: 0 auto;
-    border: none;
-    background-color: none;
-    line-height: 23px;
-    font-family: Tahoma,Geneva,sans-serif;
-    color: rgb(161, 161, 161);
-    text-indent: 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
+.calendar_date a {
+    font-size: 12px;
+    display: flex;
+    margin: 1px;
+    width: 25px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    text-shadow: 0 1px 0.5rem rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+    transition: background-color 0.1s;
+}
+
+.calendar_date div {
+    font-size: 12px;
+    display: flex;
+    margin: 1px;
+    width: 25px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    text-shadow: 0 1px 0.5rem rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+    transition: background-color 0.1s;
+}
+
+.calendar_date div:hover:not(.today,
+.next-date,
+.prev-date) {
+    background-color: rgb(125, 214, 255, 0.5);
+    cursor: pointer;
+}
+
+.prev-date,
+.next-date {
+    opacity: 0.5;
+}
+
+.today {
+    background-color: rgb(125, 214, 255);
 }
 
 .loanDateBox {
@@ -347,7 +402,7 @@
 .hr {
     width: 760px;
     margin: 25px 0 25px;
-    border: 0.1px solid rgb(161, 161, 161);
+    border: 0.1px solid rgb(206, 206, 206);
     text-align: center;
 }
 
@@ -429,7 +484,7 @@
     padding: 0 30px;
 }
 
-.modal_wrap{
+.modal_wrap {
     display: none;
     width: 150px;
     height: 200px;
@@ -472,16 +527,12 @@
     vertical-align: middle;
 }
 
-.modal_top_inner {
-}
-
 .modal_bottom {
     width: 150px;
     height: 100%;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-
 
 .modal_bottom_inner {
     margin: 15px 12px;
@@ -490,7 +541,7 @@
     overflow: hidden;
 }
 
-.modal_close{
+.modal_close {
     display: block;
     position: relative;
     font-size: 15px;
@@ -498,7 +549,7 @@
 
 .modal_close_ico {
     display: inline-block;
-    position:relative;
+    position: relative;
     background: url("../img/button/cancel_img.png") center center;
     background-size: 100%;
     top: 3px;
@@ -534,11 +585,7 @@
     padding: 15px;
     margin-top: 10px;
     color: rgb(44, 44, 44);
-    text-decoration-line:none;
-}
-
-#chk_calendar {
-
+    text-decoration-line: none;
 }
 
 div {
@@ -548,6 +595,7 @@ div {
 h3 {
     font-size: 12px;
 }
+
 h4 {
     display: block;
     margin-block-start: 1.33em;
@@ -596,9 +644,7 @@ select {
     width: 100%;
     height: 29px;
     font-size: 15px;
-    background: #fff
-      url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100% 50%
-      no-repeat;
+    background: #fff url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100% 50% no-repeat;
     background-size: 20px 8px;
     -webkit-appearance: none;
     display: inline-block;
@@ -606,7 +652,7 @@ select {
     border: none;
     cursor: default;
     font-family: Dotum, "돋움", Helvetica, sans-serif;
-  }
+}
 
 .hr h4 {
     margin: -15px 330px;
