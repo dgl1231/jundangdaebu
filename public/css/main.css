@@ -253,3 +253,18 @@ img {
     margin: 0 auto;
 
 }
+
+
+/* PC 배너1 스타일 */
+.floBanPc1 {
+    position: fixed;
+    top: 800px;
+    /* 윗쪽 끝에서부터의 거리 */
+    right:50px;
+    z-index: 99;
+    
+
+}
+.flo{
+border-radius: 20px 40px;
+}

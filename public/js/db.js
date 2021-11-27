@@ -5,12 +5,11 @@ var mysql = require('mysql');
 var app = express();
 
 var connection = {
-    host: '192.168.0.14',
-    user: 'joker',
+    host: 'bangguseok.kr',
+    user: 'dgl1231',
     password: 'dlehdrjs1!',
     port: '3306',
-    database: 'manspawnshop',
-    dateStrings: "date"
+    database: 'dgl1231',
 };
 module.exports = {
     init: function () {
@@ -18,8 +17,9 @@ module.exports = {
     },
     connect: function(conn) {
         conn.connect(function(err) {
-            if(err) console.error('mysql connection error : ' + err);
+            if (err) { console.log("FFFFFFFFUUUUUUUUUUUUUUCCCCCCCCCCCCCKKKKKKKKKKKKKKKK"); console.error('mysql connection error : ' + err); }
             else console.log('mysql is connected successfully!');
+            
         });
     }
 }
