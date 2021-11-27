@@ -185,11 +185,11 @@ app.get('/mypage?', (req, res) => {
         searchDate = ['2021-11-22', _today];
     }
 
-    const loanStateSql = 'SELECT COUNT(LOAN_NO) AS count FROM dgl1231.LOAN A WHERE A.CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY STATEMENT;';
-    const loanInfoSql = "SELECT * FROM ( SELECT * FROM (SELECT A.LOAN_PRINCIPAL, A.LOAN_DATE, A.STATEMENT, A.LOAN_NO, B.PRODUCT FROM dgl1231.LOAN AS A LEFT OUTER JOIN( SELECT * FROM dgl1231.security ) AS B ON (B.LOAN_NO = A.LOAN_NO) WHERE A.CALL_NO = ?) AS C LEFT OUTER JOIN( SELECT *  FROM dgl1231.code_entity ) AS D ON (C.PRODUCT = D.C_ID) WHERE C.LOAN_DATE BETWEEN ? AND ?) AS E LEFT OUTER JOIN( SELECT F.C_ID AS LOAN_ID , F.C_NAME AS STATENAME FROM dgl1231.code_entity F ) AS G ON (E.STATEMENT = G.LOAN_ID) ORDER BY LOAN_NO DESC";
-    const loanDateSql = 'SELECT LOAN_DATE, COUNT(LOAN_DATE) AS COUNT FROM dgl1231.LOAN WHERE CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY LOAN_DATE ORDER BY LOAN_DATE DESC';
-    const documentCountSql = 'SELECT A.LOAN_NO, COUNT(B.DOCU_NO) AS count FROM (SELECT * FROM dgl1231.LOAN WHERE CALL_NO = ? AND LOAN_DATE BETWEEN ? AND ?) A LEFT OUTER JOIN(SELECT * FROM DOCUMENT) B ON (A.LOAN_NO = B.LOAN_NO) GROUP BY LOAN_NO ORDER BY A.LOAN_NO DESC';
-    const documentsSql = 'SELECT * FROM dgl1231.DOCUMENT WHERE CALL_NO = ? AND SEND_IN_DATE BETWEEN ? AND ? ORDER BY LOAN_NO DESC';
+    const loanStateSql = 'SELECT COUNT(LOAN_NO) AS count FROM dgl1231.loan A WHERE A.CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY STATEMENT;';
+    const loanInfoSql = "SELECT * FROM ( SELECT * FROM (SELECT A.LOAN_PRINCIPAL, A.LOAN_DATE, A.STATEMENT, A.LOAN_NO, B.PRODUCT FROM dgl1231.loan AS A LEFT OUTER JOIN( SELECT * FROM dgl1231.security ) AS B ON (B.LOAN_NO = A.LOAN_NO) WHERE A.CALL_NO = ?) AS C LEFT OUTER JOIN( SELECT *  FROM dgl1231.code_entity ) AS D ON (C.PRODUCT = D.C_ID) WHERE C.LOAN_DATE BETWEEN ? AND ?) AS E LEFT OUTER JOIN( SELECT F.C_ID AS LOAN_ID , F.C_NAME AS STATENAME FROM dgl1231.code_entity F ) AS G ON (E.STATEMENT = G.LOAN_ID) ORDER BY LOAN_NO DESC";
+    const loanDateSql = 'SELECT LOAN_DATE, COUNT(LOAN_DATE) AS COUNT FROM dgl1231.loan WHERE CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY LOAN_DATE ORDER BY LOAN_DATE DESC';
+    const documentCountSql = 'SELECT A.LOAN_NO, COUNT(B.DOCU_NO) AS count FROM (SELECT * FROM dgl1231.loan WHERE CALL_NO = ? AND LOAN_DATE BETWEEN ? AND ?) A LEFT OUTER JOIN(SELECT * FROM document) B ON (A.LOAN_NO = B.LOAN_NO) GROUP BY LOAN_NO ORDER BY A.LOAN_NO DESC';
+    const documentsSql = 'SELECT * FROM dgl1231.document WHERE CALL_NO = ? AND SEND_IN_DATE BETWEEN ? AND ? ORDER BY LOAN_NO DESC';
 
     conn.query(loanStateSql, queryData, function(err, result) {
         if (err) {
@@ -361,7 +361,7 @@ app.get('/board?:postno', (req, res) => {
 
             });
 
-            var sql = 'SELECT * FROM ATTACHED_FILE WHERE ATTACHED_POST_NO = ?';
+            var sql = 'SELECT * FROM attached_file WHERE ATTACHED_POST_NO = ?';
             var i;
             conn.query(sql, realsex.POST_NO, function(err, rows) {
                 if (err) console.log(err);
@@ -412,8 +412,8 @@ app.post('/login_check', function(req, res) {
     var loginPN = [phoneNo];
     var loginData = [name, phoneNo];
 
-    const sql = 'SELECT NAME FROM dgl1231.USER WHERE CALL_NO = ?';
-    const insql = 'INSERT INTO dgl1231.USER(NAME, CALL_NO) VALUES(?, ?)';
+    const sql = 'SELECT NAME FROM dgl1231.user WHERE CALL_NO = ?';
+    const insql = 'INSERT INTO dgl1231.user(NAME, CALL_NO) VALUES(?, ?)';
 
     conn.query(sql, loginPN, function(err, result) {
         //if (인증번호 맞았는지) {
@@ -540,7 +540,7 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
 
         datas = [postno, title, write_date, content, localUserID, passwd];
 
-        sql = "INSERT INTO dgl1231.LIMIT_SEARCH_POST(POST_NO, TITLE, WRITE_DATE, CONTENT, CALL_NO, PASSWORD) VALUES(?, ?, ?, ?, ?, ?);";
+        sql = "INSERT INTO dgl1231.limit_search_post(POST_NO, TITLE, WRITE_DATE, CONTENT, CALL_NO, PASSWORD) VALUES(?, ?, ?, ?, ?, ?);";
         conn.query(sql, datas, async function(err, rows) {
             if (err) console.error("err : " + err);
             var attno = '';
@@ -670,7 +670,7 @@ app.post('/commentsave', function(req, res, next) {
         }
         var commentdata = [contentNO + 1, c_postno, content];
 
-        sql = 'INSERT INTO dgl1231.COMMENT(COMMENT_NO, POST_NO, CONTENT) VALUES(?, ?, ?);'
+        sql = 'INSERT INTO dgl1231.comment(COMMENT_NO, POST_NO, CONTENT) VALUES(?, ?, ?);'
         conn.query(sql, commentdata, function(err, rows) {
             if (err) console.error("err : " + err);
 
@@ -699,18 +699,18 @@ app.get('/menage', function(req, res, next) {
     app.locals.login = loginsession;
 
 
-    var sql = 'SELECT LOAN_NO FROM dgl1231.LOAN;';
+    var sql = 'SELECT LOAN_NO FROM dgl1231.loan;';
     conn.query(sql, function(err, a_rows) {
         if (err) console.error("err : " + err);
         if (a_rows[0].LOAN_NO == null) {} else {
-            sql = 'SELECT LOAN_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.LOAN B ORDER BY B.LOAN_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
+            sql = 'SELECT LOAN_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.loan B ORDER BY B.LOAN_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
             conn.query(sql, function(err, a_rows) {
                 if (err) console.error("err : " + err);
                 lastloan_no = a_rows[0].LOAN_NO;
             });
 
 
-            sql = 'SELECT SEC_NO FROM dgl1231.SECURITY;'
+            sql = 'SELECT SEC_NO FROM dgl1231.security;'
             conn.query(sql, function(err, b_rows) {
                 if (err) console.error("err : " + err);
                 if (b_rows[0].SEC_NO == null) {} else {
@@ -805,7 +805,7 @@ app.post('/loanwrite', upload.array('FileName'), function(req, res, next) {
 
     loan_data = [loan_no, total_loan, principal, repayment, loan_date, expirationed, expenses, day_loan, interest, phone]
 
-    var sql = 'INSERT INTO dgl1231.LOAN VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    var sql = 'INSERT INTO dgl1231.loan VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     conn.query(sql, loan_data, function(err, rows) {
         if (err) console.error("err : " + err);
 
@@ -827,7 +827,7 @@ app.post('/loanwrite', upload.array('FileName'), function(req, res, next) {
 
     sec_data = [sec_no, give_date, brand, price, get_date, , phone, loan_no];
 
-    sql = 'INSERT INTO dgl1231.SECURITY VALUES (?, ?, ?, ?, ?, ?, ?)';
+    sql = 'INSERT INTO dgl1231.security VALUES (?, ?, ?, ?, ?, ?, ?)';
     conn.query(sql, sec_data, function(err, rows) {
         if (err) console.error("err : " + err);
 
