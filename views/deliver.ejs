@@ -7,35 +7,62 @@
                     <a href="javascript:vis(1);" id="btn1st" onclick="">1st</a>
                     <a href="javascript:vis(2);" id="btn2nd" onclick="">2nd</a>
                     <a href="javascript:vis(3);" id="btn3rd" onclick="">3rd</a>
+                    <a href="javascript:vis(4);" id="btn4th" onclick="">4th</a>
                     <script>
                         function vis(n) {
                             document.getElementById("content1st").style.display = "none";
                             document.getElementById("content2nd").style.display = "none";
                             document.getElementById("content3rd").style.display = "none";
+                            document.getElementById("content4th").style.display = "none";
                             if (n == 1) {
                                 document.getElementById("content1st").style.display = "block";
+
                                 document.getElementById("btn1st").style.color = "rgb(88, 109, 204)";
                                 document.getElementById("btn2nd").style.color = "rgb(94, 169, 219)";
                                 document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
+
                                 document.getElementById("btn1st").style.fontSize = "65px";
                                 document.getElementById("btn2nd").style.fontSize = "50px";
                                 document.getElementById("btn3rd").style.fontSize = "50px";
+                                document.getElementById("btn4th").style.fontSize = "50px";
                             } else if (n == 2) {
                                 document.getElementById("content2nd").style.display = "block";
+
                                 document.getElementById("btn1st").style.color = "rgb(94, 169, 219)";
                                 document.getElementById("btn2nd").style.color = "rgb(88, 109, 204)";
                                 document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
+
                                 document.getElementById("btn1st").style.fontSize = "50px";
                                 document.getElementById("btn2nd").style.fontSize = "65px";
                                 document.getElementById("btn3rd").style.fontSize = "50px";
+                                document.getElementById("btn4th").style.fontSize = "50px";
+
                             } else if (n == 3) {
                                 document.getElementById("content3rd").style.display = "block";
+
                                 document.getElementById("btn1st").style.color = "rgb(94, 169, 219)";
                                 document.getElementById("btn2nd").style.color = "rgb(94, 169, 219)";
                                 document.getElementById("btn3rd").style.color = "rgb(88, 109, 204)";
+                                document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
+
                                 document.getElementById("btn1st").style.fontSize = "50px";
                                 document.getElementById("btn2nd").style.fontSize = "50px";
                                 document.getElementById("btn3rd").style.fontSize = "65px";
+                                document.getElementById("btn4th").style.fontSize = "50px";
+                            } else if (n == 4) {
+                                document.getElementById("content4th").style.display = "block";
+
+                                document.getElementById("btn1st").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn2nd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn4th").style.color = "rgb(88, 109, 204)";
+
+                                document.getElementById("btn1st").style.fontSize = "50px";
+                                document.getElementById("btn2nd").style.fontSize = "50px";
+                                document.getElementById("btn3rd").style.fontSize = "50px";
+                                document.getElementById("btn4th").style.fontSize = "65px";
                             }
                         }
                     </script>
@@ -89,6 +116,50 @@
                     <div class="content">대출 취소 시 상품은 착불배송으로 반환됩니다.</div>
                     <br>
                     <div class="content">감사합니다:)</div>
+                </div>
+                <div id="content4th">
+                    <div id="content">
+                        <br><br><br><br><br>
+                        <form id="" name="" method="post" action="deliver_submit" class="form_deliver">
+                            <!-- 택배사 -->
+                            <div>
+                                <h3 class="join_title">
+                                    <label for="pn" class="label">택배사</label>
+                                    <span class="box">
+                                        <select name="del_company" id="select" onchange="this.options[this.selectedIndex].text">
+                                            <option selected>택배사</option>
+                                            <option value="cj대한통운">CJ 대한통운</option>
+                                            <option value="우체국">우체국 택배</option>
+                                            <option value="한진 택배">한진 택배</option>
+                                            <option value="로젠 택배">로젠 택배</option>
+                                            <option value="한진 택배">한진 택배</option>
+                                        </select>
+                                        <input type="number" name="tbs" id="tbs" class="int" maxlength="20"
+                                            placeholder="운송장 번호">
+                                    </span>
+                                    <span class="error_next_box"></span>
+                                </h3>
+                            </div>
+                            <!-- 이메일  -->
+                            <div>
+                                <h3 class="join_title">
+                                    <label for="lang" class="label">이메일</label>
+                                    <span class="box ">
+                                        <input type="email" name="email" id="email" class="int_n" maxlength="20"
+                                            placeholder="이메일">
+                                    </span>
+                                    <span class="error_next_box"></span>
+                                </h3>
+                            </div>
+                            <!-- 제출 -->
+                            <div class="btn_area">
+                                <button type="" id="btnJoin" herf="../js/db.js">
+                                    <span>제출하기</span>
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

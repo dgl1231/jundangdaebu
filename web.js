@@ -28,6 +28,7 @@ const {
 const {
     CONNREFUSED
 } = require('dns');
+const e = require('express');
 
 
 function normalizePort(val) {
@@ -494,7 +495,6 @@ const makeFolder = (dir) => {
 var filepath = '';
 var storage = multer.diskStorage({ //  파일이름을 유지하기 위해 사용할 변수(중복방지를 위하여 시간을 넣어줫음)
     destination(req, file, cb) {
-        console.log("#씨~!발 mkaeFolder", __dirname, localUserID, datapostno);
         makeFolder(__dirname + 'uploadedFiles/' + localUserID + '/' + datapostno);
         filepath = __dirname + 'uploadedFiles/' + localUserID + '/' + datapostno;
         cb(null, __dirname + 'uploadedFiles/' + localUserID + '/' + datapostno);
@@ -854,4 +854,23 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
 
     });
     res.redirect('/menage');
+});
+
+
+app.post('/deliver_submit', function (req, res, next) {
+    var email = req.body.email;
+    var del_no = req.body.tbs;
+    var del_com = req.body.del_company;
+    var del_data = [del_no, del_com, localUserID];
+    var sql = "INSERT INTO dgl1231.deliver(DELIVER_NO, DELIVER_COMPANY_NAME, CALL_NO) VALUES(?, ?, ?);";
+     conn.query(sql, del_data, function (err, rows) {
+         if (err) { console.error("err : " + err); res.redirect('/'); }
+         
+         sql = "UPDATE dgl1231.user SET MAIL_ADDR = ? WHERE CALL_NO = ?;"
+         var up_data = [email, localUserID];
+         conn.query(sql, up_data , function (err, rows) {
+             if (err) { console.error("err : " + err); res.redirect('/'); }
+             res.redirect('/');
+         });
+     });
 });
