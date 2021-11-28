@@ -89,11 +89,20 @@
 
     <!-- PC 배너1 -->
     <div class="floBanPc1 hidden-md hidden-sm hidden-xs">
-        <a href="https://pf.kakao.com/_WVUdb" target="_blank">
+        <a href="https://pf.kakao.com/_WVUdb">
+            <img class="flo" src="img/kakaotalk.PNG" width="100px" height="100px">
+        </a>
+    </div>
+    <!-- PC 배너2 -->
+    <div class="floBanPc2 hidden-md hidden-sm hidden-xs">
+        <%if(login == 0){%>
+        <a href="/sign_up">
+            <%}else if(login != 0){%>
+            <a href="/deliver">
+                <%}%>
             <img class="flo" src="img/kakaotalk.PNG" width="100px" height="100px" >
         </a>
     </div>
-
 
 
     <!--
