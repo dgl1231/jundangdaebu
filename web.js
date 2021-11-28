@@ -482,9 +482,7 @@ app.post('/login_check', function (req, res) {
 });
 
 const makeFolder = (dir) => {
-    console.log("why don't you know?");
     if (!fs.existsSync(dir)) {
-        console.log("why don't you know?");
         fs.mkdirSync(dir, {
             recursive: true
         });
@@ -707,12 +705,16 @@ app.post('/commentsave', function (req, res, next) {
 
 
 app.get('/deliver', function (req, res, next) {
-    app.locals.styleNo = 9;
-    app.locals.login = loginsession;
-    res.render(__dirname + '/views/deliver.ejs', {
-        title: "대출이력 | " + siteData.title
-    });
-
+    if (loginsession != 0) {
+        app.locals.styleNo = 9;
+        app.locals.login = loginsession;
+        res.render(__dirname + '/views/deliver.ejs', {
+            title: "대출이력 | " + siteData.title
+        });
+        res.send('<script type="text/javascript">alert("로그인 해주세요!");document.location.href="/sign_up";</script>');
+    } else if (loginsession == 0) {
+        res.send('<script type="text/javascript">alert("로그인 해주세요!");document.location.href="/sign_up";</script>');
+    }
 });
 
 var lastloan_no = "";
@@ -721,29 +723,32 @@ app.get('/menage', function (req, res, next) {
     app.locals.styleNo = 10;
     app.locals.login = loginsession;
 
-    var sql = 'SELECT LOAN_NO FROM dgl1231.LOAN;';
+    var sql = 'SELECT LOAN_NO FROM dgl1231.loan;';
     conn.query(sql, function (err, a_rows) {
         if (err) console.error("err : " + err);
-        if (a_rows[0].LOAN_NO == null) {} else {
-            sql = 'SELECT LOAN_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.LOAN B ORDER BY B.LOAN_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
+        if (a_rows[0] == null) {
+            lastloan_no = null;
+            lastsec_no = null;
+        } else {
+            sql = 'SELECT LOAN_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.loan B ORDER BY B.LOAN_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
             conn.query(sql, function (err, a_rows) {
                 if (err) console.error("err : " + err);
                 lastloan_no = a_rows[0].LOAN_NO;
+                console.log("lastloan_no", lastloan_no);
             });
 
-            sql = 'SELECT SEC_NO FROM dgl1231.SECURITY;';
+            sql = 'SELECT SEC_NO FROM dgl1231.security;';
             conn.query(sql, function (err, b_rows) {
-
                 if (err) console.error("err : " + err);
-                if (b_rows[0].SEC_NO == null) {} else {
+                if (b_rows[0] == null) {} else {
                     sql = 'SELECT SEC_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.security B ORDER BY B.SEC_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
                     conn.query(sql, function (err, b_rows) {
                         if (err) console.error("err : " + err);
                         lastsec_no = b_rows[0].SEC_NO;
+                        console.log("lastsec_no", lastsec_no);
                     });
                 }
             });
-
         }
     });
     res.render(__dirname + '/views/menage.ejs', {
@@ -779,14 +784,14 @@ var upload = multer({
 
 app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
 
-    var total_loan = req.body.total_loan;
+    //var total_loan = req.body.total_loan;
     var principal = req.body.principal;
-    var repayment = req.body.repayment;
+    //var repayment = req.body.repayment;
     loan_date = req.body.loan_date;
     var expirationed = req.body.expirationed;
     var expenses = req.body.expenses;
-    var day_loan = req.body.day_loan;
-    var interest = req.body.interest;
+    //var day_loan = req.body.day_loan;
+    //var interest = req.body.interest;
     var state = req.body.state;
     give_date = req.body.give_date;
     var brand = req.body.brand;
@@ -813,6 +818,7 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
     console.log("#1 lastloan_no", lastloan_no);
     if (lastloan_no != null) {
         var loandt = lastloan_no.substr(1, 8);
+        console.log("l",loandt);
         if (loandt == today_date) {
             loandt = lastloan_no.substr(1, 16);
             loan_no = Number(loandt) + 1;
@@ -822,38 +828,39 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
         }
     } else {
         loan_no = 'L' + today_date + String('00000001');
-        console.log("#2 loan_no", loan_no);
+        console.log("#2 loan_no"+ loan_no);
     }
 
-    loan_data = [loan_no, total_loan, principal, repayment, loan_date, expirationed, expenses, day_loan, interest, phone]
-    var sql = 'INSERT INTO dgl1231.loan VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    loan_data = [loan_no, principal, loan_date, expirationed, expenses, state, phone]
+    var sql = 'INSERT INTO dgl1231.loan(LOAN_NO,LOAN_PRINCIPAL,LOAN_DATE,LOAN_DEADLINE,OTHER_EXPENSES,STATEMENT,CALL_NO) VALUES (?, ?, ?, ?, ?, ?, ?)'
 
     conn.query(sql, loan_data, function (err, rows) {
         if (err) console.error("err : " + err);
-
     });
-
     if (lastsec_no != null) {
-        var loandt = lastsec_no.substr(0, 7);
+        console.log("#3", lastsec_no);
+        var loandt = lastsec_no.substr(0, 8);
+        console.log("b"+loandt);
         if (loandt == today_date) {
-            loandt = lastsec_no.substr(11, 15);
-            sec_no = today_date + product + loandt;
+            console.log("좀가자");
+            loandt = lastsec_no;
+            sec_no = Number(loandt) + 1;
             sec_no = String(sec_no);
             console.log("#3 sec_no", sec_no);
-
         }
     } else {
-        sec_no = today_date + product + String('00001');
+        sec_no = today_date + String('00000001');
         console.log("#4 sec_no", sec_no);
     }
 
-    sec_data = [sec_no, give_date, brand, price, get_date, , phone, loan_no];
-    sql = 'INSERT INTO dgl1231.security VALUES (?, ?, ?, ?, ?, ?, ?)';
+    sec_data = [sec_no, give_date, brand, price, get_date, product, phone, loan_no];
+    sql = 'INSERT INTO dgl1231.security VALUES (?, ?, ?, ?, ?, ?, ?,?)';
     conn.query(sql, sec_data, function (err, rows) {
         if (err) console.error("err : " + err);
-
+        res.redirect('/menage');
     });
-    res.redirect('/menage');
+    
+
 });
 
 
@@ -863,14 +870,20 @@ app.post('/deliver_submit', function (req, res, next) {
     var del_com = req.body.del_company;
     var del_data = [del_no, del_com, localUserID];
     var sql = "INSERT INTO dgl1231.deliver(DELIVER_NO, DELIVER_COMPANY_NAME, CALL_NO) VALUES(?, ?, ?);";
-     conn.query(sql, del_data, function (err, rows) {
-         if (err) { console.error("err : " + err); res.redirect('/'); }
-         
-         sql = "UPDATE dgl1231.user SET MAIL_ADDR = ? WHERE CALL_NO = ?;"
-         var up_data = [email, localUserID];
-         conn.query(sql, up_data , function (err, rows) {
-             if (err) { console.error("err : " + err); res.redirect('/'); }
-             res.redirect('/');
-         });
-     });
+    conn.query(sql, del_data, function (err, rows) {
+        if (err) {
+            console.error("err : " + err);
+            res.redirect('/');
+        }
+
+        sql = "UPDATE dgl1231.user SET MAIL_ADDR = ? WHERE CALL_NO = ?;"
+        var up_data = [email, localUserID];
+        conn.query(sql, up_data, function (err, rows) {
+            if (err) {
+                console.error("err : " + err);
+                res.redirect('/');
+            }
+            res.redirect('/');
+        });
+    });
 });

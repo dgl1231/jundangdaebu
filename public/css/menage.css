@@ -11,10 +11,12 @@
 }
 .title_back {
     padding-top: 2%;
+    display: flex;
+    text-align: center;
 }
 
 .title {
-    text-align: center;
+    margin-left:47%;
     font-size: 40px;
     margin-top: 20px;
 }
@@ -34,4 +36,51 @@
 }
 .submit_btn_td{
     text-align: center;
+}
+
+#content1st {
+    display: block;
+}
+
+#content2nd {
+    display: none;
+}
+
+#content3rd {
+    display: none;
+}
+
+#content4th {
+    display: none;
+}
+.buttoncontainer{
+        margin-top:30px;
+        margin-left: 30px;
+}
+.buttoncontainer #btn1st {
+    color: rgb(88, 109, 204);
+    margin-left: 20px;
+    font-size: 30px;
+    text-decoration-line: none;
+}
+
+.buttoncontainer #btn2nd {
+    color: rgb(94, 169, 219);
+    margin-left: 20px;
+    font-size: 20px;
+    text-decoration-line: none;
+}
+
+.buttoncontainer #btn3rd {
+    color: rgb(94, 169, 219);
+    margin-left: 20px;
+    font-size: 20px;
+    text-decoration-line: none;
+}
+
+.buttoncontainer #btn4th {
+    color: rgb(94, 169, 219);
+    margin-left: 20px;
+    font-size: 20px;
+    text-decoration-line: none;
 }

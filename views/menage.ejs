@@ -2,28 +2,96 @@
     <div class="main-container">
         <div class="title_back">
             <div class="title">관리페이지</div>
+            <div class="buttoncontainer">
+                    <a href="javascript:vis(1);" id="btn1st" onclick="">대출/담보 등록</a>
+                    <a href="javascript:vis(2);" id="btn2nd" onclick="">상환 등록</a>
+                    <a href="javascript:vis(3);" id="btn3rd" onclick="">담보 및 대출 현황</a>
+                    <a href="javascript:vis(4);" id="btn4th" onclick="">만기 상환 시 등록</a>
+                    <script>
+                        function vis(n) {
+                            document.getElementById("content1st").style.display = "none";
+                            document.getElementById("content2nd").style.display = "none";
+                            document.getElementById("content3rd").style.display = "none";
+                            document.getElementById("content4th").style.display = "none";
+                            if (n == 1) {
+                                document.getElementById("content1st").style.display = "block";
+
+                                document.getElementById("btn1st").style.color = "rgb(88, 109, 204)";
+                                document.getElementById("btn2nd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
+
+                                document.getElementById("btn1st").style.fontSize = "30px";
+                                document.getElementById("btn2nd").style.fontSize = "20px";
+                                document.getElementById("btn3rd").style.fontSize = "20px";
+                                document.getElementById("btn4th").style.fontSize = "20px";
+                            } else if (n == 2) {
+                                document.getElementById("content2nd").style.display = "block";
+
+                                document.getElementById("btn1st").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn2nd").style.color = "rgb(88, 109, 204)";
+                                document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
+
+                                document.getElementById("btn1st").style.fontSize = "20px";
+                                document.getElementById("btn2nd").style.fontSize = "30px";
+                                document.getElementById("btn3rd").style.fontSize = "20px";
+                                document.getElementById("btn4th").style.fontSize = "20px";
+
+                            } else if (n == 3) {
+                                document.getElementById("content3rd").style.display = "block";
+
+                                document.getElementById("btn1st").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn2nd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn3rd").style.color = "rgb(88, 109, 204)";
+                                document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
+
+                                document.getElementById("btn1st").style.fontSize = "20px";
+                                document.getElementById("btn2nd").style.fontSize = "20px";
+                                document.getElementById("btn3rd").style.fontSize = "30px";
+                                document.getElementById("btn4th").style.fontSize = "20px";
+                            } else if (n == 4) {
+                                document.getElementById("content4th").style.display = "block";
+
+                                document.getElementById("btn1st").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn2nd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
+                                document.getElementById("btn4th").style.color = "rgb(88, 109, 204)";
+
+                                document.getElementById("btn1st").style.fontSize = "20px";
+                                document.getElementById("btn2nd").style.fontSize = "20px";
+                                document.getElementById("btn3rd").style.fontSize = "20px";
+                                document.getElementById("btn4th").style.fontSize = "30px";
+                            }
+                        }
+                    </script>
+                </div>
         </div>
+
         <div class="board">
-            <div class="loan">
+            <div class="loan" id="content1st">
                 <form action="/loanwrite" method="post" enctype="multipart/form-data">
                     <table class="blueone" border="1">
                         <tr class="FUCK">
-                            <td>----------------</td>
+                            <td>-----------------</td>
                             <td>-대출------------------</td>
                         </tr>
+                        <!--
                         <tr class="FUCK_in">
                             <td class="table_title">대출 총액</td>
                             <td><input type="number" name="total_loan" id="total_loan"  /></td>
                         </tr>
+                        -->
                         <tr class="FUCK_in">
                             <td class="table_title">대출 원금</td>
                             <td><input type="number" name="principal" id="principal"  /></td>
                         </tr>
+                        <!--
                         <tr class="FUCK_in">
                             <td class="table_title">상환 금액</td>
                             <td><input type="number" name="repayment" id="repayment"  /></td>
                         </tr>
-
+                    -->
                         <tr class="FUCK_in">
                             <td class="table_title">대출 날짜</td>
                             <td><input type="date" name="loan_date" id="loan_date"  /></td>
@@ -38,17 +106,18 @@
                             <td class="table_title">기타 비용</td>
                             <td><input type="number" name="expenses" id="expenses"  /></td>
                         </tr>
-
+                        <!--
                         <tr class="FUCK_in">
                             <td class="table_title">대출 일수</td>
                             <td><input type="number" name="day_loan" id="day_loan"  /></td>
                         </tr>
-
+                    -->
+                    <!--
                         <tr class="FUCK_in">
                             <td class="table_title">총 발생 이자</td>
                             <td><input type="number" name="interest" id="interest"  /></td>
                         </tr>
-
+                    -->
                         <tr class="FUCK_in">
                             <td class="table_title">상태</td>
                             <td><input type="text" name="state" id="state"  /></td>
@@ -62,7 +131,7 @@
                             <td><br></td>
                         </tr>
                         <tr class="FUCK">
-                            <td>----------------</td>
+                            <td>-----------------</td>
                             <td>-담보------------------</td>
                         </tr>
                         <tr>
@@ -121,10 +190,13 @@
                     </table>
                 </form>
             </div>
-            <div class="repay">
+            <div class="repay" id="content2nd">
 
             </div>
-            <div class="update">
+            <div class="now" id="content3rd">
+
+            </div>
+            <div class="del" id="content4th">
 
             </div>
         </div>
