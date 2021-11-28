@@ -10,6 +10,7 @@ var connection = {
     password: 'dlehdrjs1!',
     port: '3306',
     database: 'dgl1231',
+    date: 'date'
 };
 module.exports = {
     init: function () {
