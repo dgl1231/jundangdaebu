@@ -5,6 +5,7 @@ const router = express.Router();
 const path = require('path');
 const PORT = normalizePort(process.env.PORT || '8001');;
 const app = express();
+const PROMISE = require("bluebird");
 const bodyParser = require('body-parser');
 const {
     POINT_CONVERSION_UNCOMPRESSED
@@ -29,6 +30,9 @@ const {
     CONNREFUSED
 } = require('dns');
 const e = require('express');
+const {
+    resolve
+} = require('path');
 
 
 function normalizePort(val) {
@@ -184,7 +188,7 @@ app.get('/mypage?', (req, res) => {
 
 
             const boardSql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE,PASSWORD,CONTENT,CALL_NO FROM dgl1231.limit_search_post WHERE CALL_NO = ? ORDER BY POST_NO DESC";
-            conn.query(boardSql, [localUserID], function(err, rows) {
+            conn.query(boardSql, [localUserID], function (err, rows) {
                 if (err) console.error("err : " + err);
                 else {
                     length = rows.length - 1;
@@ -749,45 +753,122 @@ app.get('/deliver', function (req, res, next) {
 
 var lastloan_no = "";
 var lastsec_no = "";
+var lastrepay_no = "";
+var loaninfo = [];
+var secinfo = [];
+var repayinfo = [];
+
 app.get('/menage', function (req, res, next) {
     app.locals.styleNo = 10;
     app.locals.login = loginsession;
 
+
     var sql = 'SELECT LOAN_NO FROM dgl1231.loan;';
-    conn.query(sql, function (err, a_rows) {
+    conn.query(sql, function (err, l_rows) {
         if (err) console.error("err : " + err);
-        if (a_rows[0] == null) {
+        if (l_rows[0] == null) {
             lastloan_no = null;
             lastsec_no = null;
+
         } else {
+
             sql = 'SELECT LOAN_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.loan B ORDER BY B.LOAN_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
-            conn.query(sql, function (err, a_rows) {
+            conn.query(sql, function (err, l_rows) {
                 if (err) console.error("err : " + err);
-                lastloan_no = a_rows[0].LOAN_NO;
+                lastloan_no = l_rows[0].LOAN_NO;
                 console.log("lastloan_no", lastloan_no);
+                var loansql = 'SELECT * FROM dgl1231.loan;';
+                conn.query(loansql, function (err, l_rows) {
+                    loaninfo = l_rows;
+                });
+
+
             });
 
             sql = 'SELECT SEC_NO FROM dgl1231.security;';
-            conn.query(sql, function (err, b_rows) {
+            conn.query(sql, function (err, s_rows) {
                 if (err) console.error("err : " + err);
-                if (b_rows[0] == null) {} else {
+                if (s_rows[0] == null) {} else {
                     sql = 'SELECT SEC_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.security B ORDER BY B.SEC_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
-                    conn.query(sql, function (err, b_rows) {
+                    conn.query(sql, function (err, s_rows) {
                         if (err) console.error("err : " + err);
-                        lastsec_no = b_rows[0].SEC_NO;
+                        lastsec_no = s_rows[0].SEC_NO;
                         console.log("lastsec_no", lastsec_no);
+                        var secsql = 'SELECT * FROM dgl1231.security;';
+                        conn.query(secsql, function (err, s_rows) {
+                            secinfo = s_rows;
+                        });
                     });
                 }
             });
         }
     });
+
+
+    var repayselectsql = 'SELECT REPAY_NO FROM (SELECT @ROWNUM := @ROWNUM + 1 AS ROWNUM, A.* FROM (SELECT B.* FROM dgl1231.repayment B ORDER BY B.REPAY_NO DESC) A, (SELECT @ROWNUM := 0 ) C) D WHERE ROWNUM = 1;';
+    conn.query(repayselectsql, function (err, r_rows) {
+        if (r_rows[0] == null) {
+            lastrepay_no = null;
+        } else {
+
+            lastrepay_no = r_rows[0].REPAY_NO;
+        }
+    });
+
+
+
     res.render(__dirname + '/views/menage.ejs', {
         title: "관리페이지 | " + siteData.title,
         lastloan_no: lastloan_no,
-        lastsec_no: lastsec_no
+        lastsec_no: lastsec_no,
+        loaninfo: loaninfo,
+        secinfo: secinfo,
     });
 
 });
+
+var loan_p_no = 0;
+
+
+
+
+app.get('/loansecmanage?:page', function (req, res, next) {
+
+    var cn = loaninfo.CALL;
+    var email_loan = [];
+    app.locals.styleNo = 11;
+    app.locals.login = loginsession;
+    var page = req.params.page;
+    var data = [];
+    var bbb = "SELECT l.*,s.SEC_NO, s.SEND_IN_DATE, s.RECEIVE_DATE, s.BRAND, cg.G_NAME, u.MAIL_ADDR FROM loan l, security s, code_entity ce, code_group cg, user u WHERE l.loan_no = s.loan_no AND s.PRODUCT = ce.C_ID AND ce.G_ID = cg.G_ID AND u.CALL_NO = l.CALL_NO ORDER BY l.LOAN_NO DESC;"
+    conn.query(bbb, cn, function (err, sss) {
+        data = sss;
+    });
+
+    var sql = "SELECT LOAN_NO FROM dgl1231.loan ORDER BY LOAN_NO DESC;";
+    conn.query(sql, function (err, rows) {
+        if (err) console.error("err : " + err);
+        else {
+            res.render(__dirname + '/views/loansecmanage.ejs', {
+                title: "대출,담보현황 | " + siteData.title,
+                rows: rows,
+                page: page,
+                length: rows.length - 1,
+                page_num: 10,
+                pass: true,
+                loan_p_no: loan_p_no,
+                data: data
+            });
+        }
+    });
+});
+
+
+
+
+
+
+
 
 var loan_date = '';
 var give_date = '';
@@ -848,7 +929,7 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
     console.log("#1 lastloan_no", lastloan_no);
     if (lastloan_no != null) {
         var loandt = lastloan_no.substr(1, 8);
-        console.log("l",loandt);
+        console.log("l", loandt);
         if (loandt == today_date) {
             loandt = lastloan_no.substr(1, 16);
             loan_no = Number(loandt) + 1;
@@ -858,7 +939,7 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
         }
     } else {
         loan_no = 'L' + today_date + String('00000001');
-        console.log("#2 loan_no"+ loan_no);
+        console.log("#2 loan_no" + loan_no);
     }
 
     loan_data = [loan_no, principal, loan_date, expirationed, expenses, state, phone]
@@ -870,7 +951,7 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
     if (lastsec_no != null) {
         console.log("#3", lastsec_no);
         var loandt = lastsec_no.substr(0, 8);
-        console.log("b"+loandt);
+        console.log("b" + loandt);
         if (loandt == today_date) {
             console.log("좀가자");
             loandt = lastsec_no;
@@ -889,9 +970,74 @@ app.post('/loanwrite', upload.array('FileName'), function (req, res, next) {
         if (err) console.error("err : " + err);
         res.redirect('/menage');
     });
-    
+
 
 });
+
+
+
+
+app.post('/repayment', function (req, res, next) {
+
+    var repay_amount = req.body.repay_amount;
+    var repay_date = req.body.repay_date;
+    var repay_g = req.body.repay_g;
+    var r_loan_no = req.body.loan_no;
+
+    var repay_no = '';
+    var repay_data = [];
+
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth() + 1;
+    var date = today.getDate();
+    var today_date = String(year) + String(month) + String(date);
+
+    console.log("#1 lastrepay_no", lastrepay_no);
+    if (lastrepay_no != null) {
+        var loandt = lastrepay_no.substr(1, 8);
+        console.log("l", loandt);
+        if (loandt == today_date) {
+            loandt = lastrepay_no.substr(1, 16);
+            repay_no = Number(loandt) + 1;
+            repay_no = String(repay_no);
+            repay_no = 'R' + repay_no;
+            console.log("#1 repay_no", repay_no);
+        }
+    } else {
+        repay_no = 'L' + today_date + String('00000001');
+        console.log("#2 repay_no" + repay_no);
+    }
+
+    repay_data = [repay_no, repay_amount, repay_date, repay_g, r_loan_no]
+    var sql = 'INSERT INTO dgl1231.repayment(REPAY_NO, REPAY_AMOUNT, REPAY_DATE, REPAY_G, LOAN_NO) VALUES (?, ?, ?, ?, ?)'
+
+    conn.query(sql, repay_data, function (err, rows) {
+        if (err) console.error("err : " + err);
+        res.redirect('/menage');
+    });
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.post('/deliver_submit', function (req, res, next) {
