@@ -10,20 +10,20 @@
     display: block;
 }
 
-.write{
+.write {
     margin-top: 30px;
     text-align: right;
     margin-right: 600px;
-    
 }
-.write a{
+
+.write a {
     /*outline: 3px solid #168;
     box-shadow: 0 0 0 4px skyblue;
     /*border-radius: 5px;*/
     font-size: 29px;
-    
 }
-.write a:hover{
+
+.write a:hover {
     /*outline: 3px solid rgb(12, 83, 110);
     box-shadow: 0 0 0 4px rgb(83, 155, 184);
     /*border-radius: 8px;*/
@@ -61,12 +61,13 @@
     text-align: center;
 }
 
-.posttitle{
+.posttitle {
     border-right: 1px solid #ddd;
     text-align: left;
     width: 400px;
 }
-.writedate{
+
+.writedate {
     width: 100px;
     text-align: center;
 }
@@ -75,20 +76,21 @@
     color: #669;
     padding: 10px;
     border-bottom: 1px solid #ddd;
-    
-
 }
 
 .blueone tr:hover td {
     color: #004;
 }
-a{
+
+a {
     text-decoration: none;
     color: #669;
 }
-a:hover{
+
+a:hover {
     color: #004;
 }
-.page{
+
+.page {
     text-align: center;
 }

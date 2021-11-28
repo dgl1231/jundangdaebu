@@ -138,7 +138,6 @@ app.get('/dambo?:page', (req, res) => {
         postinfo = rows;
         datapostno = rows.length;
     });
-
 });
 //대출이력
 app.get('/loanlist', (req, res) => {
@@ -152,10 +151,10 @@ app.get('/loanlist', (req, res) => {
 
 //마이페이지
 app.get('/mypage?', (req, res) => {
-
-    localUserID = '123123';
+    localUserID = '01040825606';
 
     var url = req.url.split('?');
+    var url_board = '';
     var queryData = new Array();
 
     app.locals.styleNo = 5;
@@ -166,12 +165,42 @@ app.get('/mypage?', (req, res) => {
     var searchDate = new Array();
     var docuCount = new Array();
     var documents = new Array();
+    var myPage_postno = new Array();
+    var page = 0;
+    var length = 0;
     var count = 0;
+    var myBoard = 0;
 
     if (url[1] != null) {
-        var params = new URLSearchParams(url[1]);
-        queryData = [localUserID, params.get('date1'), params.get('date2')];
-        searchDate = [params.get('date1'), params.get('date2')];
+        url_board = url[1].split('=');
+        if (url_board[0] != 'myBoard') {
+            myBoard = 0;
+            var params = new URLSearchParams(url[1]);
+            queryData = [localUserID, params.get('date1'), params.get('date2')];
+            searchDate = [params.get('date1'), params.get('date2')];
+        } else {
+            myBoard = 1;
+            page = Number(url_board[1]);
+
+
+            const boardSql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE,PASSWORD,CONTENT,CALL_NO FROM dgl1231.limit_search_post WHERE CALL_NO = ? ORDER BY POST_NO DESC";
+            conn.query(boardSql, [localUserID], function(err, rows) {
+                if (err) console.error("err : " + err);
+                else {
+                    length = rows.length - 1;
+                    res.render(__dirname + '/views/mypage.ejs', {
+                        title: "마이페이지 | " + siteData.title,
+                        myBoard: myBoard,
+                        postno: myPage_postno,
+                        page: page,
+                        rows: rows,
+                        length: length
+                    });
+                    postinfo = rows;
+                }
+            });
+            return;
+        }
     } else {
         var today = new Date();
 
@@ -220,7 +249,6 @@ app.get('/mypage?', (req, res) => {
                         } else {
                             for (var i = 0; i < result.length; i++) {
                                 var a = result[i].LOAN_PRINCIPAL;
-                                console.log(a);
                                 a = String(a);
                                 var _length = a.length;
 
@@ -306,6 +334,7 @@ app.get('/mypage?', (req, res) => {
                     }
                 });
             }
+
             res.render(__dirname + '/views/mypage.ejs', {
                 title: "마이페이지 | " + siteData.title,
                 loanState: loanStateDatas,
@@ -314,7 +343,8 @@ app.get('/mypage?', (req, res) => {
                 documents: documents,
                 searchDate: searchDate,
                 docuCount: docuCount,
-                count: count
+                count: count,
+                myBoard: myBoard
             });
         }
     });
@@ -333,8 +363,6 @@ app.get('/write', (req, res) => {
     res.render(__dirname + '/views/write.ejs', {
         title: "글싸기 | " + siteData.title
     });
-
-
 });
 //글상세
 var attached_P_N = [];
@@ -380,10 +408,12 @@ app.get('/board?:postno', (req, res) => {
                 });
             });
         } else {
+            console.log('asdfasdfasdfadsfsdfsfd');
             res.send('<script type="text/javascript">alert("내 글만 볼 수 있어요!!");document.location.href="/";</script>');
         }
 
     } else if (loginsession == 0) {
+        console.log('hhhhhhhh');
         res.send('<script type="text/javascript">alert("내 글만 볼 수 있어요!!");document.location.href="/sign_up";</script>');
     }
 });

@@ -2,29 +2,33 @@
     <div class="main-container">
         <div class="mainContainer">
             <!-- 왼쪽 컨테이너 -->
-            <%selectedCalendar = 0;%>
-                <div class="leftContainer">
-                    <!-- 회원 이름 나오는 박스 -->
-                    <div id="userOutBox">
-                        <!-- 회원 이름 나오는 동그라미 -->
-                        <div id="userCircleBox">
-                            이동건님
-                        </div>
-                        <!-- 데코용 흰 네모 -->
-                        <div id="userInBox"></div>
+            <div class="leftContainer">
+                <!-- 회원 이름 나오는 박스 -->
+                <div id="userOutBox">
+                    <!-- 회원 이름 나오는 동그라미 -->
+                    <div id="userCircleBox">
+                        이동건님
                     </div>
+                    <!-- 데코용 흰 네모 -->
+                    <div id="userInBox"></div>
                 </div>
-                <!-- 오른쪽 컨테이너 -->
-                <div class="rightContainer">
-                    <!-- [대출] [내 한도 게시판] 버튼 -->
-                    <div class="rightTopContainer">
-                        <a href="" class="choiceBox">
+            </div>
+
+            <!-- 오른쪽 컨테이너 -->
+            <div class="rightContainer">
+                <!-- [대출] [내 한도 게시판] 버튼 -->
+                <div class="rightTopContainer">
+                    <a href="/mypage" id="choice_loanInfo" class="choiceBox">
                         대출 현황
                     </a>
-                        <a href="" class="choiceBox">
+                    <a href="#" id="choice_board" class="choiceBox">
                         내 게시물
                     </a>
-                    </div>
+                </div>
+
+                <%if (myBoard == 0) { %>
+                    <!-- 대출 현황 -->
+
                     <!-- :대출 진행중: :대출완료/상환중: :상환완료: -->
                     <div class="rightCenterContainer">
                         <!-- 실질적인 컨테이너 -->
@@ -41,9 +45,11 @@
                                             <%if (loanState != null) {%>
                                                 <%if (loanState[0] != null) {%>
                                                     <%=loanState[0].count%>
-                                                        <%} else {}} else {%>
+                                                        <%} else {%>
                                                             0
-                                                            <%}%> 건
+                                                            <%}} else {%>
+                                                                0
+                                                                <%}%> 건
                                         </div>
                                     </div>
                                 </div>
@@ -57,9 +63,11 @@
                                             <%if (loanState != null) {%>
                                                 <%if (loanState[1] != null) {%>
                                                     <%=loanState[1].count%>
-                                                        <%} else {}} else {%>
+                                                        <%} else {%>
                                                             0
-                                                            <%}%> 건
+                                                            <%}} else {%>
+                                                                0
+                                                                <%}%> 건
                                         </div>
                                     </div>
                                 </div>
@@ -73,9 +81,11 @@
                                             <%if (loanState != null) {%>
                                                 <%if (loanState[2] != null) {%>
                                                     <%=loanState[2].count%>
-                                                        <%} else {}} else {%>
+                                                        <%} else {%>
                                                             0
-                                                            <%}%> 건
+                                                            <%}} else {%>
+                                                                0
+                                                                <%}%> 건
                                         </div>
                                     </div>
                                 </div>
@@ -90,41 +100,38 @@
                                                 <td>
                                                     <div class="loanDateGroup">
                                                         <a href="#" id="prev_date" class="loanDate">
-                                                            <span id="prevDate" name="prevDate"><%=searchDate[0]%></span>
-                                                            <span class="calendar_ico"></span>
-                                                            <input type="hidden" id="" name="" value="" readonly>
+                                                            <div class="loanDate_text">
+                                                                <span id="prevDate" name="prevDate"><%=searchDate[0]%></span>
+                                                            </div>
+                                                            <div class="loanDate_icoBox">
+                                                                <span class="calendar_ico"></span>
+                                                            </div>
                                                         </a>
                                                         <span class="wave">~</span>
                                                         <a href="#" id="next_date" class="loanDate">
-                                                            <span id="nextDate" name="nextDate"><%=searchDate[1]%></span>
-                                                            <span class="calendar_ico"></span>
-                                                            <input type="hidden" id="" name="" value="" readonly>
+                                                            <div class="loanDate_text">
+                                                                <span id="nextDate" name="nextDate"><%=searchDate[1]%></span>
+                                                            </div>
+                                                            <div class="loanDate_icoBox">
+                                                                <span class="calendar_ico"></span>
+                                                            </div>
                                                         </a>
 
                                                         <div class="hello"></div>
-                                                        <div id="chk_calendar" class="check_calendar" style="right: 0px; top: 29px; display: block; z-index: 1;">
-                                                            <div class="check_month">
-                                                                <a href="#" class="calendar_month_prev_btn"></a>
-                                                                <span class="calendar_title_year">
-                                                    <span class="">
-
-                                                        <span>
-                                                            <span id="year0"></span>
+                                                        <div id="chk_calendar_1" class="check_calendar" style="right: 0px; top: 29px; display: block; z-index: 1;">
+                                                            <div id="check_month_1" class="check_month">
+                                                                <a href="#" id="calendar_month_prev_btn1" class="calendar_month_prev_btn"></a>
+                                                                <span id="calendar_title_year1" class="calendar_title_year">
+                                                                <span id="year_0"></span>
+                                                                <span id="year_1"></span>
+                                                                <span id="year_2"></span>
+                                                                <span id="year_3"></span>
                                                                 </span>
-                                                                <span><span id="year1"></span></span>
-                                                                <span><span id="year2"></span></span>
-                                                                <span><span id="year3"></span></span>
-                                                                </span>
-
-
-                                                                </span>
-                                                                </span>
-
-                                                                <div class="calendar_title_month"></div>
-                                                                <a href="#" class="calendar_month_next_btn"></a>
+                                                                <div id="calendar_title_month1" class="calendar_title_month"></div>
+                                                                <a href="#" id="calendar_month_next_btn1" class="calendar_month_next_btn"></a>
                                                             </div>
 
-                                                            <div class="check_day">
+                                                            <div id="check_day1" class="check_day">
                                                                 <table cellpading="0" cellspacing="0" border="0">
                                                                     <thead>
                                                                         <div class="weekdays">
@@ -151,7 +158,55 @@
                                                                             </div>
                                                                         </div>
                                                                     </thead>
-                                                                    <div class="calendar_date">
+                                                                    <div id="calendar_date1" class="calendar_date">
+                                                                    </div>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div id="chk_calendar_2" class="check_calendar" style="right: 0px; top: 29px; display: block; z-index: 1;">
+                                                            <div id="check_month_2" class="check_month">
+                                                                <a href="#" id="calendar_month_prev_btn2" class="calendar_month_prev_btn"></a>
+                                                                <span id="calendar_title_year2" class="calendar_title_year">
+                                                                <span id="year__0"></span>
+                                                                <span id="year__1"></span>
+                                                                <span id="year__2"></span>
+                                                                <span id="year__3"></span>
+                                                                </span>
+                                                                <div id="calendar_title_month2" class="calendar_title_month"></div>
+                                                                <a href="#" id="calendar_month_next_btn2" class="calendar_month_next_btn"></a>
+                                                            </div>
+
+                                                            <div id="check_day2" class="check_day">
+                                                                <table cellpading="0" cellspacing="0" border="0">
+                                                                    <thead>
+                                                                        <div class="weekdays">
+                                                                            <div class="sunDay" scope="col">
+                                                                                <span>일</span>
+                                                                            </div>
+                                                                            <div scope="col">
+                                                                                <span>월</span>
+                                                                            </div>
+                                                                            <div scope="col">
+                                                                                <span>화</span>
+                                                                            </div>
+                                                                            <div scope="col">
+                                                                                <span>수</span>
+                                                                            </div>
+                                                                            <div scope="col">
+                                                                                <span>목</span>
+                                                                            </div>
+                                                                            <div scope="col">
+                                                                                <span>금</span>
+                                                                            </div>
+                                                                            <div class="satDay" scope="col">
+                                                                                <span>토</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </thead>
+                                                                    <div id="calendar_date2" class="calendar_date">
                                                                     </div>
                                                                 </table>
                                                             </div>
@@ -173,22 +228,39 @@
 
                                             <script>
                                                 window.onload = function() {
-                                                    var calendar = document.getElementById('chk_calendar');
-                                                    var prev_date = document.getElementById('prev_date');
-                                                    var next_date = document.getElementById('next_date');
-                                                    var allSearchBtn = document.getElementById('all_search_btn');
-                                                    var searchBtn = document.getElementById('section_search_btn');
-                                                    var prevDate = document.getElementById('prevDate').innerHTML;
-                                                    var nextDate = document.getElementById('nextDate').innerHTML;
+                                                    const calendar1 = document.getElementById('chk_calendar_1');
+                                                    const calendar2 = document.getElementById('chk_calendar_2');
+                                                    const prev_date = document.getElementById('prev_date');
+                                                    const next_date = document.getElementById('next_date');
+                                                    const allSearchBtn = document.getElementById('all_search_btn');
+                                                    const searchBtn = document.getElementById('section_search_btn');
+                                                    const choice_loanInfo = document.getElementById('choice_loanInfo');
+                                                    const myBoard = document.getElementById('choice_board');
+                                                    const prevDate = document.getElementById('prevDate').innerHTML;
+                                                    const nextDate = document.getElementById('nextDate').innerHTML;
+
+                                                    choice_loanInfo.onclick = function() {
+                                                        location.href = "/mypage";
+                                                        return false;
+                                                    };
+
+                                                    myBoard.onclick = function() {
+                                                        location.href = "/mypage?myBoard=1";
+                                                        return false;
+                                                    };
 
                                                     prev_date.onclick = function() {
-                                                        selectedCalendar = 1;
-                                                        calendar.style.visibility = 'visible';
+                                                        calendar1.style.visibility = 'visible';
+                                                        calendar2.style.visibility = 'hidden';
+                                                        renderCalender_1();
+                                                        return false;
                                                     };
 
                                                     next_date.onclick = function() {
-                                                        selectedCalendar = 2;
-                                                        calendar.style.visibility = 'visible';
+                                                        calendar2.style.visibility = 'visible';
+                                                        calendar1.style.visibility = 'hidden';
+                                                        renderCalender_2();
+                                                        return false;
                                                     };
 
                                                     allSearchBtn.onclick = function() {
@@ -205,105 +277,231 @@
                                             </script>
 
                                             <script>
-                                                const date = new Date();
-                                                var selectDateNo = 0;
+                                                const date_ = new Date();
 
-                                                function renderCalender() {
+                                                function renderCalender_1() {
+                                                    var selectDateNo = 0;
 
-                                                    var selectDate = new Array();
+                                                    date_.setDate(1);
 
-                                                    date.setDate(1);
+                                                    const year = String(date_.getFullYear());
 
-                                                    const year = String(date.getFullYear());
+                                                    const lastDay = new Date(date_.getFullYear(), date_.getMonth() + 1, 0).getDate();
 
-                                                    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+                                                    const prevLastDay = new Date(date_.getFullYear(), date_.getMonth(), 0).getDate();
 
-                                                    const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
+                                                    const firstDayIndex = date_.getDay();
 
-                                                    const firstDayIndex = date.getDay();
-
-                                                    const lastDayIndex = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay();
+                                                    const lastDayIndex = new Date(date_.getFullYear(), date_.getMonth() + 1, 0)
+                                                        .getDay();
 
                                                     const nextDays = 7 - lastDayIndex - 1;
 
                                                     for (let l = 0; l < year.length; l++) {
-                                                        document.getElementById('year' + l).innerHTML = year.substr(l, 1);
+                                                        document.getElementById('year_' + l).innerHTML = year.substr(l, 1);
                                                     }
 
-                                                    document.querySelector('.calendar_title_month').innerHTML = date.getMonth() + 1;
+                                                    document.getElementById('calendar_title_month1').innerHTML = date_.getMonth() + 1;
 
                                                     let days = "";
 
                                                     for (let x = firstDayIndex; x > 0; x--) {
-                                                        days += `<div href="#" id="date${selectDateNo}" class="prev-date">${prevLastDay - x + 1}</div>`;
+                                                        days += `<div href="#" id="date_${selectDateNo}" class="prev-date">${prevLastDay - x + 1}</div>`;
+                                                        selectDateNo++;
                                                     }
-                                                    selectDate.push(document.querySelectorAll(".prev-date"));
 
                                                     for (let i = 1; i <= lastDay; i++) {
-                                                        if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
-                                                            days += `<div href="#" id="date${selectDateNo}" class="today">${i}</div>`;
+                                                        if (i === new Date().getDate() && date_.getMonth() === new Date()
+                                                            .getMonth()) {
+                                                            days +=
+                                                                `<div href="#" id="date_${selectDateNo}" class="today">${i}</div>`;
                                                         } else {
-                                                            days += `<a href="#" id="date${selectDateNo}">${i}</a>`;
+                                                            days += `<a href="#" id="date_${selectDateNo}">${i}</a>`;
                                                         }
+                                                        selectDateNo++;
                                                     }
 
 
                                                     for (let j = 1; j <= nextDays; j++) {
-                                                        days += `<div href="#" id="date${selectDateNo}" class="next-date">${j}</div>`;
+                                                        days +=
+                                                            `<div href="#" id="date_${selectDateNo}" class="next-date">${j}</div>`;
+                                                        selectDateNo++;
                                                     }
 
-                                                    var m = firstDayIndex;
-                                                    alert('hi');
-                                                    for (; m < selectDateNo - nextDays + 1; m++) {
-                                                        alert(m);
-                                                        /*
-                                                        selectDate.push(document.getElementById('date' + m));
+                                                    let m = firstDayIndex;
 
-                                                        selectDate.addEventListener('click',
-                                                            () => {
-                                                                if (selectedCalendar == 1) {
-                                                                    const hello = document.getElementById('prevDate').innerHTML;
-                                                                    alert(hello)
-                                                                    hello = year + '-' + (date.getMonth() + 1) + '-' + document.getElementById('date' + a).innerHTML
-                                                                    alert(hello);
-                                                                } else if (selectedCalendar == 2) {
-                                                                    document.getElementById('nextDate').innerHTML = year + '-' + (date.getMonth() + 1) + '-' + document.getElementById('date' + a).innerHTML;
+                                                    document.getElementById('calendar_date1').innerHTML = days;
+
+                                                    for (; m < selectDateNo; m++) {
+                                                        var _select = document.getElementById('date_' + m);
+
+                                                        _select.addEventListener('click', function(event) {
+                                                            _selectDay = this.innerHTML;
+                                                            _selectMonth = date_.getMonth() + 1;
+                                                            const select_Date = year + '' + _selectMonth + '' + _selectDay;
+
+                                                            const now = new Date();
+
+                                                            var limit_day = document.getElementById('nextDate').innerHTML;
+                                                            var now_month = now.getMonth() + 1;
+                                                            var now_day = now.getDate();
+
+                                                            if ((now_month / 10) < 1) {
+                                                                now_month = '0' + now_month;
+                                                            }
+                                                            if ((now_day / 10) < 1) {
+                                                                now_day = '0' + now_day;
+                                                            }
+                                                            if ((_selectMonth / 10) < 1) {
+                                                                _selectMonth = '0' + _selectMonth;
+                                                            }
+                                                            if ((_selectDay / 10) < 1) {
+                                                                _selectDay = '0' + _selectDay;
+                                                            }
+                                                            if (Number(select_Date) < 20211122) {
+                                                                alert("2021-11-22 이전 이력은 조회할 수 없습니다.");
+                                                            } else {
+                                                                if (Number(select_Date) > Number(now.getFullYear() + '' + now_month + '' + now_day)) {
+                                                                    alert("과거 이력만 조회할 수 있습니다.");
+                                                                } else {
+                                                                    if (Number(select_Date) > Number(limit_day.substr(0, 4) + '' + limit_day.substr(5, 2) + '' + limit_day.substr(8, 2))) {
+                                                                        document.getElementById('nextDate').innerHTML = year + '-' + _selectMonth + '-' + _selectDay;
+                                                                    }
+                                                                    document.getElementById('prevDate').innerHTML = year + '-' + _selectMonth + '-' + _selectDay;
                                                                 }
-
-                                                                document.getElementById('chk_calendar').style.visibility = hidden;
-                                                            });
-                                                            */
-
+                                                            }
+                                                            document.getElementById('chk_calendar_1').style.visibility = "hidden";
+                                                        });
                                                     }
-
-                                                    document.querySelector('.calendar_date').innerHTML = days;
                                                 }
 
-                                                document.querySelector('.calendar_month_prev_btn').addEventListener('click',
+                                                document.getElementById('calendar_month_prev_btn1').addEventListener('click',
                                                     () => {
-                                                        date.setMonth(date.getMonth() - 1);
-                                                        renderCalender();
+                                                        date_.setMonth(date_.getMonth() - 1);
+                                                        renderCalender_1();
                                                     });
 
-                                                document.querySelector('.calendar_month_next_btn').addEventListener('click',
+                                                document.getElementById('calendar_month_next_btn1').addEventListener('click',
                                                     () => {
-                                                        date.setMonth(date.getMonth() + 1);
-                                                        renderCalender();
+                                                        date_.setMonth(date_.getMonth() + 1);
+                                                        renderCalender_1();
                                                     });
-                                                /*
-                                                for (let a = 0; a < selectDateNo + 1; a++) {
-                                                    document.getElementById('date' + a).addEventListener('click',
-                                                        () => {
-                                                            if (selectedCalendar == 1) {
-                                                                document.getElementById('prevDate').innerHTML = year + '-' + (date.getMonth() + 1) + '-' + document.getElementById('date' + a).innerHTML;
-                                                            } else if (selectedCalendar == 2) {
-                                                                document.getElementById('nextDate').innerHTML = year + '-' + (date.getMonth() + 1) + '-' + document.getElementById('date' + a).innerHTML;
+
+                                                renderCalender_1();
+                                            </script>
+
+                                            <script>
+                                                const date__ = new Date();
+
+                                                function renderCalender_2() {
+                                                    var selectDateNo = 0;
+
+                                                    date__.setDate(1);
+
+                                                    const year = String(date__.getFullYear());
+
+                                                    const lastDay = new Date(date__.getFullYear(), date__.getMonth() + 1, 0).getDate();
+
+                                                    const prevLastDay = new Date(date__.getFullYear(), date__.getMonth(), 0).getDate();
+
+                                                    const firstDayIndex = date__.getDay();
+
+                                                    const lastDayIndex = new Date(date__.getFullYear(), date__.getMonth() + 1, 0).getDay();
+
+                                                    const nextDays = 7 - lastDayIndex - 1;
+
+                                                    for (let l = 0; l < year.length; l++) {
+                                                        document.getElementById('year__' + l).innerHTML = year.substr(l, 1);
+                                                    }
+
+                                                    document.getElementById('calendar_title_month2').innerHTML = date__.getMonth() + 1;
+
+                                                    let days = "";
+
+                                                    for (let x = firstDayIndex; x > 0; x--) {
+                                                        days +=
+                                                            `<div href="#" id="date__${selectDateNo}" class="prev-date">${prevLastDay - x + 1}</div>`;
+                                                        selectDateNo++;
+                                                    }
+
+                                                    for (let i = 1; i <= lastDay; i++) {
+                                                        if (i === new Date().getDate() && date__.getMonth() === new Date()
+                                                            .getMonth()) {
+                                                            days +=
+                                                                `<div href="#" id="date__${selectDateNo}" class="today">${i}</div>`;
+                                                        } else {
+                                                            days += `<a href="#" id="date__${selectDateNo}">${i}</a>`;
+                                                        }
+                                                        selectDateNo++;
+                                                    }
+
+
+                                                    for (let j = 1; j <= nextDays; j++) {
+                                                        days +=
+                                                            `<div href="#" id="date__${selectDateNo}" class="next-date">${j}</div>`;
+                                                        selectDateNo++;
+                                                    }
+
+                                                    let m = firstDayIndex;
+
+                                                    document.getElementById('calendar_date2').innerHTML = days;
+
+                                                    for (; m < selectDateNo; m++) {
+                                                        var _select = document.getElementById('date__' + m);
+
+                                                        _select.addEventListener('click', function(event) {
+                                                            _selectDay = this.innerHTML;
+                                                            _selectMonth = date__.getMonth() + 1;
+                                                            const select_Date = year + '' + _selectMonth + '' + _selectDay;
+
+                                                            const now = new Date();
+
+                                                            var limit_day = document.getElementById('prevDate').innerHTML;
+                                                            var now_month = now.getMonth() + 1;
+                                                            var now_day = now.getDate();
+
+                                                            if ((now_month / 10) < 1) {
+                                                                now_month = '0' + now_month;
                                                             }
+                                                            if ((now_day / 10) < 1) {
+                                                                now_day = '0' + now_day;
+                                                            }
+                                                            if ((_selectMonth / 10) < 1) {
+                                                                _selectMonth = '0' + _selectMonth;
+                                                            }
+                                                            if ((_selectDay / 10) < 1) {
+                                                                _selectDay = '0' + _selectDay;
+                                                            }
+                                                            if (Number(select_Date) < 20211122) {
+                                                                alert("2021-11-22 이전 이력은 조회할 수 없습니다.");
+                                                            } else {
+                                                                if (Number(select_Date) > Number(now.getFullYear() + '' + now_month + '' + now_day)) {
+                                                                    alert("과거 이력만 조회할 수 있습니다.");
+                                                                } else {
+                                                                    if (Number(select_Date) < Number(limit_day.substr(0, 4) + '' + limit_day.substr(5, 2) + '' + limit_day.substr(8, 2))) {
+                                                                        document.getElementById('prevDate').innerHTML = year + '-' + _selectMonth + '-' + _selectDay;
+                                                                    }
+                                                                    document.getElementById('nextDate').innerHTML = year + '-' + _selectMonth + '-' + _selectDay;
+                                                                }
+                                                            }
+                                                            document.getElementById('chk_calendar_2').style.visibility = "hidden";
                                                         });
+                                                    }
+                                                }
 
-                                                }*/
+                                                document.getElementById('calendar_month_prev_btn2').addEventListener('click',
+                                                    () => {
+                                                        date__.setMonth(date__.getMonth() - 1);
+                                                        renderCalender_2();
+                                                    });
 
-                                                renderCalender();
+                                                document.getElementById('calendar_month_next_btn2').addEventListener('click',
+                                                    () => {
+                                                        date__.setMonth(date__.getMonth() + 1);
+                                                        renderCalender_2();
+                                                    });
+
+                                                renderCalender_2();
                                             </script>
                                         </tbody>
                                     </table>
@@ -412,12 +610,57 @@
                                                         <%if (l != loanDate[i].COUNT) { %>
                                                             <div class="hr"></div>
                                                             <%}%>
-
                                                                 <%}%>
                                                                     <%}%>
                                                                         <%}%>
                     </div>
-                </div>
+                    <%} else {%>
+                        <!-- 내 게시글 -->
+                        <div class="rightBoardContainer">
+
+                            <table class="blueone">
+                                <tr>
+                                    <th>No</th>
+                                    <th>제목</th>
+                                    <th>등록일</th>
+                                </tr>
+                                <%  var l = rows.length; let page_num = 10;%>
+                                    <%for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { %>
+                                        <% if(i > length){ i++; } else { var data = rows[i]; %>
+                                            <tr>
+                                                <td class="postno">
+                                                    <%= l-i %>
+                                                </td>
+                                                <% postno[i] = i; %>
+                                                    <td name="postno" id="postno" class="posttitle"> &nbsp;
+                                                        <a href="/board<%= i%>">
+                                                            <%=data.TITLE;%>
+                                                        </a>
+                                                    </td>
+                                                    <td class="writedate">
+                                                        <%=data.WRITE_DATE%>
+                                                    </td>
+
+                                            </tr>
+                                            <%}%>
+                                                <%}%>
+                                                    <tr>
+                                                        <td class="page" colspan="6">
+                                                            <%for(var j = 0; j < rows.length / page_num; j++){ %>
+                                                                [
+                                                                <a href="/mypage?myBoard=<%= j + 1 %>">
+                                                                    <%= j + 1 %>
+                                                                </a>]
+                                                                <%}%>
+                                                        </td>
+                                                    </tr>
+                            </table>
+                        </div>
+
+                        <%}%>
+
+
+            </div>
         </div>
     </div>
 </div>

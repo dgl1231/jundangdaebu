@@ -59,6 +59,57 @@
     margin-top: 40px;
 }
 
+.rightBoardContainer {
+    position: relative;
+    width: 760px;
+    min-height: 970px;
+}
+
+.blueone {
+    border-collapse: collapse;
+    margin-top: 30px;
+    width: 760px;
+    font-size: 18px;
+}
+
+.blueone th {
+    padding: 10px;
+    color: #168;
+    border-bottom: 3px solid #168;
+    text-align: center;
+}
+
+.postno {
+    border-right: 1px solid #ddd;
+    width: 100px;
+    text-align: center;
+}
+
+.posttitle {
+    border-right: 1px solid #ddd;
+    text-align: left;
+    width: 400px;
+}
+
+.writedate {
+    width: 100px;
+    text-align: center;
+}
+
+.blueone td {
+    color: #669;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.blueone tr:hover td {
+    color: #004;
+}
+
+.page {
+    text-align: center;
+}
+
 .choiceBox {
     display: inline-block;
     width: 10%;
@@ -66,6 +117,10 @@
     color: rgb(44, 44, 44);
     line-height: 39px;
     text-align: center;
+}
+
+.choiceBox:hover {
+    color: #5cd1ffe3;
 }
 
 .rightCenter_left {
@@ -108,10 +163,10 @@
 }
 
 .loanDate {
-    display: inline;
+    display: flex;
     float: left;
     position: relative;
-    width: 100px;
+    width: 110px;
     height: 30px;
     border: 1px solid rgb(134, 134, 134);
     background: white;
@@ -121,14 +176,23 @@
     font-size: 13px;
 }
 
+.loanDate_text {
+    width: 78%;
+    height: 30px;
+}
+
+.loanDate_icoBox {
+    width: 22%;
+    height: 30px;
+}
+
 .calendar_ico {
-    display: inline-block;
     position: absolute;
     background: url("../img/calendar.png") center center;
     background-size: 100%;
     background-color: rgb(255, 255, 255);
     bottom: 20%;
-    margin-left: 4px;
+    left: 80%;
     width: 17px;
     height: 17px;
 }
@@ -155,7 +219,7 @@
     background-color: white;
     color: rgb(0, 0, 0);
     line-height: 27px;
-    margin-left: 32px;
+    margin-left: 20px;
     text-align: center;
     font-size: 14px;
 }
@@ -169,7 +233,7 @@
     background-color: rgb(146, 221, 255);
     color: rgb(0, 0, 0);
     line-height: 27px;
-    margin-left: 40px;
+    margin-left: 20px;
     text-indent: 12px;
     font-size: 14px;
 }
@@ -373,9 +437,7 @@
     transition: background-color 0.1s;
 }
 
-.calendar_date div:hover:not(.today,
-.next-date,
-.prev-date) {
+.calendar_date a:hover {
     background-color: rgb(125, 214, 255, 0.5);
     cursor: pointer;
 }
