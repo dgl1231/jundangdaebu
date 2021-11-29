@@ -157,7 +157,6 @@ app.get('/loanlist', (req, res) => {
                 result = null;
             } else {}
 
-            console.log(result.length);
             res.render(__dirname + '/views/loanlist.ejs', {
                 title: "대출이력 | " + siteData.title,
                 loanInfos: result,

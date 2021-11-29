@@ -96,17 +96,23 @@
                                 <div class="selectCircles_box">
                                     <div class="selectCircles">
 
-                                        <input type="radio" name="pos" id="pos1" checked>
-                                        <input type="radio" name="pos" id="pos2">
-                                        <input type="radio" name="pos" id="pos3">
-                                        <input type="radio" name="pos" id="pos4">
-                                        <p class="bullet">
-                                            <label for="pos1"></label>
-                                            <label for="pos2"></label>
-                                            <label for="pos3"></label>
-                                            <label for="pos4"></label>
-                                        </p>
+                                        <%for (let k = 1; k < length+1; k++) {%>
+                                            <%if (k == 1) { %>
+                                                <input type="radio" name="pos" id="pos<%=k%>" checked>
+                                                <%} else {%>
+                                                    <input type="radio" name="pos" id="pos<%=k%>">
+                                                    <%}%>
+                                                        <%}%>
+                                                            <p class="bullet">
+                                                                <%for (let l = 1; l < length + 1; l++) {%>
 
+                                                                    <style>
+
+                                                                    </style>
+
+                                                                    <label for="pos<%=l%>"></label>
+                                                                    <%}%>
+                                                            </p>
 
                                     </div>
                                 </div>

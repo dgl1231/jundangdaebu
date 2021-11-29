@@ -106,10 +106,14 @@
 
 .selectCircles_box {
     position: relative;
-    width: 200px;
+    width: 800px;
     height: 20px;
     margin: 0 auto;
     top: 12.5px;
+}
+
+.selectCircles {
+    width: 800px;
 }
 
 .info_container {
@@ -299,7 +303,7 @@ input {
     background: #fff;
     font-size: 0;
     transition: 0.5s;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .slide .bullet label {
@@ -314,7 +318,8 @@ input {
     cursor: pointer;
 }
 
-#pos1:checked~ul {
+
+/*#pos1:checked~ul {
     margin-left: 0;
 }
 
@@ -328,14 +333,10 @@ input {
 
 #pos4:checked~ul {
     margin-left: -300%;
-}
-
-
-/* bullet 조작 */
+}*/
 
 #pos1:checked~.bullet label:nth-child(1),
 #pos2:checked~.bullet label:nth-child(2),
-#pos3:checked~.bullet label:nth-child(3),
-#pos4:checked~.bullet label:nth-child(4) {
+#pos3:checked~.bullet label:nth-child(3) {
     background: #666;
 }
