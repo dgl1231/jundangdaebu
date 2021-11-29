@@ -1,27 +1,136 @@
-    <div class="body__container">
+<div class="body__container">
 
-        <div class="main-container">
-            <div class="title_back">
-                <div class="title">대출 이력</div>
+    <div class="main-container">
+        <div class="title_back">
+            <div class="title">대출 이력</div>
+        </div>
+
+
+        <div class="board">
+            <div class="leftpadding">
             </div>
-            
+            <div class="mainboard">
 
-            <div class="board">
-                <div class="leftpadding">
+                <div class="side_section">
+                    <div class="left_arrow_ico_section">
+                        <div class="left_arrow_ico">
 
+                        </div>
+                    </div>
                 </div>
-                <div class="mainboard">
-                    
+                <!--
+                <div class="center_container">
+                    <div class="board_container">
+                        <div class="slide">
+                            <input type="radio" name="pos" id="pos1" checked>
+                            <input type="radio" name="pos" id="pos2">
+                            <input type="radio" name="pos" id="pos3">
+                            <input type="radio" name="pos" id="pos4">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <p class="bullet">
+                                <label for="pos1">1</label>
+                                <label for="pos2">2</label>
+                                <label for="pos3">3</label>
+                                <label for="pos4">4</label>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="rightpadding">
+            -->
 
-                </div>
+
+
+                <%let j = 0; let i = 0%>
+                    <%for (; i < length / 4; i++) {%>
+                        <div class="center_container">
+                            <div class="board_container">
+                                <%for (; j < length; j++) {%>
+                                    <div class="info_container">
+                                        <div class="info_box">
+                                            <div class="info_top_section">
+                                                <div class="text_section">
+                                                    <div class="productText">
+                                                        <%=loanInfos[j].G_NAME%>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="info_middle_section">
+                                                <div class="photo_section">
+                                                    <div class="photoZone">
+                                                        <div class="photo">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text_section">
+                                                    <div class="textZone">
+                                                        <div class="loanAmountText">
+                                                            <%=loanInfos[j].LOAN_PRINCIPAL%>원 대출
+                                                        </div>
+                                                    </div>
+                                                    <div class="textZone">
+                                                        <div class="userNameText">
+                                                            <%=loanInfos[j].NAME.substr(0, 1)%>OO 고객님
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="info_bottom_section">
+                                                <div class="photo_info_btn_section">
+                                                    <span class="photo_info_btn_text">
+                                            사진 보기
+                                        </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%}%>
+                            </div>
+                            <div class="selectCircles_container">
+                                <div class="selectCircles_box">
+                                    <div class="selectCircles">
+
+                                        <input type="radio" name="pos" id="pos1" checked>
+                                        <input type="radio" name="pos" id="pos2">
+                                        <input type="radio" name="pos" id="pos3">
+                                        <input type="radio" name="pos" id="pos4">
+                                        <p class="bullet">
+                                            <label for="pos1"></label>
+                                            <label for="pos2"></label>
+                                            <label for="pos3"></label>
+                                            <label for="pos4"></label>
+                                        </p>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+
+
+                            <div class="side_section">
+                                <div class="right_arrow_ico_section">
+                                    <div class="right_arrow_ico">
+
+                                    </div>
+                                </div>
+                            </div>
             </div>
+            <div class="rightpadding">
+            </div>
+        </div>
 
 
 
 
-            <!--
+        <!--
                 <ul class="row">
                     <li class="cell">
                         <div class="img-box">
@@ -34,5 +143,5 @@
                 </ul>
                 -->
 
-        </div>
     </div>
+</div>

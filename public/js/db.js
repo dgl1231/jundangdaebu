@@ -10,16 +10,19 @@ var connection = {
     password: 'dlehdrjs1!',
     port: '3306',
     database: 'dgl1231',
+    dateStrings: 'date'
 };
 module.exports = {
-    init: function () {
+    init: function() {
         return mysql.createConnection(connection);
     },
     connect: function(conn) {
         conn.connect(function(err) {
-            if (err) { console.log("FFFFFFFFUUUUUUUUUUUUUUCCCCCCCCCCCCCKKKKKKKKKKKKKKKK"); console.error('mysql connection error : ' + err); }
-            else console.log('mysql is connected successfully!');
-            
+            if (err) {
+                console.log("FFFFFFFFUUUUUUUUUUUUUUCCCCCCCCCCCCCKKKKKKKKKKKKKKKK");
+                console.error('mysql connection error : ' + err);
+            } else console.log('mysql is connected successfully!');
+
         });
     }
 }
