@@ -1,0 +1,65 @@
+<div class="body__container">
+    <div class="main-container">
+        <div class="title_back">
+            <div class="title">대출, 담보 현황</div>
+        </div>
+        <div class="now" id="content3rd">
+            <table class="blueon_3rd">
+                <tr>
+                    <th>번호</th>
+                    <th>대출.No/<br>상환.No</th>
+                    <th>대출총액/<br>대출원금</th>
+                    <th>상환총액</th>
+                    <th>대출날짜/<br>만기날짜</th>
+                    <th>기타비용/<br>총이자</th>
+                    <th>현재상태</th>
+                    <th>담보 제출날짜/<br>수령날짜</th>
+                    <th>브랜드, 품목</th>
+                    <th>전화번호/<br>email</th>
+                </tr>
+
+                <%var l = rows.length;
+                        for(var i = (page * page_num) - page_num; i < (page * page_num); i++) {
+                            if(i > length){
+                            i++;
+                        }else{
+                        %>
+                <tr>
+                    <th class="loan_p_no"><%= l-i %></th>
+                    <% loan_p_no[i] = i; %>
+                    <th class="number"><%= rows[i].LOAN_NO%>&nbsp;/&nbsp;<br><%= data[i].SEC_NO%> </th>
+                    <th class="number">
+                        <%= data[i].TOTAL_LOAN_AMOUNT%>&nbsp;/&nbsp;<br><%= data[i].LOAN_PRINCIPAL%> </th>
+                    <th class="number"><%= data[i].REPAY_AMOUNT%></th>
+                    <th class="number_d"><%= data[i].LOAN_DATE%>&nbsp;/<br><%= data[i].LOAN_DEADLINE%> </th>
+                    <th class="number"><%= data[i].OTHER_EXPENSES%>&nbsp;/&nbsp;<br><%= data[i].TOTAL_OCCUR_INTEREST%> </th>
+                    <th class="number"><%if(1 == data[i].STATEMENT){%>
+                        대출 진행중
+                    <%}else if(2 == data[i].STATEMENT){%>
+                        대출완료/상환중
+                    <%}else if(3 == data[i].STATEMENT){%>
+                        상환완료
+                    <%}%></th>
+                    <th class="number_d"><%= data[i].SEND_IN_DATE%>&nbsp;/<br><%= data[i].RECEIVE_DATE%> </th>
+                    <th class="number"><%= data[i].BRAND%>/<br><%= data[i].PRODUCT%> </th>
+                    <th class="number"><%= data[i].CALL_NO%>/<br><%= data[i].MAIL_ADDR%></th>
+
+                </tr>
+                <%}}%>
+                <tr>
+                    <td class="page" colspan="10">
+                        <%
+                    for(var j = 0; j < rows.length / page_num; j++){
+                    %>
+                        [<a href="/loansecmanage<%= j + 1 %>"><%= j + 1 %></a>]
+                        <%
+                    }
+                    %>
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
+    </div>
+</div>

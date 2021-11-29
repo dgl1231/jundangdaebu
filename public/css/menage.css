@@ -24,6 +24,7 @@
 .blueone{
     margin-top:20px;
 }
+
 .FUCK_in{
     margin-top:10px;
 }
@@ -38,10 +39,7 @@
     padding-left: 42.5%;
     width: 20%;
 }
-.now {
-    padding-left: 42.5%;
-    width: 20%;
-}
+
 .del {
     padding-left: 42.5%;
     width: 20%;
@@ -49,6 +47,7 @@
 .submit_btn_td{
     text-align: center;
 }
+
 
 #content1st {
     display: block;
@@ -62,9 +61,6 @@
     display: none;
 }
 
-#content4th {
-    display: none;
-}
 .buttoncontainer{
         margin-top:30px;
         margin-left: 30px;
@@ -90,9 +86,4 @@
     text-decoration-line: none;
 }
 
-.buttoncontainer #btn4th {
-    color: rgb(94, 169, 219);
-    margin-left: 20px;
-    font-size: 20px;
-    text-decoration-line: none;
-}
+

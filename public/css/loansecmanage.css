@@ -1,0 +1,62 @@
+.main-container {
+    background: #f5f6f7;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100%;
+    width: auto;
+    height: 750px;
+    position: relative;
+    font-family: "Jua", sans-serif;
+    display: block;
+}
+
+.title_back {
+    padding-top: 2%;
+    display: flex;
+    text-align: center;
+}
+
+.title {
+    margin-left: 47%;
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+
+.now {
+    padding-left: 5%;
+    width: 90%;
+}
+
+
+.blueon_3rd {
+    margin-top: 40px;
+    font-size: 20px;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+.blueon_3rd th {
+    width: 250px;
+    padding-top: 5px;
+    height: 40px;
+    color: #168;
+    border-bottom: 3px solid #168;
+    border-right: 3px solid #168;
+    text-align: center;
+}
+.blueon_3rd th .number{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.blueon_3rd th .number_d {
+    
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.page {
+    width: 100%;
+    text-align: center;
+}

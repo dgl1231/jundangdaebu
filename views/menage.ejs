@@ -5,64 +5,29 @@
             <div class="buttoncontainer">
                 <a href="javascript:vis(1);" id="btn1st" onclick="">대출/담보 등록</a>
                 <a href="javascript:vis(2);" id="btn2nd" onclick="">상환 등록</a>
-                <a href="javascript:vis(3);" id="btn3rd" onclick="">담보 및 대출 현황</a>
-                <a href="javascript:vis(4);" id="btn4th" onclick="">만기 상환 시 등록</a>
+                <a href="/loansecmanage1" id="btn3rd" onclick="">담보 및 대출 현황</a>
                 <script>
                     function vis(n) {
                         document.getElementById("content1st").style.display = "none";
                         document.getElementById("content2nd").style.display = "none";
-                        document.getElementById("content3rd").style.display = "none";
-                        document.getElementById("content4th").style.display = "none";
                         if (n == 1) {
                             document.getElementById("content1st").style.display = "block";
 
                             document.getElementById("btn1st").style.color = "rgb(88, 109, 204)";
                             document.getElementById("btn2nd").style.color = "rgb(94, 169, 219)";
-                            document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
-                            document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
 
                             document.getElementById("btn1st").style.fontSize = "30px";
                             document.getElementById("btn2nd").style.fontSize = "20px";
-                            document.getElementById("btn3rd").style.fontSize = "20px";
-                            document.getElementById("btn4th").style.fontSize = "20px";
                         } else if (n == 2) {
                             document.getElementById("content2nd").style.display = "block";
 
                             document.getElementById("btn1st").style.color = "rgb(94, 169, 219)";
                             document.getElementById("btn2nd").style.color = "rgb(88, 109, 204)";
-                            document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
-                            document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
 
                             document.getElementById("btn1st").style.fontSize = "20px";
                             document.getElementById("btn2nd").style.fontSize = "30px";
-                            document.getElementById("btn3rd").style.fontSize = "20px";
-                            document.getElementById("btn4th").style.fontSize = "20px";
 
-                        } else if (n == 3) {
-                            document.getElementById("content3rd").style.display = "block";
-
-                            document.getElementById("btn1st").style.color = "rgb(94, 169, 219)";
-                            document.getElementById("btn2nd").style.color = "rgb(94, 169, 219)";
-                            document.getElementById("btn3rd").style.color = "rgb(88, 109, 204)";
-                            document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
-
-                            document.getElementById("btn1st").style.fontSize = "20px";
-                            document.getElementById("btn2nd").style.fontSize = "20px";
-                            document.getElementById("btn3rd").style.fontSize = "30px";
-                            document.getElementById("btn4th").style.fontSize = "20px";
-                        } else if (n == 4) {
-                            document.getElementById("content4th").style.display = "block";
-
-                            document.getElementById("btn1st").style.color = "rgb(94, 169, 219)";
-                            document.getElementById("btn2nd").style.color = "rgb(94, 169, 219)";
-                            document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
-                            document.getElementById("btn4th").style.color = "rgb(88, 109, 204)";
-
-                            document.getElementById("btn1st").style.fontSize = "20px";
-                            document.getElementById("btn2nd").style.fontSize = "20px";
-                            document.getElementById("btn3rd").style.fontSize = "20px";
-                            document.getElementById("btn4th").style.fontSize = "30px";
-                        }
+                        } 
                     }
                 </script>
             </div>
@@ -205,6 +170,10 @@
                             <td class="table_title">상환 종류</td>
                             <td><input type="number" name="repay_g" id="repay_g" /></td>
                         </tr>
+                        <tr class="FUCK_in">
+                            <td class="table_title">대출 일련번호</td>
+                            <td><input type="text" name="loan_no" id="loan_no" /></td>
+                        </tr>
                         <tr>
                         <tr>
                             <td><br></td>
@@ -227,13 +196,6 @@
                     </table>
                 </form>
             </div>
-
-            
-            <div class="now" id="content3rd">
-                
-            </div>
-            <div class="del" id="content4th">
-                
             </div>
         </div>
     </div>
