@@ -33,7 +33,13 @@
                     <th class="number"><%= data[i].REPAY_AMOUNT%></th>
                     <th class="number_d"><%= data[i].LOAN_DATE%>&nbsp;/<br><%= data[i].LOAN_DEADLINE%> </th>
                     <th class="number"><%= data[i].OTHER_EXPENSES%>&nbsp;/&nbsp;<br><%= data[i].TOTAL_OCCUR_INTEREST%> </th>
-                    <th class="number"><%= data[i].STATEMENT%> </th>
+                    <th class="number"><%if(1 == data[i].STATEMENT){%>
+                        대출 진행중
+                    <%}else if(2 == data[i].STATEMENT){%>
+                        대출완료/상환중
+                    <%}else if(3 == data[i].STATEMENT){%>
+                        상환완료
+                    <%}%></th>
                     <th class="number_d"><%= data[i].SEND_IN_DATE%>&nbsp;/<br><%= data[i].RECEIVE_DATE%> </th>
                     <th class="number"><%= data[i].BRAND%>/<br><%= data[i].PRODUCT%> </th>
                     <th class="number"><%= data[i].CALL_NO%>/<br><%= data[i].MAIL_ADDR%></th>
