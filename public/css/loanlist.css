@@ -48,7 +48,6 @@
 }
 
 .center_container {
-    display: none;
     height: 350px;
 }
 
@@ -104,6 +103,7 @@
     display: flex;
     list-style: none;
     transition: 1s;
+    margin-left: 0;
 }
 
 .selectCircles_container {
@@ -229,4 +229,8 @@
     height: 40px;
     color: rgb(255, 255, 255);
     font-size: 13px;
+}
+
+.selectCircles label {
+    font-size: 0;
 }
