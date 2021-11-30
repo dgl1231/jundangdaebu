@@ -43,21 +43,22 @@
 
 .mainboard {
     display: table;
-    width: 1200px;
+    width: 1300px;
     height: 400px;
-    top: 60px;
-    margin: 0 auto;
 }
 
 .center_container {
-    display: table-cell;
-    width: 800px;
-    height: 400px;
+    display: none;
+    height: 350px;
+}
+
+.center_container.active {
+    display: block;
 }
 
 .side_section {
     display: table-cell;
-    width: 10%;
+    width: 150px;
     height: 400px;
     vertical-align: middle;
 }
@@ -76,10 +77,9 @@
     position: relative;
     width: 70px;
     height: 75px;
-    left: 17%;
+    left: 0%;
     background: url('../img/button/left_arrow_2.png') center center;
     background-size: 100%;
-    left: 0px;
     cursor: pointer;
 }
 
@@ -87,24 +87,22 @@
     position: relative;
     width: 70px;
     height: 75px;
-    right: 17%;
+    right: -80px;
     background: url('../img/button/right_arrow_2.png') center center;
     background-size: 100%;
-    left: 62px;
     cursor: pointer;
 }
 
 .slide_container {
-    padding: none;
-    width: 1000px;
     height: 400px;
     overflow: hidden;
     position: relative;
 }
 
 .board_container {
-    width: 1000px;
-    height: 400px;
+    height: 350px;
+    display: flex;
+    list-style: none;
 }
 
 .selectCircles_container {
@@ -128,7 +126,7 @@
 
 .info_container {
     display: table-cell;
-    width: 235px;
+    width: 250px;
     height: 350px;
     vertical-align: middle;
 }
@@ -168,7 +166,7 @@
     height: 120px;
     background: rgb(255, 255, 255);
     border-radius: 12%;
-    margin: 0 0 0 40px;
+    margin: 0 0 0 47.5px;
 }
 
 .photo {
