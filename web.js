@@ -89,7 +89,7 @@ app.set('layout', 'layout/layout');
 
 //listening
 app.listen(PORT, () => {
-    var dir = __dirname + '/uploadedFiles';
+    var dir = __dirname + '/public/' + '/uploadedFiles';
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     console.log(dir);
 });
@@ -149,6 +149,7 @@ app.get('/loanlist', (req, res) => {
     app.locals.login = loginsession;
 
     const loanListSql = "SELECT LOAN_NO, LOAN_PRINCIPAL, PRODUCT, G_ID, G_NAME, NAME, STORED_DOCU_NAME, DOCU_PATH FROM (SELECT l.loan_no, LOAN_PRINCIPAL, PRODUCT, ce.G_ID, G_NAME, u.NAME FROM dgl1231.loan l, dgl1231.security s, dgl1231.code_entity ce, dgl1231.code_group cg, dgl1231.user u WHERE l.loan_no = s.loan_no AND ce.C_ID = s.PRODUCT AND cg.G_ID = ce.G_ID AND l.CALL_NO = u.CALL_NO ORDER BY l.loan_no DESC) AS FIR LEFT OUTER JOIN(SELECT DISTINCT A.STORED_DOCU_NAME, A.DOCU_PATH, A.LOAN_NO AS L_N FROM dgl1231.document A, (SELECT @ROWNUM := 0) B WHERE A.DOCU_G = '11') AS SEC ON (FIR.LOAN_NO = SEC.L_N) GROUP BY LOAN_NO ORDER BY LOAN_NO DESC;";
+
     conn.query(loanListSql, function(err, result) {
         if (err) console.error("err : " + err);
         else {
@@ -539,9 +540,9 @@ const makeFolder = (dir) => {
 var filepath = '';
 var storage = multer.diskStorage({ //  파일이름을 유지하기 위해 사용할 변수(중복방지를 위하여 시간을 넣어줫음)
     destination(req, file, cb) {
-        makeFolder(__dirname + 'uploadedFiles/' + localUserID + '/' + datapostno);
-        filepath = __dirname + 'uploadedFiles/' + localUserID + '/' + datapostno;
-        cb(null, __dirname + 'uploadedFiles/' + localUserID + '/' + datapostno);
+        makeFolder(__dirname + '/public/' + 'uploadedFiles/' + localUserID + '/' + datapostno);
+        filepath = __dirname + '/public/' + 'uploadedFiles/' + localUserID + '/' + datapostno;
+        cb(null, __dirname + '/public/' + 'uploadedFiles/' + localUserID + '/' + datapostno);
         console.log()
     },
     filename(req, file, cb) {
@@ -896,9 +897,9 @@ var filepath_loan = '';
 var storage = multer.diskStorage({ //  파일이름을 유지하기 위해 사용할 변수(중복방지를 위하여 시간을 넣어줫음) 
     destination(req, file, cb) {
         var today = new Date();
-        makeFolder('uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + (today.getMonth() + 1) + today.getDate());
-        filepath_loan = 'uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + (today.getMonth() + 1) + today.getDate();
-        cb(null, 'uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + (today.getMonth() + 1) + today.getDate());
+        makeFolder(__dirname + '/public/' + 'uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + (today.getMonth() + 1) + today.getDate());
+        filepath_loan = __dirname + '/public/' + 'uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + (today.getMonth() + 1) + today.getDate();
+        cb(null, __dirname + '/public/' + 'uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + (today.getMonth() + 1) + today.getDate());
     },
     filename(req, file, cb) {
         var today = new Date();
