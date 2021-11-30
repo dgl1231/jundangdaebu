@@ -165,13 +165,13 @@
     top: 22%;
     width: 130px;
     height: 120px;
-    background: rgb(255, 255, 255);
     border-radius: 12%;
     margin: 0 0 0 47.5px;
 }
-
-.photo {
-    background: rgb(0, 0, 0);
+.photo{
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
 }
 
 .text_section {
@@ -229,4 +229,8 @@
     height: 40px;
     color: rgb(255, 255, 255);
     font-size: 13px;
+}
+
+#pos4:checked~ul {
+    margin-left: -300%;
 }

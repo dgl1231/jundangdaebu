@@ -1,4 +1,8 @@
+
 <div class="body__container">
+
+
+    
 
     <div class="main-container">
         <div class="title_back">
@@ -60,8 +64,10 @@
                                         </div>
                                         <div class="info_middle_section">
                                             <div class="photo_section">
+                                                
+                                                    <%var filepath = loanInfos[j].DOCU_PATH +'/'+loanInfos[j].STORED_DOCU_NAME%>
                                                 <div class="photoZone">
-                                                    <div class="photo"></div>
+                                                    <img class="photo" alt="FUCK" src="<%=filepath%>">
                                                 </div>
                                             </div>
                                             <div class="text_section">
@@ -77,11 +83,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="info_bottom_section">
-                                            <div class="photo_info_btn_section">
-                                                <span class="photo_info_btn_text">사진 보기</span>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div><%}%>
                             </div><%}%>
@@ -90,7 +91,7 @@
                                 <div class="selectCircles_box">
                                     <div class="selectCircles">
                                         <%for (let k = 0; k < length / 4; k++) {
-                                if (k == 0) {%>
+                                        if (k == 0) {%>
                                         <input type="radio" name="pos" id="pos<%=k%>" class="rdg" checked>
                                         <%} else {%>
                                         <input type="radio" name="pos" id="pos<%=k%>" class="rdg">
