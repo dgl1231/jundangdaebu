@@ -1,0 +1,133 @@
+<div class="body__container">
+
+    <div class="main-container">
+        <div class="title_back">
+            <div class="title">대출 이력</div>
+        </div>
+
+
+        <div class="board">
+            <div class="leftpadding">
+            </div>
+            <div class="mainboard">
+
+                <div class="side_section">
+                    <div class="left_arrow_ico_section">
+                        <div class="left_arrow_ico">
+
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .slide_container .board_container {
+                        width: calc(100% * <%=Math.ceil(length / 4)%>);
+                    }
+                    
+                    .board_container .center_container {
+                        width: calc(100% / <%=Math.ceil(length / 4)%>);
+                        height: 350px;
+                    }
+                </style>
+
+                <div class="slide_container">
+                    <div class="board_container">
+                        <%let j = 0;%>
+                            <%for (let i = 0; i < length / 4; i++) {%>
+
+                                <style>
+                                    .slide_container~.board_container:nth-child(<%=i%>) {
+                                        background: #f5f6f7;
+                                    }
+                                    
+                                    #pos<%=i%>:checked~.board_container {
+                                        margin-left: <%=i * -100%>%;
+                                    }
+                                </style>
+                                <%if (i == 0) {%>
+                                    <div class="center_container active">
+                                        <%} else {%>
+                                            <div class="center_container">
+                                                <%}%>
+
+
+                                                    <%for (; j < (i + 1) * 4; j++) {%>
+                                                        <%if (j == length) {%>
+                                                            <%break;%>
+                                                                <%}%>
+                                                                    <div class="info_container">
+                                                                        <div class="info_box">
+                                                                            <div class="info_top_section">
+                                                                                <div class="text_section">
+                                                                                    <div class="productText">
+                                                                                        <%=loanInfos[j].G_NAME%>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="info_middle_section">
+                                                                                <div class="photo_section">
+                                                                                    <div class="photoZone">
+                                                                                        <div class="photo">
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="text_section">
+                                                                                    <div class="textZone">
+                                                                                        <div class="loanAmountText">
+                                                                                            <%=loanInfos[j].LOAN_PRINCIPAL%>원 대출
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="textZone">
+                                                                                        <div class="userNameText">
+                                                                                            <%=loanInfos[j].NAME.substr(0, 1)%>OO 고객님
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <div class="info_bottom_section">
+                                                                                <div class="photo_info_btn_section">
+                                                                                    <span class="photo_info_btn_text">
+                                                사진 보기
+                                            </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <%}%>
+                                            </div>
+                                            <%}%>
+                                    </div>
+                                    <div class="selectCircles_container">
+                                        <div class="selectCircles_box">
+                                            <div class="selectCircles">
+
+                                                <%for (let k = 0; k < length / 4; k++) {%>
+                                                    <%if (k == 0) {%>
+                                                        <input type="radio" name="pos" id="pos<%=k%>" class="rdg" checked>
+                                                        <%} else {%>
+                                                            <input type="radio" name="pos" id="pos<%=k%>" class="rdg">
+                                                            <%}%>
+                                                                <%}%>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                    </div>
+
+
+
+                    <div class="side_section">
+                        <div class="right_arrow_ico_section">
+                            <div class="right_arrow_ico">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rightpadding">
+                </div>
+            </div>
+        </div>
+    </div>
