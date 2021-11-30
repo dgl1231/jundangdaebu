@@ -103,6 +103,7 @@
     height: 350px;
     display: flex;
     list-style: none;
+    transition: 1s;
 }
 
 .selectCircles_container {
@@ -228,15 +229,4 @@
     height: 40px;
     color: rgb(255, 255, 255);
     font-size: 13px;
-}
-
-.selectCircles ul {
-    width: calc(100% * 4);
-    display: flex;
-    transition: 1s;
-}
-
-.selectCircles li {
-    width: calc(100% / 4);
-    height: 300px;
 }
