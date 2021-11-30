@@ -276,9 +276,14 @@
     transform: translate(-50%, -40%);
 }
 
+<<<<<<< Updated upstream
 .show .popup {
     transform: translate(-50%, -50%);
     transition: all .5s;
+=======
+input {
+    /*display: none;*/
+>>>>>>> Stashed changes
 }
 
 .popup-top {
@@ -319,6 +324,7 @@
     font-size: 25px;
 }
 
+<<<<<<< Updated upstream
 .solo_pop {
     font-size: 30px;
     padding-top: 10px;
@@ -329,3 +335,8 @@
     text-decoration-line: none;
     color: red;
 }
+=======
+#pos4:checked~ul {
+    margin-left: -300%;
+}*/
+>>>>>>> Stashed changes
