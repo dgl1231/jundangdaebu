@@ -54,90 +54,149 @@
                 <div class="slide_container">
                     <div class="board_container">
                         <%let j = 0; let i = 0%>
-                            <%for (; i < length / 4; i++) {%>
-                                <div class="center_container">
+                        <%for (; i < length / 4; i++) {%>
+                        <div class="center_container">
+                            <%for (; j < length; j++) {%>
+                                <script>
+                                function show<%=j%>() {
+                                    document.querySelector(".bg<%=j%>").className = "bg<%=j%>" + " show";
+                                }
+                                function close<%=j%>() {
+                                    document.querySelector(".bg<%=j%>" + String(j) ).className = "bg<%=j%>"  ;
+                                }
+                                document.querySelector("#imgshow<%=j%>" ).addEventListener('click', show<%=j%>);
+                                document.querySelector("#close<%=j%>").addEventListener('click', close<%=j%>);
+                            </script>
+                            <div class="info_container">
+                                <div class="info_box">
+                                    <div class="info_top_section">
+                                        <div class="text_section">
+                                            <div class="productText">
+                                                <%=loanInfos[j].G_NAME%>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="info_middle_section">
+                                        <div class="photo_section">
+                                            <div class="photoZone">
+                                                <div class="photo">
 
-                                    <%for (; j < length; j++) {%>
-                                        <div class="info_container">
-                                            <div class="info_box">
-                                                <div class="info_top_section">
-                                                    <div class="text_section">
-                                                        <div class="productText">
-                                                            <%=loanInfos[j].G_NAME%>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="info_middle_section">
-                                                    <div class="photo_section">
-                                                        <div class="photoZone">
-                                                            <div class="photo">
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text_section">
-                                                        <div class="textZone">
-                                                            <div class="loanAmountText">
-                                                                <%=loanInfos[j].LOAN_PRINCIPAL%>원 대출
-                                                            </div>
-                                                        </div>
-                                                        <div class="textZone">
-                                                            <div class="userNameText">
-                                                                <%=loanInfos[j].NAME.substr(0, 1)%>OO 고객님
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="info_bottom_section">
-                                                    <div class="photo_info_btn_section">
-                                                        <span class="photo_info_btn_text">
-                                                사진 보기
-                                            </span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <%}%>
+                                        <div class="text_section">
+                                            <div class="textZone">
+                                                <div class="loanAmountText">
+                                                    <%=loanInfos[j].LOAN_PRINCIPAL%>원 대출
+                                                </div>
+                                            </div>
+                                            <div class="textZone">
+                                                <div class="userNameText">
+                                                    <%=loanInfos[j].NAME.substr(0, 1)%>OO 고객님
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="info_bottom_section">
+                                        <div class="photo_info_btn_section">
+                                            <a class="photo_info_btn_text" id="show<%=i%>" href="#" onclick="">사진 보기</a>
+                                            <%console.log(j)%>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%}%>
 
                                             <div class="selectCircles_container">
                                                 <div class="selectCircles_box">
                                                     <div class="selectCircles">
 
                                                         <%for (let k = 1; k < length+1; k++) {%>
-                                                            <%if (k == 1) { %>
-                                                                <input type="radio" name="pos" id="pos<%=k%>" class="rdg" checked/>
-                                                                <%} else {%>
-                                                                    <input type="radio" name="pos" id="pos<%=k%>" class="rdg" />
-                                                                    <%}%>
-                                                                        <style>
-                                                                            #post<%=k%>:checked~ul {
-                                                                                margin-left: 0;
-                                                                            }
-                                                                        </style>
-                                                                        <%}%>
+                            <%if (k == 1) { %>
+                            <input type="radio" name="pos" id="pos<%=k%>" class="rdg" checked />
+                            <%} else {%>
+                            <input type="radio" name="pos" id="pos<%=k%>" class="rdg" />
+                            <%}%>
+                            <style>
+                                #post<%=k%>:checked~ul {
+                            margin-left: 0;
+                            }
+                            </style>
+                            <%}%>
                                                     </div>
                                                     <style></style>
                                                 </div>
                                             </div>
                                 </div>
                                 <%}%>
+                        </div>
+                    </div>
+
+
+
+                    <div class="side_section">
+                        <div class="right_arrow_ico_section">
+                            <div class="right_arrow_ico">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="rightpadding">
+                </div>
+            </div>
 
 
 
-                <div class="side_section">
-                    <div class="right_arrow_ico_section">
-                        <div class="right_arrow_ico">
 
+
+
+            <%for(var a = 0; a < length; a++ ){%>
+            <!---------------------------------------------------------------------->
+            <div id="pop<%=a%>" class="bg<%=a%>" onclick="">
+                <div class="window">
+                    <div class="popup">
+                        <div class="popup-top">
+                            <div class="title_pop">
+                                담보 사진!
+                            </div>
+                            <button id="close<%=a%>" class="close">X</button>
+                        </div>
+                        <div class="popup-bottom">
+                            <div class="con_pop1">
+                                <img class="img<%=a%>" src="<%=loanInfos[a].DOCU_PATH%>" alt="">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="rightpadding">
-            </div>
-        </div>
+            <style>
+                .bg<%=a%> {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100vh;
+                    background-color: rgba(0, 0, 0, 0.3);
+                    z-index: 1000;
+                    /* 숨기기 */
+                    z-index: -1;
+                    opacity: 0;
+                }
+            </style>
+            <%}%>
+        <!---------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+
 
 
 
