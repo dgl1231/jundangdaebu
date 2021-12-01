@@ -176,13 +176,13 @@ app.get('/loanlist', (req, res) => {
 app.get('/mypage?', (req, res) => {
 
 
+    if (loginsession == 1 || loginsession == 5) {
+        app.locals.styleNo = 5;
 
-    if (loginsession != 0 || loginsession == 5) {
         var url = req.url.split('?');
         var url_board = '';
         var queryData = new Array();
 
-        app.locals.styleNo = 5;
 
         var loanStateDatas = new Array(3);
         var loanInfoDatas = new Array();
@@ -208,7 +208,7 @@ app.get('/mypage?', (req, res) => {
                 page = Number(url_board[1]);
 
                 const boardSql = "SELECT POST_NO, TITLE, date_format(WRITE_DATE,' %Y-%m-%d ')WRITE_DATE,PASSWORD,CONTENT,CALL_NO FROM dgl1231.limit_search_post WHERE CALL_NO = ? ORDER BY POST_NO DESC";
-                conn.query(boardSql, [localUserID], function (err, rows) {
+                conn.query(boardSql, [localUserID], function(err, rows) {
                     if (err) console.error("err : " + err);
                     else {
                         length = rows.length - 1;
@@ -232,11 +232,20 @@ app.get('/mypage?', (req, res) => {
             var month = today.getMonth() + 1;
             var day = today.getDate();
 
+            if ((month / 10) < 1) {
+                month = '0' + month;
+            }
+            if ((day / 10) < 1) {
+                day = '0' + day;
+            }
+
             var _today = year + "-" + month + "-" + day;
 
             queryData = [localUserID, '2021-11-22', _today];
             searchDate = ['2021-11-22', _today];
         }
+
+        console.log(searchDate._today);
 
         const loanStateSql = 'SELECT COUNT(LOAN_NO) AS count FROM dgl1231.loan A WHERE A.CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY STATEMENT;';
         const loanInfoSql = "SELECT *, date_format(LOAN_DATE,' %Y-%m-%d ') AS LOAN_DATE FROM ( SELECT * FROM (SELECT A.LOAN_PRINCIPAL, A.LOAN_DATE , A.STATEMENT, A.LOAN_NO, B.PRODUCT FROM dgl1231.loan AS A LEFT OUTER JOIN( SELECT * FROM dgl1231.security ) AS B ON (B.LOAN_NO = A.LOAN_NO) WHERE A.CALL_NO = ?) AS C LEFT OUTER JOIN( SELECT *  FROM dgl1231.code_entity ) AS D ON (C.PRODUCT = D.C_ID) WHERE C.LOAN_DATE BETWEEN ? AND ?) AS E LEFT OUTER JOIN( SELECT F.C_ID AS LOAN_ID , F.C_NAME AS STATENAME FROM dgl1231.code_entity F ) AS G ON (E.STATEMENT = G.LOAN_ID) ORDER BY LOAN_NO DESC";
@@ -244,7 +253,7 @@ app.get('/mypage?', (req, res) => {
         const documentCountSql = 'SELECT A.LOAN_NO, COUNT(B.DOCU_NO) AS count FROM (SELECT * FROM dgl1231.loan WHERE CALL_NO = ? AND LOAN_DATE BETWEEN ? AND ?) A LEFT OUTER JOIN(SELECT * FROM document) B ON (A.LOAN_NO = B.LOAN_NO) GROUP BY LOAN_NO ORDER BY A.LOAN_NO DESC';
         const documentsSql = 'SELECT * FROM dgl1231.document WHERE CALL_NO = ? AND SEND_IN_DATE BETWEEN ? AND ? ORDER BY LOAN_NO DESC';
 
-        conn.query(loanStateSql, queryData, function (err, result) {
+        conn.query(loanStateSql, queryData, function(err, result) {
             if (err) {
                 console.log('#!!#query is not excuted. insert fail...\n' + err);
                 res.redirect('/mypage');
@@ -259,141 +268,122 @@ app.get('/mypage?', (req, res) => {
                 } else {
                     loanStateDatas = result;
 
-
-
-                }
-                console.log("#11");
-
-                conn.query(loanInfoSql, queryData, function (err, result) {
-                    if (err) {
-                        console.log('#!!#query is not excuted. insert fail...\n' + err);
-                        res.redirect('/mypage');
-                        return;
-                    } else {
-                        if (result[0] == null) {
-                            loanInfoDatas = null;
-                            loanDateDatas = null;
-                            docuCount = null;
-                            documents = null;
+                    conn.query(loanInfoSql, queryData, function(err, result) {
+                        if (err) {
+                            console.log('#!!#query is not excuted. insert fail...\n' + err);
+                            res.redirect('/mypage');
+                            return;
                         } else {
-                            for (var i = 0; i < result.length; i++) {
-                                var a = result[i].LOAN_PRINCIPAL;
-                                a = String(a);
-                                var _length = a.length;
-
-                                var position = 1;
-                                var h = _length % 3;
-
-
-                                var _mod = _length / 3;
-                                var n = 0;
-
-                                if (h == 1) {
-                                    position = 1;
-                                } else if (h == 2) {
-                                    position = 2;
-                                } else {
-                                    position = 3;
-                                }
-
-                                for (; n < _mod; n++) {
-                                    if (position >= _length) {
-                                        break;
-                                    }
-
-                                    a = [a.slice(0, position), ',', a.slice(position)].join('');
-                                    position += 4;
-                                }
-
-                                result[i].LOAN_PRINCIPAL = a;
-                                loanInfoDatas.push(result[i]);
-                            }
-
-
-                        }
-                        console.log("#8");
-                        conn.query(loanDateSql, queryData, function (err, result) {
-                            if (err) {
-                                console.log('#!!#query is not excuted. insert fail...\n' + err);
-                                res.redirect('/mypage');
-                                return;
+                            if (result[0] == null) {
+                                loanInfoDatas = null;
+                                loanDateDatas = null;
+                                docuCount = null;
+                                documents = null;
                             } else {
-                                console.log(result);
-                                console.log(result[0]);
-                                if (result[0] == null) {
-                                    loanDateDatas = null;
-                                    docuCount = null;
-                                    documents = null;
-                                } else {
-                                    for (var i = 0; i < result.length; i++) {
-                                        count++;
+                                for (var i = 0; i < result.length; i++) {
+                                    var a = result[i].LOAN_PRINCIPAL;
+                                    a = String(a);
+                                    var _length = a.length;
+
+                                    var position = 1;
+                                    var h = _length % 3;
+
+
+                                    var _mod = _length / 3;
+                                    var n = 0;
+
+                                    if (h == 1) {
+                                        position = 1;
+                                    } else if (h == 2) {
+                                        position = 2;
+                                    } else {
+                                        position = 3;
                                     }
-                                    loanDateDatas = result;
 
+                                    for (; n < _mod; n++) {
+                                        if (position >= _length) {
+                                            break;
+                                        }
 
+                                        a = [a.slice(0, position), ',', a.slice(position)].join('');
+                                        position += 4;
+                                    }
+
+                                    result[i].LOAN_PRINCIPAL = a;
+                                    loanInfoDatas.push(result[i]);
                                 }
-                                console.log("#5");
 
-                                conn.query(documentCountSql, queryData, function (err, result) {
-
+                                conn.query(loanDateSql, queryData, function(err, result) {
                                     if (err) {
                                         console.log('#!!#query is not excuted. insert fail...\n' + err);
                                         res.redirect('/mypage');
                                         return;
                                     } else {
+                                        console.log(result);
+                                        console.log(result[0]);
                                         if (result[0] == null) {
+                                            loanDateDatas = null;
                                             docuCount = null;
                                             documents = null;
                                         } else {
-                                            docuCount = result;
-                                        }
-                                        conn.query(documentsSql, queryData, function (err, result) {
-
-                                            if (err) {
-                                                console.log('#!!#query is not excuted. insert fail...\n' + err);
-                                                res.redirect('/mypage');
-                                                return;
-                                            } else {
-                                                if (result[0] == null) {
-                                                    documents = null;
-                                                } else {
-                                                    documents = result;
-                                                }
-
-                                                res.render(__dirname + '/views/mypage.ejs', {
-                                                    title: "마이페이지 | " + siteData.title,
-                                                    loanState: loanStateDatas,
-                                                    loanInfo: loanInfoDatas,
-                                                    loanDate: loanDateDatas,
-                                                    documents: documents,
-                                                    searchDate: searchDate,
-                                                    docuCount: docuCount,
-                                                    count: count,
-                                                    myBoard: myBoard
-                                                });
+                                            for (var i = 0; i < result.length; i++) {
+                                                count++;
                                             }
-                                            console.log("#1");
-                                        });
-                                        console.log("#2");
+                                            loanDateDatas = result;
+
+                                            conn.query(documentCountSql, queryData, function(err, result) {
+
+                                                if (err) {
+                                                    console.log('#!!#query is not excuted. insert fail...\n' + err);
+                                                    res.redirect('/mypage');
+                                                    return;
+                                                } else {
+                                                    if (result[0] == null) {
+                                                        docuCount = null;
+                                                        documents = null;
+                                                    } else {
+                                                        docuCount = result;
+                                                    }
+                                                    conn.query(documentsSql, queryData, function(err, result) {
+
+                                                        if (err) {
+                                                            console.log('#!!#query is not excuted. insert fail...\n' + err);
+                                                            res.redirect('/mypage');
+                                                            return;
+                                                        } else {
+                                                            if (result[0] == null) {
+                                                                documents = null;
+                                                            } else {
+                                                                documents = result;
+                                                            }
+
+                                                            res.render(__dirname + '/views/mypage.ejs', {
+                                                                title: "마이페이지 | " + siteData.title,
+                                                                loanState: loanStateDatas,
+                                                                loanInfo: loanInfoDatas,
+                                                                loanDate: loanDateDatas,
+                                                                documents: documents,
+                                                                searchDate: searchDate,
+                                                                docuCount: docuCount,
+                                                                count: count,
+                                                                myBoard: myBoard
+                                                            });
+                                                        }
+                                                    });
+
+                                                }
+                                            });
+                                        }
                                     }
-                                    console.log("#3");
                                 });
-                                console.log("#4");
                             }
-                            console.log("#6");
-                        });
-                        console.log("#7");
-                    }
-                    console.log("#9");
-                });
-                console.log("#10");
+                        }
+                    });
+                }
             }
-            console.log("#12");
         });
-        console.log("#13");
-    }
-    else {
-        res.redirect("/");
+    } else {
+        res.send('<script type="text/javascript">alert("로그인 해주세요!");document.location.href="/sign_up";</script>');
     }
 });
 
@@ -480,12 +470,16 @@ app.post('/login_check', function (req, res) {
     var phoneNo = req.body.pn;
     if (name == '') {
         // 이름을 입력해주세요(팝업(?))
-        console.log("이름을 입력해주세요.");
-        res.redirect('/sign_up');
+        res.send('<script type="text/javascript">alert("이름을 입력해주세요.");document.location.href="/sign_up";</script>');
         return;
     } else if (phoneNo == '') {
-        console.log("전화번호를 입력해주세요.");
-        res.redirect('/sign_up');
+        res.send('<script type="text/javascript">alert("전화번호를 입력해주세요.");document.location.href="/sign_up";</script>');
+        return;
+    } else if (name.length < 2) {
+        res.send('<script type="text/javascript">alert("다시 입력해주세요.");document.location.href="/sign_up";</script>');
+        return;
+    } else if (phoneNo.length != 11) {
+        res.send('<script type="text/javascript">alert("다시 입력해주세요.");document.location.href="/sign_up";</script>');
         return;
     }
     var verNo = req.body.lang;
@@ -539,9 +533,6 @@ app.post('/login_check', function (req, res) {
                             res.redirect('/');
                         }
                     });
-
-
-
                 } else {
                     // 로그인 실패
                     console.log("기존 회원 로그인 실패");
@@ -577,8 +568,18 @@ var storage = multer.diskStorage({ //  파일이름을 유지하기 위해 사�
     },
     filename(req, file, cb) {
         var today = new Date();
-        changefilename = `${today.getFullYear()}${today.getMonth()+1}${today.getDate()}${today.getSeconds()}__${file.originalname}`;
-        cb(null, `${today.getFullYear()}${today.getMonth()+1}${today.getDate()}${today.getSeconds()}__${file.originalname}`);
+        var month = today.getMonth() + 1;
+        var day = today.getDate()
+
+        if ((month / 10) < 1) {
+            month = '0' + month;
+        }
+        if ((day / 10) < 1) {
+            day = '0' + day;
+        }
+
+        changefilename = `${today.getFullYear()}${month}${day}${today.getSeconds()}__${file.originalname}`;
+        cb(null, `${today.getFullYear()}${month}${day}${today.getSeconds()}__${file.originalname}`);
     },
 });
 var uploadWithOriginalFilename = multer({
@@ -598,6 +599,14 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
     var year = today.getFullYear();
     var month = today.getMonth() + 1;
     var date = today.getDate();
+
+    if ((month / 10) < 1) {
+        month = '0' + month;
+    }
+    if ((date / 10) < 1) {
+        date = '0' + date;
+    }
+
     var write_date = String(year) + String(month) + String(date);
 
     var files = null;
@@ -927,14 +936,36 @@ var filepath_loan = '';
 var storage = multer.diskStorage({ //  파일이름을 유지하기 위해 사용할 변수(중복방지를 위하여 시간을 넣어줫음) 
     destination(req, file, cb) {
         var today = new Date();
-        makeFolder(__dirname + '/public/' + 'uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + (today.getMonth() + 1) + today.getDate());
-        filepath_loan = __dirname + '/public/' + 'uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + (today.getMonth() + 1) + today.getDate();
-        cb(null, __dirname + '/public/' + 'uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + (today.getMonth() + 1) + today.getDate());
+
+        var month = today.getMonth() + 1;
+        var day = today.getDate();
+
+        if ((month / 10) < 1) {
+            month = '0' + month;
+        }
+        if ((day / 10) < 1) {
+            day = '0' + day;
+        }
+
+        makeFolder(__dirname + '/public/' + 'uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + month + day);
+        filepath_loan = __dirname + '/public/' + 'uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + month + day;
+        cb(null, __dirname + '/public/' + 'uploadedFiles/' + 'loan' + '/' + localUserID + '/' + today.getFullYear() + month + day);
     },
     filename(req, file, cb) {
         var today = new Date();
-        changefilename = `${today.getFullYear()}${today.getMonth()+1}${today.getDate()}${today.getSeconds()}__${file.originalname}`;
-        cb(null, `${today.getFullYear()}${today.getMonth()+1}${today.getDate()}${today.getSeconds()}__${file.originalname}`);
+
+        var month = today.getMonth() + 1;
+        var day = today.getDate();
+
+        if ((month / 10) < 1) {
+            month = '0' + month;
+        }
+        if ((day / 10) < 1) {
+            day = '0' + day;
+        }
+
+        changefilename = `${today.getFullYear()}${month}${day}${today.getSeconds()}__${file.originalname}`;
+        cb(null, `${today.getFullYear()}${month}${day}${today.getSeconds()}__${file.originalname}`);
     },
 });
 var upload = multer({
@@ -986,6 +1017,14 @@ app.post('/loanwrite', upload.array('FileName'), async function (req, res, next)
     var year = today.getFullYear();
     var month = today.getMonth() + 1;
     var date = today.getDate();
+
+    if ((month / 10) < 1) {
+        month = '0' + month;
+    }
+    if ((date / 10) < 1) {
+        date = '0' + date;
+    }
+
     var today_date = String(year) + String(month) + String(date);
 
     console.log("#1 lastloan_no", lastloan_no);
@@ -1115,6 +1154,14 @@ app.post('/repayment', function (req, res, next) {
     var year = today.getFullYear();
     var month = today.getMonth() + 1;
     var date = today.getDate();
+
+    if ((month / 10) < 1) {
+        month = '0' + month;
+    }
+    if ((date / 10) < 1) {
+        date = '0' + date;
+    }
+
     var today_date = String(year) + String(month) + String(date);
 
     console.log("#1 lastrepay_no", lastrepay_no);
