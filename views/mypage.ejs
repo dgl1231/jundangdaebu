@@ -338,6 +338,20 @@
                                                         _select.addEventListener('click', function(event) {
                                                             _selectDay = this.innerHTML;
                                                             _selectMonth = date_.getMonth() + 1;
+
+                                                            alert(_selectMonth);
+
+
+                                                            if ((_selectMonth / 10) < 1) {
+                                                                _selectMonth = '0' + _selectMonth;
+                                                            }
+                                                            if ((_selectDay / 10) < 1) {
+                                                                _selectDay = '0' + _selectDay;
+                                                            }
+
+
+                                                            alert(_selectDay);
+                                                            
                                                             const select_Date = year + '' + _selectMonth + '' + _selectDay;
 
                                                             const now = new Date();
@@ -352,14 +366,9 @@
                                                             if ((now_day / 10) < 1) {
                                                                 now_day = '0' + now_day;
                                                             }
-                                                            if ((_selectMonth / 10) < 1) {
-                                                                _selectMonth = '0' + _selectMonth;
-                                                            }
-                                                            if ((_selectDay / 10) < 1) {
-                                                                _selectDay = '0' + _selectDay;
-                                                            }
+                                                            
                                                             if (Number(select_Date) < 20211122) {
-                                                                alert("2021-11-22 이전 이력은 조회할 수 없습니다.");
+                                                                //alert("2021-11-22 이전 이력은 조회할 수 없습니다.");
                                                             } else {
                                                                 if (Number(select_Date) > Number(now.getFullYear() + '' + now_month + '' + now_day)) {
                                                                     alert("과거 이력만 조회할 수 있습니다.");
@@ -452,6 +461,14 @@
                                                         _select.addEventListener('click', function(event) {
                                                             _selectDay = this.innerHTML;
                                                             _selectMonth = date__.getMonth() + 1;
+
+                                                            if ((_selectMonth / 10) < 1) {
+                                                                _selectMonth = '0' + _selectMonth;
+                                                            }
+                                                            if ((_selectDay / 10) < 1) {
+                                                                _selectDay = '0' + _selectDay;
+                                                            }
+
                                                             const select_Date = year + '' + _selectMonth + '' + _selectDay;
 
                                                             const now = new Date();
@@ -466,12 +483,7 @@
                                                             if ((now_day / 10) < 1) {
                                                                 now_day = '0' + now_day;
                                                             }
-                                                            if ((_selectMonth / 10) < 1) {
-                                                                _selectMonth = '0' + _selectMonth;
-                                                            }
-                                                            if ((_selectDay / 10) < 1) {
-                                                                _selectDay = '0' + _selectDay;
-                                                            }
+                                                            
                                                             if (Number(select_Date) < 20211122) {
                                                                 alert("2021-11-22 이전 이력은 조회할 수 없습니다.");
                                                             } else {
