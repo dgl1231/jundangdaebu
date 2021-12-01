@@ -219,7 +219,7 @@
                                                     <a href="" id="all_search_btn" class="listSearchBtn">
                                                         <span>전체조회</span>
                                                     </a>
-                                                    <a href="#" id="section_search_btn" class="searchBtn">
+                                                    <a href="" id="section_search_btn" class="searchBtn">
                                                         <span>조회</span>
                                                         <span class="search_ico"></span>
                                                     </a>
@@ -236,8 +236,6 @@
                                                     const searchBtn = document.getElementById('section_search_btn');
                                                     const choice_loanInfo = document.getElementById('choice_loanInfo');
                                                     const myBoard = document.getElementById('choice_board');
-                                                    const prevDate = document.getElementById('prevDate').innerHTML;
-                                                    const nextDate = document.getElementById('nextDate').innerHTML;
 
                                                     choice_loanInfo.onclick = function() {
                                                         location.href = "/mypage";
@@ -269,6 +267,8 @@
                                                     };
 
                                                     searchBtn.onclick = function() {
+                                                        const prevDate = document.getElementById('prevDate').innerHTML;
+                                                        const nextDate = document.getElementById('nextDate').innerHTML;
                                                         location.href = "/mypage?date1=" + prevDate + "&date2=" +
                                                             nextDate;
                                                         return false;
@@ -338,6 +338,14 @@
                                                         _select.addEventListener('click', function(event) {
                                                             _selectDay = this.innerHTML;
                                                             _selectMonth = date_.getMonth() + 1;
+
+                                                            if ((_selectMonth / 10) < 1) {
+                                                                _selectMonth = '0' + _selectMonth;
+                                                            }
+                                                            if ((_selectDay / 10) < 1) {
+                                                                _selectDay = '0' + _selectDay;
+                                                            }
+
                                                             const select_Date = year + '' + _selectMonth + '' + _selectDay;
 
                                                             const now = new Date();
@@ -352,12 +360,7 @@
                                                             if ((now_day / 10) < 1) {
                                                                 now_day = '0' + now_day;
                                                             }
-                                                            if ((_selectMonth / 10) < 1) {
-                                                                _selectMonth = '0' + _selectMonth;
-                                                            }
-                                                            if ((_selectDay / 10) < 1) {
-                                                                _selectDay = '0' + _selectDay;
-                                                            }
+
                                                             if (Number(select_Date) < 20211122) {
                                                                 alert("2021-11-22 이전 이력은 조회할 수 없습니다.");
                                                             } else {
@@ -452,6 +455,14 @@
                                                         _select.addEventListener('click', function(event) {
                                                             _selectDay = this.innerHTML;
                                                             _selectMonth = date__.getMonth() + 1;
+
+                                                            if ((_selectMonth / 10) < 1) {
+                                                                _selectMonth = '0' + _selectMonth;
+                                                            }
+                                                            if ((_selectDay / 10) < 1) {
+                                                                _selectDay = '0' + _selectDay;
+                                                            }
+
                                                             const select_Date = year + '' + _selectMonth + '' + _selectDay;
 
                                                             const now = new Date();
@@ -465,12 +476,6 @@
                                                             }
                                                             if ((now_day / 10) < 1) {
                                                                 now_day = '0' + now_day;
-                                                            }
-                                                            if ((_selectMonth / 10) < 1) {
-                                                                _selectMonth = '0' + _selectMonth;
-                                                            }
-                                                            if ((_selectDay / 10) < 1) {
-                                                                _selectDay = '0' + _selectDay;
                                                             }
                                                             if (Number(select_Date) < 20211122) {
                                                                 alert("2021-11-22 이전 이력은 조회할 수 없습니다.");
