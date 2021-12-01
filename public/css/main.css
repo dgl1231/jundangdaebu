@@ -269,11 +269,11 @@ img {
 /* PC 배너1 스타일 */
 .floBanPc2 {
     position: fixed;
-    top: 700px;
+    top: 650px;
     /* 윗쪽 끝에서부터의 거리 */
     right: 50px;
     z-index: 99;
 }
 .flo {
-    border-radius: 10px 30px;
+    border-radius: 20px 40px;
 }
