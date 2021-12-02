@@ -56,6 +56,7 @@ function normalizePort(val) {
 
 var loginsession = 0;
 var localUserID = '';
+var localUserName = '';
 var posttitle = '';
 app.locals.login = loginsession;
 var postno = [];
@@ -155,8 +156,8 @@ app.get('/loanlist', (req, res) => {
         else {
             if (result[0] == null) {
                 result = null;
-            } else {
-            }
+            } else {}
+
             for (var i = 0; i < result.length; i++) {
 
                 loandocu_path = result[i].DOCU_PATH;
@@ -191,6 +192,7 @@ app.get('/mypage?', async(req, res) => {
         var docuCount = new Array();
         var documents = new Array();
         var myPage_postno = new Array();
+        var loanDocu = [];
         var page = 0;
         var length = 0;
         var count = 0;
@@ -218,7 +220,8 @@ app.get('/mypage?', async(req, res) => {
                             postno: myPage_postno,
                             page: page,
                             rows: rows,
-                            length: length
+                            length: length,
+                            userName: localUserName
                         });
                         postinfo = rows;
                     }
@@ -273,7 +276,8 @@ app.get('/mypage?', async(req, res) => {
                         searchDate: searchDate,
                         docuCount: docuCount,
                         count: count,
-                        myBoard: myBoard
+                        myBoard: myBoard,
+                        userName: localUserName
                     });
                 } else {
                     loanStateDatas = result;
@@ -356,17 +360,40 @@ app.get('/mypage?', async(req, res) => {
                                                                 attached_P_N = result;
                                                             }
 
-                                                            res.render(__dirname + '/views/mypage.ejs', {
-                                                                title: "마이페이지 | " + siteData.title,
-                                                                loanState: loanStateDatas,
-                                                                loanInfo: loanInfoDatas,
-                                                                loanDate: loanDateDatas,
-                                                                documents: documents,
-                                                                searchDate: searchDate,
-                                                                docuCount: docuCount,
-                                                                count: count,
-                                                                myBoard: myBoard
-                                                            });
+                                                            const loan_docu = "SELECT DOCU_PATH, STORED_DOCU_NAME FROM dgl1231.document WHERE DOCU_G = 11 AND CALL_NO = '01029767875' GROUP BY LOAN_NO ORDER BY LOAN_NO DESC;";
+
+                                                            conn.query(loan_docu, localUserID, function(err, result) {
+                                                                if (err) {
+                                                                    console.log('#!!#query is not excuted. insert fail...\n' + err);
+                                                                    res.redirect('/mypage');
+                                                                    return;
+                                                                } else {
+                                                                    var loandocu_path = '';
+                                                                    for (var i = 0; i < result.length; i++) {
+
+                                                                        loandocu_path = result[i].DOCU_PATH;
+                                                                        loandocu_path = loandocu_path.substr(59, loandocu_path.length);
+                                                                        result[i].DOCU_PATH = loandocu_path;
+                                                                    }
+                                                                    loanDocu = result;
+
+                                                                    console.log(loanDocu);
+
+                                                                    res.render(__dirname + '/views/mypage.ejs', {
+                                                                        title: "마이페이지 | " + siteData.title,
+                                                                        loanState: loanStateDatas,
+                                                                        loanInfo: loanInfoDatas,
+                                                                        loanDate: loanDateDatas,
+                                                                        documents: documents,
+                                                                        searchDate: searchDate,
+                                                                        docuCount: docuCount,
+                                                                        count: count,
+                                                                        myBoard: myBoard,
+                                                                        userName: localUserName,
+                                                                        loanDocu: loanDocu
+                                                                    });
+                                                                }
+                                                            })
                                                         }
                                                     });
                                                 }
@@ -464,6 +491,7 @@ app.get('/log_out', (req, res) => {
 app.post('/login_check', function(req, res) {
     var name = req.body.id;
     var phoneNo = req.body.pn;
+    localUserName = name;
     if (name == '') {
         // 이름을 입력해주세요(팝업(?))
         res.send('<script type="text/javascript">alert("이름을 입력해주세요.");document.location.href="/sign_up";</script>');
@@ -790,9 +818,8 @@ app.get('/deliver', function(req, res, next) {
         app.locals.styleNo = 9;
         app.locals.login = loginsession;
         res.render(__dirname + '/views/deliver.ejs', {
-            title: "대출이력 | " + siteData.title
+            title: "배송절차안내 | " + siteData.title
         });
-        res.send('<script type="text/javascript">alert("로그인 해주세요!");document.location.href="/sign_up";</script>');
     } else if (loginsession == 0) {
         res.send('<script type="text/javascript">alert("로그인 해주세요!");document.location.href="/sign_up";</script>');
     }

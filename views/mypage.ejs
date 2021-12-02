@@ -6,11 +6,13 @@
                 <!-- 회원 이름 나오는 박스 -->
                 <div id="userOutBox">
                     <!-- 회원 이름 나오는 동그라미 -->
-                    <div id="userCircleBox">
-                        이동건님
+                    <div id="userCircleBox" class="userCircle">
+
                     </div>
                     <!-- 데코용 흰 네모 -->
-                    <div id="userInBox"></div>
+                    <div id="userInBox">
+                        <%=userName%>님
+                    </div>
                 </div>
             </div>
 
@@ -537,87 +539,90 @@
                                             </div>
                                             <%loanDateCount += loanDate[i].COUNT; var l = 0;%>
                                                 <%for(; j < loanDateCount; j++) {%>
-                                                    <div class="loanInfo">
-                                                        <div class="pictureBox">
-                                                            <div class="picture"></div>
-                                                        </div>
-                                                        <div class="loanInfo_detail">
-                                                            <table class="loanInfo_inner">
-                                                                <tbody>
-                                                                    <tr class="modelName">
-                                                                        <td>
-                                                                            <%=loanInfo[j].C_NAME%>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr height="50%">
-                                                                        <td class="loanAmount">
-                                                                            <%=loanInfo[j].LOAN_PRINCIPAL%>원
-                                                                        </td>
-                                                                        <td class="realLoanDate">
-                                                                            <%=loanInfo[j].LOAN_DATE%>
-                                                                        </td>
-                                                                        <td class="loanStatement">
-                                                                            <%=loanInfo[j].STATENAME%>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="loanDocuments">
-                                                            <a href="#" id="loanDocuBtn<%=j%>" class="loanDocuBtn">
+                                                    <%var filepath = loanDocu[j].DOCU_PATH +'/'+loanDocu[j].STORED_DOCU_NAME%>
+                                                        <div class="loanInfo">
+                                                            <div class="pictureBox">
+                                                                <div class="picture">
+                                                                    <img class="photo" src="<%=filepath%>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="loanInfo_detail">
+                                                                <table class="loanInfo_inner">
+                                                                    <tbody>
+                                                                        <tr class="modelName">
+                                                                            <td>
+                                                                                <%=loanInfo[j].C_NAME%>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr height="50%">
+                                                                            <td class="loanAmount">
+                                                                                <%=loanInfo[j].LOAN_PRINCIPAL%>원
+                                                                            </td>
+                                                                            <td class="realLoanDate">
+                                                                                <%=loanInfo[j].LOAN_DATE%>
+                                                                            </td>
+                                                                            <td class="loanStatement">
+                                                                                <%=loanInfo[j].STATENAME%>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="loanDocuments">
+                                                                <a href="#" id="loanDocuBtn<%=j%>" class="loanDocuBtn">
                                 제출서류 내역
                             </a>
-                                                            <div id="modal_wrap<%=j%>" class="modal_wrap">
-                                                                <div class="modal_top">
-                                                                    <div class="modal_top_text">
-                                                                        제출서류
+                                                                <div id="modal_wrap<%=j%>" class="modal_wrap">
+                                                                    <div class="modal_top">
+                                                                        <div class="modal_top_text">
+                                                                            제출서류
+                                                                        </div>
+                                                                        <div class="modal_top_box">
+                                                                            <a href="#" id="modal_close<%=j%>" class="modal_close">
+                                                                                <span class="modal_close_ico"></span>
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="modal_top_box">
-                                                                        <a href="#" id="modal_close<%=j%>" class="modal_close">
-                                                                            <span class="modal_close_ico"></span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal_bottom">
-                                                                    <div class="modal_bottom_inner">
-                                                                        <%if (docuCount[j] != null) {%>
-                                                                            <%a += docuCount[j].count%>
-                                                                                <%for (; k < a; k++) {%>
-                                                                                    <p>
-                                                                                        <a name="<%=k%>" href="/download/<%=k%>" class="attached_documents">
-                                                                                            <%=documents[k].DEFAULT_DOCU_NAME%>
-                                                                                        </a>
-                                                                                    </p>
-                                                                                    <%}} else {%>
-                                                                                        <%}%>
+                                                                    <div class="modal_bottom">
+                                                                        <div class="modal_bottom_inner">
+                                                                            <%if (docuCount[j] != null) {%>
+                                                                                <%a += docuCount[j].count%>
+                                                                                    <%for (; k < a; k++) {%>
+                                                                                        <p>
+                                                                                            <a name="<%=k%>" href="/download/<%=k%>" class="attached_documents">
+                                                                                                <%=documents[k].DEFAULT_DOCU_NAME%>
+                                                                                            </a>
+                                                                                        </p>
+                                                                                        <%}} else {%>
+                                                                                            <%}%>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+                                                            <script>
+                                                                function onClick() {
+                                                                    document.getElementById('modal_wrap<%=j%>').style.display =
+                                                                        'block';
+                                                                }
+
+                                                                function offClick() {
+                                                                    document.getElementById('modal_wrap<%=j%>').style.display = 'none';
+                                                                }
+
+                                                                document.getElementById('loanDocuBtn<%=j%>').addEventListener('click',
+                                                                    onClick);
+                                                                document.getElementById('modal_close<%=j%>').addEventListener('click',
+                                                                    offClick);
+                                                            </script>
                                                         </div>
-
-                                                        <script>
-                                                            function onClick() {
-                                                                document.getElementById('modal_wrap<%=j%>').style.display =
-                                                                    'block';
-                                                            }
-
-                                                            function offClick() {
-                                                                document.getElementById('modal_wrap<%=j%>').style.display = 'none';
-                                                            }
-
-                                                            document.getElementById('loanDocuBtn<%=j%>').addEventListener('click',
-                                                                onClick);
-                                                            document.getElementById('modal_close<%=j%>').addEventListener('click',
-                                                                offClick);
-                                                        </script>
-                                                    </div>
-                                                    <%l++;%>
-                                                        <%if (l != loanDate[i].COUNT) { %>
-                                                            <div class="hr"></div>
-                                                            <%}%>
+                                                        <%l++;%>
+                                                            <%if (l != loanDate[i].COUNT) { %>
+                                                                <div class="hr"></div>
                                                                 <%}%>
                                                                     <%}%>
                                                                         <%}%>
+                                                                            <%}%>
                     </div>
                     <%} else {%>
                         <!-- 내 게시글 -->
