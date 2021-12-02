@@ -165,9 +165,9 @@ app.get('/loanlist', (req, res) => {
         }
     });
 });
-
+var attached_P_N = [];
 //마이페이지
-app.get('/mypage?', (req, res) => {
+app.get('/mypage?', async(req, res) => {
 
     if (loginsession == 1 || loginsession == 5) {
         app.locals.styleNo = 5;
@@ -238,15 +238,13 @@ app.get('/mypage?', (req, res) => {
             searchDate = ['2021-11-22', _today];
         }
 
-        console.log(searchDate._today);
-
         const loanStateSql = 'SELECT COUNT(LOAN_NO) AS count FROM dgl1231.loan A WHERE A.CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY STATEMENT;';
         const loanInfoSql = "SELECT *, date_format(LOAN_DATE,' %Y-%m-%d ') AS LOAN_DATE FROM ( SELECT * FROM (SELECT A.LOAN_PRINCIPAL, A.LOAN_DATE , A.STATEMENT, A.LOAN_NO, B.PRODUCT FROM dgl1231.loan AS A LEFT OUTER JOIN( SELECT * FROM dgl1231.security ) AS B ON (B.LOAN_NO = A.LOAN_NO) WHERE A.CALL_NO = ?) AS C LEFT OUTER JOIN( SELECT *  FROM dgl1231.code_entity ) AS D ON (C.PRODUCT = D.C_ID) WHERE C.LOAN_DATE BETWEEN ? AND ?) AS E LEFT OUTER JOIN( SELECT F.C_ID AS LOAN_ID , F.C_NAME AS STATENAME FROM dgl1231.code_entity F ) AS G ON (E.STATEMENT = G.LOAN_ID) ORDER BY LOAN_NO DESC";
         const loanDateSql = "SELECT date_format(LOAN_DATE,' %Y-%m-%d ') AS LOAN_DATE, COUNT(LOAN_DATE) AS COUNT FROM dgl1231.loan WHERE CALL_NO = ? AND LOAN_DATE between ? AND ? GROUP BY LOAN_DATE ORDER BY LOAN_DATE DESC";
         const documentCountSql = 'SELECT A.LOAN_NO, COUNT(B.DOCU_NO) AS count FROM (SELECT * FROM dgl1231.loan WHERE CALL_NO = ? AND LOAN_DATE BETWEEN ? AND ?) A LEFT OUTER JOIN(SELECT * FROM document) B ON (A.LOAN_NO = B.LOAN_NO) GROUP BY LOAN_NO ORDER BY A.LOAN_NO DESC';
         const documentsSql = 'SELECT * FROM dgl1231.document WHERE CALL_NO = ? AND SEND_IN_DATE BETWEEN ? AND ? ORDER BY LOAN_NO DESC';
 
-        conn.query(loanStateSql, queryData, function(err, result) {
+        await conn.query(loanStateSql, queryData, async function(err, result) {
             if (err) {
                 console.log('#!!#query is not excuted. insert fail...\n' + err);
                 res.redirect('/mypage');
@@ -258,21 +256,28 @@ app.get('/mypage?', (req, res) => {
                     loanDateDatas = null;
                     docuCount = null;
                     documents = null;
+
+                    res.render(__dirname + '/views/mypage.ejs', {
+                        title: "마이페이지 | " + siteData.title,
+                        loanState: loanStateDatas,
+                        loanInfo: loanInfoDatas,
+                        loanDate: loanDateDatas,
+                        documents: documents,
+                        searchDate: searchDate,
+                        docuCount: docuCount,
+                        count: count,
+                        myBoard: myBoard
+                    });
                 } else {
                     loanStateDatas = result;
 
-                    conn.query(loanInfoSql, queryData, function(err, result) {
+                    await conn.query(loanInfoSql, queryData, async function(err, result) {
                         if (err) {
                             console.log('#!!#query is not excuted. insert fail...\n' + err);
                             res.redirect('/mypage');
                             return;
                         } else {
-                            if (result[0] == null) {
-                                loanInfoDatas = null;
-                                loanDateDatas = null;
-                                docuCount = null;
-                                documents = null;
-                            } else {
+                            if (result[0] == null) {} else {
                                 for (var i = 0; i < result.length; i++) {
                                     var a = result[i].LOAN_PRINCIPAL;
                                     a = String(a);
@@ -306,26 +311,19 @@ app.get('/mypage?', (req, res) => {
                                     loanInfoDatas.push(result[i]);
                                 }
 
-                                conn.query(loanDateSql, queryData, function(err, result) {
+                                await conn.query(loanDateSql, queryData, async function(err, result) {
                                     if (err) {
                                         console.log('#!!#query is not excuted. insert fail...\n' + err);
                                         res.redirect('/mypage');
                                         return;
                                     } else {
-                                        console.log(result);
-                                        console.log(result[0]);
-                                        if (result[0] == null) {
-                                            loanDateDatas = null;
-                                            docuCount = null;
-                                            documents = null;
-                                        } else {
+                                        if (result[0] == null) {} else {
                                             for (var i = 0; i < result.length; i++) {
                                                 count++;
                                             }
                                             loanDateDatas = result;
 
-                                            conn.query(documentCountSql, queryData, function(err, result) {
-
+                                            await conn.query(documentCountSql, queryData, async function(err, result) {
                                                 if (err) {
                                                     console.log('#!!#query is not excuted. insert fail...\n' + err);
                                                     res.redirect('/mypage');
@@ -337,7 +335,8 @@ app.get('/mypage?', (req, res) => {
                                                     } else {
                                                         docuCount = result;
                                                     }
-                                                    conn.query(documentsSql, queryData, function(err, result) {
+
+                                                    await conn.query(documentsSql, queryData, function(err, result) {
 
                                                         if (err) {
                                                             console.log('#!!#query is not excuted. insert fail...\n' + err);
@@ -348,6 +347,7 @@ app.get('/mypage?', (req, res) => {
                                                                 documents = null;
                                                             } else {
                                                                 documents = result;
+                                                                attached_P_N = result;
                                                             }
 
                                                             res.render(__dirname + '/views/mypage.ejs', {
@@ -363,7 +363,6 @@ app.get('/mypage?', (req, res) => {
                                                             });
                                                         }
                                                     });
-
                                                 }
                                             });
                                         }
@@ -372,6 +371,7 @@ app.get('/mypage?', (req, res) => {
                             }
                         }
                     });
+
                 }
             }
         });
@@ -395,7 +395,7 @@ app.get('/write', (req, res) => {
     });
 });
 //글상세
-var attached_P_N = [];
+
 var realsex = [];
 var nowpn = 0;
 app.get('/board?:postno', (req, res) => {
@@ -417,7 +417,6 @@ app.get('/board?:postno', (req, res) => {
                 } else {
                     for (var i = 0; i < rows.length; i++) {
                         comment_content[i] = rows[i];
-                        console.log("#i", i);
                     }
                 }
 
@@ -438,12 +437,10 @@ app.get('/board?:postno', (req, res) => {
                 });
             });
         } else {
-            console.log('asdfasdfasdfadsfsdfsfd');
             res.send('<script type="text/javascript">alert("내 글만 볼 수 있어요!!");document.location.href="/";</script>');
         }
 
     } else if (loginsession == 0) {
-        console.log('hhhhhhhh');
         res.send('<script type="text/javascript">alert("내 글만 볼 수 있어요!!");document.location.href="/sign_up";</script>');
     }
 });
@@ -513,14 +510,10 @@ app.post('/login_check', function(req, res) {
                     conn.query(usersql, localUserID, function(err, usercode) {
                         if (err) console.log("err : ", err);
                         if (usercode[0].USER_CODE == null) {
-                            console.log('기존 회원 로그인 성공');
-                            console.log(usercode);
                             loginsession = 1;
                             app.locals.login = loginsession;
                             res.redirect('/');
                         } else {
-                            console.log('관리자 로그인 성공');
-                            console.log(usercode);
                             loginsession = 5;
                             app.locals.login = loginsession;
                             res.redirect('/');
@@ -528,7 +521,6 @@ app.post('/login_check', function(req, res) {
                     });
                 } else {
                     // 로그인 실패
-                    console.log("기존 회원 로그인 실패");
                     res.redirect('/sign_up');
                     return;
                 }
@@ -557,7 +549,6 @@ var storage = multer.diskStorage({ //  파일이름을 유지하기 위해 사�
         makeFolder(__dirname + '/public/' + 'uploadedFiles/' + localUserID + '/' + datapostno);
         filepath = __dirname + '/public/' + 'uploadedFiles/' + localUserID + '/' + datapostno;
         cb(null, __dirname + '/public/' + 'uploadedFiles/' + localUserID + '/' + datapostno);
-        console.log()
     },
     filename(req, file, cb) {
         var today = new Date();
@@ -710,11 +701,17 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
 });
 
 app.get('/download/:i', function(req, res, next) {
-    console.log(req.params.i)
+    console.log(req.params.i);
     var file_No = req.params.i;
     console.log(attached_P_N[file_No]);
 
-    var file = attached_P_N[file_No].FILE_PATH + '/' + attached_P_N[file_No].STORED_FILE_NAME;
+
+    if (app.locals.styleNo == 8) {
+        var file = attached_P_N[file_No].FILE_PATH + '/' + attached_P_N[file_No].STORED_FILE_NAME;
+    } else if (app.locals.styleNo == 5) {
+        var file = attached_P_N[file_No].DOCU_PATH + '/' + attached_P_N[file_No].STORED_DOCU_NAME;
+    }
+
 
     try {
         if (fs.existsSync(file)) { // 파일이 존재하는지 체크

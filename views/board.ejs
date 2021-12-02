@@ -6,15 +6,21 @@
         <table class="blueone" border="1">
             <tr>
                 <td class="table_title">제목</td>
-                <td class="contentbackground"> &nbsp; <%= realsex.TITLE%></td>
+                <td class="contentbackground"> &nbsp;
+                    <%= realsex.TITLE%>
+                </td>
             </tr>
             <tr>
                 <td class="table_content">내용</td>
-                <td class="contentbackground">&nbsp; <%= realsex.CONTENT%></td>
+                <td class="contentbackground">&nbsp;
+                    <%= realsex.CONTENT%>
+                </td>
             </tr>
             <tr>
                 <td class="table_title">작성일자</td>
-                <td class="contentbackground"> &nbsp; <%= realsex.WRITE_DATE%></td>
+                <td class="contentbackground"> &nbsp;
+                    <%= realsex.WRITE_DATE%>
+                </td>
             </tr>
             </tr>
 
@@ -23,12 +29,13 @@
 
                 <td class="contentbackground-file">
                     <%for(var i = 0; i < attached_P_N.length ; i++){%>
-                    <a name="<%= i%>" class="ATTA" href="/download/<%= i%>"><%= attached_P_N[i].DEFAULT_FILE_NAME %></a>
-                    <%console.log(attached_P_N[i].DEFAULT_FILE_NAME)}%>
+                        <a name="<%= i%>" class="ATTA" href="/download/<%= i%>">
+                            <%= attached_P_N[i].DEFAULT_FILE_NAME %>
+                        </a>
                 </td>
-                
+
             </tr>
-            
+
         </table>
 
         <table class="blueone-com" border="1">
@@ -36,16 +43,17 @@
                 <td class="table_title">댓글</td>
                 <td class="commentarea">
                     <%if(comment_content[0] != null){ %>
-                    <%for(var i=0; i < comment_content.length; i++){%>
-                    <p class="rowcomment">&nbsp; <%= comment_content[i].CONTENT %></p>
-                    <%}}%>
+                        <%for(var i=0; i < comment_content.length; i++){%>
+                            <p class="rowcomment">&nbsp;
+                                <%= comment_content[i].CONTENT %>
+                            </p>
+                            <%}}%>
                 </td>
             </tr>
             <tr>
                 <td class="table_title">댓글달기</td>
                 <form action="/commentsave" method="post">
-                    <td class="comment">&nbsp;<textarea name="content" id="content" cols="72" rows="5"
-                            required></textarea>
+                    <td class="comment">&nbsp;<textarea name="content" id="content" cols="72" rows="5" required></textarea>
                         <button type="" id="" herf="">
                             <span>댓글달기</span>
                         </button></td>
