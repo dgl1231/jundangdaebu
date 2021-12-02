@@ -621,6 +621,7 @@ app.post('/writesubmit', uploadWithOriginalFilename.array('FileName'), (req, res
     if ((month / 10) < 1) {
         month = '0' + month;
     }
+    
     if ((date / 10) < 1) {
         date = '0' + date;
     }
@@ -1060,7 +1061,11 @@ app.post('/loanwrite', upload.array('FileName'), async function(req, res, next) 
             loan_no = String(loan_no);
             loan_no = 'L' + loan_no;
             console.log("#1 loan_no", loan_no);
-        }
+        } else {
+        loan_no = 'L' + today_date + String('00000001');
+        console.log("#2 loan_no" + loan_no);
+    }
+
     } else {
         loan_no = 'L' + today_date + String('00000001');
         console.log("#2 loan_no" + loan_no);
@@ -1082,7 +1087,10 @@ app.post('/loanwrite', upload.array('FileName'), async function(req, res, next) 
             sec_no = Number(loandt) + 1;
             sec_no = String(sec_no);
             console.log("#3 sec_no", sec_no);
-        }
+        }else {
+        sec_no = today_date + String('00000001');
+        console.log("#4 sec_no", sec_no);
+    }
     } else {
         sec_no = today_date + String('00000001');
         console.log("#4 sec_no", sec_no);
