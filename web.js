@@ -147,7 +147,7 @@ app.get('/dambo?:page', (req, res) => {
 app.get('/loanlist', (req, res) => {
     app.locals.styleNo = 4;
     app.locals.login = loginsession;
-
+    var loandocu_path = '';
     const loanListSql = "SELECT LOAN_NO, LOAN_PRINCIPAL, PRODUCT, G_ID, G_NAME, NAME, STORED_DOCU_NAME, DOCU_PATH FROM (SELECT l.loan_no, LOAN_PRINCIPAL, PRODUCT, ce.G_ID, G_NAME, u.NAME FROM dgl1231.loan l, dgl1231.security s, dgl1231.code_entity ce, dgl1231.code_group cg, dgl1231.user u WHERE l.loan_no = s.loan_no AND ce.C_ID = s.PRODUCT AND cg.G_ID = ce.G_ID AND l.CALL_NO = u.CALL_NO ORDER BY l.loan_no DESC) AS FIR LEFT OUTER JOIN(SELECT DISTINCT A.STORED_DOCU_NAME, A.DOCU_PATH, A.LOAN_NO AS L_N FROM dgl1231.document A, (SELECT @ROWNUM := 0) B WHERE A.DOCU_G = '11') AS SEC ON (FIR.LOAN_NO = SEC.L_N) GROUP BY LOAN_NO ORDER BY LOAN_NO DESC;";
 
     conn.query(loanListSql, function(err, result) {
@@ -156,6 +156,12 @@ app.get('/loanlist', (req, res) => {
             if (result[0] == null) {
                 result = null;
             } else {}
+            for (var i = 0; i < result.length; i++) {
+
+                loandocu_path = result[i].DOCU_PATH;
+                loandocu_path = laondocu.substr(59, loandocu_path.length);
+                result[i].DOCU_PATH = loandocu_path;
+            }
 
             res.render(__dirname + '/views/loanlist.ejs', {
                 title: "대출이력 | " + siteData.title,
@@ -244,7 +250,7 @@ app.get('/mypage?', async(req, res) => {
         const documentCountSql = 'SELECT A.LOAN_NO, COUNT(B.DOCU_NO) AS count FROM (SELECT * FROM dgl1231.loan WHERE CALL_NO = ? AND LOAN_DATE BETWEEN ? AND ?) A LEFT OUTER JOIN(SELECT * FROM document) B ON (A.LOAN_NO = B.LOAN_NO) GROUP BY LOAN_NO ORDER BY A.LOAN_NO DESC';
         const documentsSql = 'SELECT * FROM dgl1231.document WHERE CALL_NO = ? AND SEND_IN_DATE BETWEEN ? AND ? ORDER BY LOAN_NO DESC';
 
-        await conn.query(loanStateSql, queryData, async function(err, result) {
+        conn.query(loanStateSql, queryData, function(err, result) {
             if (err) {
                 console.log('#!!#query is not excuted. insert fail...\n' + err);
                 res.redirect('/mypage');
@@ -271,7 +277,7 @@ app.get('/mypage?', async(req, res) => {
                 } else {
                     loanStateDatas = result;
 
-                    await conn.query(loanInfoSql, queryData, async function(err, result) {
+                    conn.query(loanInfoSql, queryData, function(err, result) {
                         if (err) {
                             console.log('#!!#query is not excuted. insert fail...\n' + err);
                             res.redirect('/mypage');
@@ -311,7 +317,7 @@ app.get('/mypage?', async(req, res) => {
                                     loanInfoDatas.push(result[i]);
                                 }
 
-                                await conn.query(loanDateSql, queryData, async function(err, result) {
+                                conn.query(loanDateSql, queryData, function(err, result) {
                                     if (err) {
                                         console.log('#!!#query is not excuted. insert fail...\n' + err);
                                         res.redirect('/mypage');
@@ -323,7 +329,7 @@ app.get('/mypage?', async(req, res) => {
                                             }
                                             loanDateDatas = result;
 
-                                            await conn.query(documentCountSql, queryData, async function(err, result) {
+                                            conn.query(documentCountSql, queryData, function(err, result) {
                                                 if (err) {
                                                     console.log('#!!#query is not excuted. insert fail...\n' + err);
                                                     res.redirect('/mypage');
@@ -335,8 +341,7 @@ app.get('/mypage?', async(req, res) => {
                                                     } else {
                                                         docuCount = result;
                                                     }
-
-                                                    await conn.query(documentsSql, queryData, function(err, result) {
+                                                    conn.query(documentsSql, queryData, function(err, result) {
 
                                                         if (err) {
                                                             console.log('#!!#query is not excuted. insert fail...\n' + err);
