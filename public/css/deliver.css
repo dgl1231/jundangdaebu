@@ -15,14 +15,14 @@
     padding-left: 25%;
 }
 .top{
-    font-size: 50px;
+    font-size: 35px;
     display: flex;
 }
 .top .title{
     font-size: 80px;
 }
 .top .buttoncontainer{
-    margin-left: 100px;
+    margin-left: 70px;
     padding-top: 25px;
 }
 .top .buttoncontainer .a{
@@ -31,23 +31,23 @@
 }
 .top .buttoncontainer #btn1st{
     color:rgb(88, 109, 204);
-    margin-left:20px;
+    margin-left:0px;
     font-size: 65px;
     text-decoration-line: none;
 }
 .top .buttoncontainer #btn2nd{
     color:rgb(94, 169, 219);
-    margin-left:20px;
+    margin-left:10px;
     text-decoration-line: none;
 }
 .top .buttoncontainer #btn3rd{
     color:rgb(94, 169, 219);
-    margin-left:20px;
+    margin-left:10px;
     text-decoration-line: none;
 }
 .top .buttoncontainer #btn4th {
     color: rgb(94, 169, 219);
-    margin-left: 20px;
+    margin-left: 10px;
     text-decoration-line: none;
 }
 
@@ -57,7 +57,7 @@
 }
 .bottom .subtitle{
     font-size: 40px;
-    color:rgb(36, 36, 36);
+    color:rgb(88, 109, 204);
 }
 
 #content1st{

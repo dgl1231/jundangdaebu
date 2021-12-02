@@ -4,10 +4,10 @@
             <div class="top">
                 <div class="title">배송절차안내</div>
                 <div class="buttoncontainer">
-                    <a href="javascript:vis(1);" id="btn1st" onclick="">1st</a>
-                    <a href="javascript:vis(2);" id="btn2nd" onclick="">2nd</a>
-                    <a href="javascript:vis(3);" id="btn3rd" onclick="">3rd</a>
-                    <a href="javascript:vis(4);" id="btn4th" onclick="">4th</a>
+                    <a href="javascript:vis(1);" id="btn1st" onclick="">"포장"</a>
+                    <a href="javascript:vis(2);" id="btn2nd" onclick="">"배송"</a>
+                    <a href="javascript:vis(3);" id="btn3rd" onclick="">"유의사항"</a>
+                    <a href="javascript:vis(4);" id="btn4th" onclick="">"운송장 입력"</a>
                     <script>
                         function vis(n) {
                             document.getElementById("content1st").style.display = "none";
@@ -23,9 +23,9 @@
                                 document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
 
                                 document.getElementById("btn1st").style.fontSize = "65px";
-                                document.getElementById("btn2nd").style.fontSize = "50px";
-                                document.getElementById("btn3rd").style.fontSize = "50px";
-                                document.getElementById("btn4th").style.fontSize = "50px";
+                                document.getElementById("btn2nd").style.fontSize = "35px";
+                                document.getElementById("btn3rd").style.fontSize = "35px";
+                                document.getElementById("btn4th").style.fontSize = "35px";
                             } else if (n == 2) {
                                 document.getElementById("content2nd").style.display = "block";
 
@@ -34,10 +34,10 @@
                                 document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
                                 document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
 
-                                document.getElementById("btn1st").style.fontSize = "50px";
+                                document.getElementById("btn1st").style.fontSize = "35px";
                                 document.getElementById("btn2nd").style.fontSize = "65px";
-                                document.getElementById("btn3rd").style.fontSize = "50px";
-                                document.getElementById("btn4th").style.fontSize = "50px";
+                                document.getElementById("btn3rd").style.fontSize = "35px";
+                                document.getElementById("btn4th").style.fontSize = "35px";
 
                             } else if (n == 3) {
                                 document.getElementById("content3rd").style.display = "block";
@@ -47,10 +47,10 @@
                                 document.getElementById("btn3rd").style.color = "rgb(88, 109, 204)";
                                 document.getElementById("btn4th").style.color = "rgb(94, 169, 219)";
 
-                                document.getElementById("btn1st").style.fontSize = "50px";
-                                document.getElementById("btn2nd").style.fontSize = "50px";
+                                document.getElementById("btn1st").style.fontSize = "35px";
+                                document.getElementById("btn2nd").style.fontSize = "35px";
                                 document.getElementById("btn3rd").style.fontSize = "65px";
-                                document.getElementById("btn4th").style.fontSize = "50px";
+                                document.getElementById("btn4th").style.fontSize = "35px";
                             } else if (n == 4) {
                                 document.getElementById("content4th").style.display = "block";
 
@@ -59,9 +59,9 @@
                                 document.getElementById("btn3rd").style.color = "rgb(94, 169, 219)";
                                 document.getElementById("btn4th").style.color = "rgb(88, 109, 204)";
 
-                                document.getElementById("btn1st").style.fontSize = "50px";
-                                document.getElementById("btn2nd").style.fontSize = "50px";
-                                document.getElementById("btn3rd").style.fontSize = "50px";
+                                document.getElementById("btn1st").style.fontSize = "35px";
+                                document.getElementById("btn2nd").style.fontSize = "35px";
+                                document.getElementById("btn3rd").style.fontSize = "35px";
                                 document.getElementById("btn4th").style.fontSize = "65px";
                             }
                         }
@@ -119,7 +119,9 @@
                 </div>
                 <div id="content4th">
                     <div id="content">
-                        <br><br><br><br><br>
+                        <br><br><br>
+                        <div class="subtitle">운송장 번호 입력</div>
+                        <br><br>
                         <form id="" name="" method="post" action="deliver_submit" class="form_deliver">
                             <!-- 택배사 -->
                             <div>

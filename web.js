@@ -155,11 +155,12 @@ app.get('/loanlist', (req, res) => {
         else {
             if (result[0] == null) {
                 result = null;
-            } else {}
+            } else {
+            }
             for (var i = 0; i < result.length; i++) {
 
                 loandocu_path = result[i].DOCU_PATH;
-                loandocu_path = laondocu.substr(59, loandocu_path.length);
+                loandocu_path = loandocu_path.substr(59, loandocu_path.length);
                 result[i].DOCU_PATH = loandocu_path;
             }
 
